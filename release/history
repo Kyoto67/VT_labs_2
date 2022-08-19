@@ -1,10 +1,6 @@
-
-<table>
-<tr><td>X: </td><td>3</td></tr>
-<tr><td>Y: </td><td>-1</td></tr>
-<tr><td>R: </td><td>1</td></tr>
-<tr><td>Matching? </td><td>FALSE</td></tr>
-<tr><td>Time script working: </td><td>0.0086178779602051 sec</td></tr>
-<tr><td>Current time: </td><td>15:02:01</td></tr>
-</table>
+<tr><td>1</td><td></td><td>-3</td><td></td><td>FALSE</td><td>0.00018811225891113</td><td>17:21:34</td>
+<hr>
+<tr><td>1</td><td></td><td>1</td><td></td><td>FALSE</td><td>0.00018692016601562</td><td>17:20:14</td>
+<hr>
+<tr><td>1</td><td></td><td>1</td><td></td><td>FALSE</td><td>0.00017786026000977</td><td>17:20:12</td>
 <hr>

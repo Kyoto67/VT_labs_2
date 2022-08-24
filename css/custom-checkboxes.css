@@ -1,0 +1,21 @@
+.x_checkboxes {
+    opacity: 0;
+  }
+
+  .x_checkboxes+label::before {
+    content: '\2713';
+    text-align: center;
+    color: #7b7b7b00;
+    line-height: 1em;
+    width: 1em;
+    height: 1em;
+    border: 2px inset #000;
+    border-radius: 0.25em;
+    margin: 0.25em;
+    display: inline-block;
+  }
+
+  .x_checkboxes:checked+label::before {
+    color: rgb(0, 0, 255);
+    border: 2px inset rgb(0, 0, 255);
+  }

@@ -1,12 +1,13 @@
 let x , y , r, localStorage=new Array;
 
+
 function valAndSub() {
     try {
         if (validate()) {
 
             $.ajax({
                 type: "GET",
-                url: "script.php",
+                url: "php/script.php",
                 headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
                 data: {
                     "x": x,
@@ -28,7 +29,7 @@ function valAndSub() {
 function onAnswer(ans) {
     var parsedAns = JSON.parse(ans);
     localStorage.push(parsedAns);
-    var output = "<table border=\"1\">\n<tr><td>№</td><td>X</td><td>Y</td><td>R</td><td>Result</td><td>Working time</td><td>Current time</td></tr>\n";
+    var output = "<table border=\"1\" class=\"resultTable;\"><tr><td class=\"cellNum\">№</td><td class=\"cellNum\">X</td><td class=\"cellNum\">Y</td><td class=\"cellNum\">R</td><td class=\"cellRes\">Result</td><td class=\"cellTime\">Working time</td><td class=\"cellTime\">Current time</td></tr>\n";
     for (var i = 0; i<localStorage.length; i++){
         var num = i+1;
         output+= "<tr><td>"+num+"</td>";
@@ -49,7 +50,7 @@ function validate() {
 }
 
 function valid_y() {
-    let rawY = document.forms["mainForm"]["y"].value;
+    let rawY = document.getElementById('y_value').value;
     try {
         let value_y = parseFloat(rawY);
         if (value_y > -5 && value_y < 3) {
@@ -140,7 +141,7 @@ function valid_R() {
 }
 
 function getMarkedXBoxes() {
-    var allCheckboxes = document.getElementsByClassName('checkbox');
+    var allCheckboxes = document.getElementsByClassName('x_checkboxes');
     var markedBoxes = [];
     for (var i = 0; i < allCheckboxes.length; i++) {
         if (allCheckboxes[i].checked) {

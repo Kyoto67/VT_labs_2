@@ -39,7 +39,7 @@ body {
 
 .data {
     position: absolute;
-    left: 5%;
+    left: 50px;
     top: 10%;
     text-align: left;
 }
@@ -60,13 +60,13 @@ body {
     margin-top: 5%;
     width: 600px;
     position: relative;
-    background-color: #ffffff;
 }
 
 .resultTable {
     position: absolute;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
+    background-color: #ffffff;
 }
 
 .cellNum {

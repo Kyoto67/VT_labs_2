@@ -1,4 +1,4 @@
-let x , y , r, localStorage=new Array;
+let x , y , r, tableContent=new Array;
 
 
 function valAndSub() {
@@ -8,7 +8,6 @@ function valAndSub() {
             $.ajax({
                 type: "GET",
                 url: "php/script.php",
-                headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
                 data: {
                     "x": x,
                     "y": y,
@@ -28,12 +27,12 @@ function valAndSub() {
 
 function onAnswer(ans) {
     var parsedAns = JSON.parse(ans);
-    localStorage.push(parsedAns);
-    var output = "<table border=\"1\" class=\"resultTable;\"><tr><td class=\"cellNum\">№</td><td class=\"cellNum\">X</td><td class=\"cellNum\">Y</td><td class=\"cellNum\">R</td><td class=\"cellRes\">Result</td><td class=\"cellTime\">Working time</td><td class=\"cellTime\">Current time</td></tr>\n";
-    for (var i = 0; i<localStorage.length; i++){
+    tableContent.push(parsedAns);
+    var output = "<table border=\"1\" class=\"resultTable\"><tr><td class=\"cellNum\">№</td><td class=\"cellNum\">X</td><td class=\"cellNum\">Y</td><td class=\"cellNum\">R</td><td class=\"cellRes\">Result</td><td class=\"cellTime\">Working time</td><td class=\"cellTime\">Current time</td></tr>\n";
+    for (var i = 0; i<tableContent.length; i++){
         var num = i+1;
         output+= "<tr><td>"+num+"</td>";
-        var m = localStorage[i];
+        var m = tableContent[i];
         for(var j=0; j<m.length; j++){
             output+= "<td>"+m[j]+"</td>";
         }

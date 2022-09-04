@@ -1,4 +1,4 @@
-let x , y , r, tableContent=new Array;
+let x , y , r, dataStorage=new Array;
 
 
 function valAndSub() {
@@ -27,12 +27,12 @@ function valAndSub() {
 
 function onAnswer(ans) {
     var parsedAns = JSON.parse(ans);
-    tableContent.push(parsedAns);
+    dataStorage.push(parsedAns);
     var output = "<table border=\"1\" class=\"resultTable\"><tr><td class=\"cellNum\">№</td><td class=\"cellNum\">X</td><td class=\"cellNum\">Y</td><td class=\"cellNum\">R</td><td class=\"cellRes\">Result</td><td class=\"cellTime\">Working time</td><td class=\"cellTime\">Current time</td></tr>\n";
-    for (var i = 0; i<tableContent.length; i++){
+    for (var i = 0; i<dataStorage.length; i++){
         var num = i+1;
         output+= "<tr><td>"+num+"</td>";
-        var m = tableContent[i];
+        var m = dataStorage[i];
         for(var j=0; j<m.length; j++){
             output+= "<td>"+m[j]+"</td>";
         }
@@ -50,9 +50,11 @@ function validate() {
 
 function valid_y() {
     let rawY = document.getElementById('y_value').value;
+    let ymin = -5;
+    let ymax = 3;
     try {
         let value_y = parseFloat(rawY);
-        if (value_y > -5 && value_y < 3) {
+        if (value_y > ymin && value_y < ymax) {
             y = value_y;
             return true;
         } else {
@@ -140,7 +142,7 @@ function valid_R() {
 }
 
 function getMarkedXBoxes() {
-    var allCheckboxes = document.getElementsByClassName('x_checkboxes');
+    var allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     var markedBoxes = [];
     for (var i = 0; i < allCheckboxes.length; i++) {
         if (allCheckboxes[i].checked) {

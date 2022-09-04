@@ -9,15 +9,15 @@
     line-height: 1em;
     width: 0.7em;
     height: 0.7em;
-    border: 2px inset #4548de;
+    border: 2px inset #343680;
     border-radius: 0.25em;
     margin: 0.25em;
     display: inline-block;
   }
 
   .x_checkboxes-negative:checked+label::before {
-    color: #4548de;
-    border: 2px inset #4548de;
+    color: #adbac7;
+    border: 2px inset #343680;
   }
 
 
@@ -32,7 +32,7 @@
     line-height: 1em;
     width: 0.7em;
     height: 0.7em;
-    border: 2px inset #4548de;
+    border: 2px inset #343680;
     border-radius: 0.25em;
     margin: 0.25em;
     margin-right: 0.58em;
@@ -40,6 +40,10 @@
   }
 
   .x_checkboxes:checked+label::before {
-    color: #4548de;
-    border: 2px inset #4548de;
+    color: #adbac7;
+    border: 2px inset #343680;
+  }
+  
+  label {
+    cursor: pointer;
   }

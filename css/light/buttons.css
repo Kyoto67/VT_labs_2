@@ -1,5 +1,5 @@
 .Rbutton {
-    background-color: #4548de; 
+  background-color: #4548de;
   border: 1px solid #000000b8;
   color: white;
   padding: 7px 7px;
@@ -12,12 +12,17 @@
 }
 
 .Rbutton:hover {
-    background-color: #d3e4f8;
-    color: black;
-  }
+  background-color: #d3e4f8;
+  color: black;
+}
 
-  .submitButton {
-    background-color: #454fde; 
+.Rbutton:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton {
+  background-color: #454fde;
   border: 1px solid #000000b8;
   color: white;
   padding: 7px 7px;
@@ -27,9 +32,14 @@
   font-size: 12px;
   border-radius: 7px;
   transition-duration: 0.4s;
-  }
+}
 
-  .submitButton:hover {
-    background-color: #8fbff6; 
-    color: black;
-  }
+.submitButton:hover {
+  background-color: #8fbff6;
+  color: black;
+}
+
+.submitButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}

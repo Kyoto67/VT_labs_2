@@ -1,4 +1,4 @@
-let x , y , r, dataStorage=new Array;
+let x = new Array, y, r, dataStorage = new Array;
 
 
 function valAndSub() {
@@ -26,19 +26,22 @@ function valAndSub() {
 
 
 function onAnswer(ans) {
-    var parsedAns = JSON.parse(ans);
-    dataStorage.push(parsedAns);
-    var output = "<table border=\"1\" class=\"resultTable\"><tr><td class=\"cellNum\">№</td><td class=\"cellNum\">X</td><td class=\"cellNum\">Y</td><td class=\"cellNum\">R</td><td class=\"cellRes\">Result</td><td class=\"cellTime\">Working time</td><td class=\"cellTime\">Current time</td></tr>\n";
-    for (var i = 0; i<dataStorage.length; i++){
-        var num = i+1;
-        output+= "<tr><td>"+num+"</td>";
-        var m = dataStorage[i];
-        for(var j=0; j<m.length; j++){
-            output+= "<td>"+m[j]+"</td>";
+    x = new Array;
+    let parsedAns = JSON.parse(ans);
+    parsedAns.forEach(element => {
+        dataStorage.push(element);
+    });
+    let output = "<table border=\"1\" class=\"resultTable\"><tr><td class=\"cellNum\">№</td><td class=\"cellNum\">X</td><td class=\"cellNum\">Y</td><td class=\"cellNum\">R</td><td class=\"cellRes\">Result</td><td class=\"cellTime\">Working time</td><td class=\"cellTime\">Current time</td></tr>\n";
+    for (let i = 0; i < dataStorage.length; i++) {
+        let num = i + 1;
+        output += "<tr><td>" + num + "</td>";
+        let m = dataStorage[i];
+        for (let j = 0; j < m.length; j++) {
+            output += "<td>" + m[j] + "</td>";
         }
-        output+="</tr>\n";
+        output += "</tr>\n";
     }
-    output+="</table>"
+    output += "</table>"
     document.getElementById("outputContainer").innerHTML = output;
 }
 
@@ -68,56 +71,50 @@ function valid_y() {
 }
 
 function valid_x() {
-    var markedBoxes = getMarkedXBoxes();
-    if (markedBoxes.length == 1) {
-        switch (markedBoxes[0].name) {
+    let markedBoxes = getMarkedXBoxes();
+    if (markedBoxes.length > 0) {
+        for (let i = 0; i < markedBoxes.length; i++) {
+            switch (markedBoxes[i].name) {
 
-            case "x_-5":
-                x = -5;
-                return true;
-            case "x_-4":
-                x = -4;
-                return true;
-            case "x_-3":
-                x = -3;
-                return true;
-            case "x_-2":
-                x = -2;
-                return true;
-            case "x_-1":
-                x = -1;
-                return true;
-            case "x_0":
-                x = 0;
-                return true;
-            case "x_1":
-                x = 1;
-                return true;
-            case "x_2":
-                x = 2;
-                return true;
-            case "x_3":
-                x = 3;
-                return true;
-            default:
-                return false;
+                case "x_-5":
+                    x.push(-5);
+                    break;
+                case "x_-4":
+                    x.push(-4);
+                    break;
+                case "x_-3":
+                    x.push(-3);
+                    break;
+                case "x_-2":
+                    x.push(-2);
+                    break;
+                case "x_-1":
+                    x.push(-1);
+                    break;
+                case "x_0":
+                    x.push(0);
+                    break;
+                case "x_1":
+                    x.push(1);
+                    break;
+                case "x_2":
+                    x.push(2);
+                    break;
+                case "x_3":
+                    x.push(3);
+                    break;
+            }
         }
 
-
+        return true;
     } else {
-
-        if (markedBoxes.length == 0) {
-            alert("Выберите координату X!");
-        } else {
-            alert("Выберите одно значение X.");
-        }
-
+        alert("Выберите координату X!");
         return false;
     }
 }
 
 function valid_R() {
-    var valueR = document.getElementById("valueR").value;
+    let valueR = document.getElementById("valueR").value;
     switch (valueR) {
 
         case ("1"):
@@ -142,9 +139,9 @@ function valid_R() {
 }
 
 function getMarkedXBoxes() {
-    var allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-    var markedBoxes = [];
-    for (var i = 0; i < allCheckboxes.length; i++) {
+    let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    let markedBoxes = [];
+    for (let i = 0; i < allCheckboxes.length; i++) {
         if (allCheckboxes[i].checked) {
             markedBoxes.push(allCheckboxes[i]);
         }

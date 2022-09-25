@@ -1,0 +1,21 @@
+Имя хоста:
+	root@kyoto-PC:~# hostname
+	kyoto-PC
+Семейство процессора:
+	root@kyoto-PC:~# lscpu
+	Model name:            AMD Ryzen 5 4600H with Radeon Graphics
+	CPU family:          23
+Разрядность системы:
+	root@kyoto-PC:~# uname -m
+	x86_64
+Номер версии ядра:
+	root@kyoto-PC:~# uname -r
+	5.15.0-48-generic
+Имя ядра системы:
+	root@kyoto-PC:~# uname -s
+	Linux
+Имя и версия дистрибутива:
+	root@kyoto-PC:~# cat /etc/os-release 
+	PRETTY_NAME="Ubuntu 22.04.1 LTS"
+
+

@@ -16,7 +16,7 @@ function validatingAndSend() {
                 success: onAnswer,
                 dataType: "text"
             });
-            x=[];
+            x = [];
         }
     } catch (error) {
         alert("Ошибка HTTP. Повторите попытку позже." + error)
@@ -27,7 +27,6 @@ function validatingAndSend() {
 function onAnswer(ans) {
     document.getElementById("outputContainer").innerHTML = ans;
 }
-
 
 
 function validate() {
@@ -57,38 +56,8 @@ function valid_x() {
     let markedBoxes = getMarkedXBoxes();
     if (markedBoxes.length > 0) {
         for (let i = 0; i < markedBoxes.length; i++) {
-            switch (markedBoxes[i].name) {
-
-                case "x_-5":
-                    x.push(-5);
-                    break;
-                case "x_-4":
-                    x.push(-4);
-                    break;
-                case "x_-3":
-                    x.push(-3);
-                    break;
-                case "x_-2":
-                    x.push(-2);
-                    break;
-                case "x_-1":
-                    x.push(-1);
-                    break;
-                case "x_0":
-                    x.push(0);
-                    break;
-                case "x_1":
-                    x.push(1);
-                    break;
-                case "x_2":
-                    x.push(2);
-                    break;
-                case "x_3":
-                    x.push(3);
-                    break;
-            }
+            x.push(markedBoxes[i].value);
         }
-
         return true;
     } else {
         alert("Выберите координату X!");
@@ -97,28 +66,12 @@ function valid_x() {
 }
 
 function valid_R() {
-    let valueR = document.getElementById("valueR").value;
-    switch (valueR) {
-
-        case ("1"):
-            r = 1;
-            return true;
-        case ("2"):
-            r = 2;
-            return true;
-        case ("3"):
-            r = 3;
-            return true;
-        case ("4"):
-            r = 4;
-            return true;
-        case ("5"):
-            r = 5;
-            return true;
-        default:
-            return false;
+    let valueR = document.getElementById("RvalueSelector").value;
+    if (valueR == 1 || valueR == 1.5 || valueR == 2 || valueR == 2.5 || valueR == 3) {
+        r = valueR;
+        return true;
     }
-
+    return false;
 }
 
 function getMarkedXBoxes() {

@@ -1,3 +1,7 @@
+package verifyer;
+
+import exception.WrongValueException;
+
 public class DataChecker {
 
     private double x;
@@ -16,8 +20,11 @@ public class DataChecker {
         this.r = r;
     }
 
-    public boolean verification() {
-        return (verifyX() && verifyY() && verifyR());
+    public boolean verification() throws WrongValueException {
+        if (!verifyX()) throw new WrongValueException("x= " + x + " is invalid value");
+        if (!verifyY()) throw new WrongValueException("y= " + y + " is invalid value");
+        if (!verifyR()) throw new WrongValueException("r= " + r + " is invalid value");
+        return true;
     }
 
     private boolean verifyX() {

@@ -20,9 +20,6 @@
 <!-- validate & ajax script -->
 <script type="text/javascript" src="js/validate_and_submit.js"></script>
 
-<!-- dynamic R displaying script -->
-<script src="js/dynamic_R_value.js"></script>
-
 <body class="body" onload="setTheme()">
 
 <div class="hat">
@@ -50,36 +47,36 @@
         <p><br>
             x:
             <br>
-            <input type="checkbox" id="x_-5" class="x_checkboxes-negative" name="x_-5">
-            <label for="x_-5" class="checkbox-custom-label">-5</label>
-
-            <input type="checkbox" class="x_checkboxes-negative" name="x_-4" id="x_-4">
-            <label for="x_-4" class="checkbox-custom-label">-4</label>
-
-            <input type="checkbox" class="x_checkboxes-negative" name="x_-3" id="x_-3">
+            <input type="checkbox" id="x_-3" class="x_checkboxes-negative" value="-3">
             <label for="x_-3" class="checkbox-custom-label">-3</label>
 
-            <br>
-
-            <input type="checkbox" class="x_checkboxes-negative" name="x_-2" id="x_-2">
+            <input type="checkbox" class="x_checkboxes-negative" value="-2" id="x_-2">
             <label for="x_-2" class="checkbox-custom-label">-2</label>
 
-            <input type="checkbox" class="x_checkboxes-negative" name="x_-1" id="x_-1">
+            <input type="checkbox" class="x_checkboxes-negative" value="-1" id="x_-1">
             <label for="x_-1" class="checkbox-custom-label">-1</label>
-
-            <input type="checkbox" class="x_checkboxes" name="x_0" id="x_0">
-            <label for="x_0" class="checkbox-custom-label">0</label>
 
             <br>
 
-            <input type="checkbox" class="x_checkboxes" name="x_1" id="x_1">
+            <input type="checkbox" class="x_checkboxes" value="0" id="x_0">
+            <label for="x_0" class="checkbox-custom-label">0</label>
+
+            <input type="checkbox" class="x_checkboxes" value="1" id="x_1">
             <label for="x_1" class="checkbox-custom-label">1</label>
 
-            <input type="checkbox" class="x_checkboxes" name="x_2" id="x_2">
+            <input type="checkbox" class="x_checkboxes" value="2" id="x_2">
             <label for="x_2" class="checkbox-custom-label">2</label>
 
-            <input type="checkbox" class="x_checkboxes" name="x_3" id="x_3">
+            <br>
+
+            <input type="checkbox" class="x_checkboxes" value="3" id="x_3">
             <label for="x_3" class="checkbox-custom-label">3</label>
+
+            <input type="checkbox" class="x_checkboxes" value="4" id="x_4">
+            <label for="x_4" class="checkbox-custom-label">4</label>
+
+            <input type="checkbox" class="x_checkboxes" value="5" id="x_5">
+            <label for="x_5" class="checkbox-custom-label">5</label>
 
             <br>
 
@@ -91,15 +88,14 @@
         </p>
 
         <!-- R block -->
-        <p>R: <span class="valueR" name="R">Выберите значение</span></p>
-        <p>
-            <button class="Rbutton" name="R" value="1" type="button" onclick="showRequal1()">1</button>
-            <button class="Rbutton" name="R" value="2" type="button" onclick="showRequal2()">2</button>
-            <button class="Rbutton" name="R" value="3" type="button" onclick="showRequal3()">3</button>
-            <button class="Rbutton" name="R" value="4" type="button" onclick="showRequal4()">4</button>
-            <button class="Rbutton" name="R" value="5" type="button" onclick="showRequal5()">5</button>
-        </p>
-        <input type="hidden" id="valueR" name="R"></input>
+        <p>R: <span class="valueR" name="R"></span><select name="R_value" id="RvalueSelector">
+        <option disabled>Выберите значение</option>
+        <option value="1">1</option>
+        <option value="1.5">1.5</option>
+        <option value="3">2</option>
+        <option value="2.5">2.5</option>
+        <option value="3">3</option>
+        </select></p>
         <br>
         <button class="submitButton" type="button" onclick="validatingAndSend()">Send</button>
     </div>
@@ -122,7 +118,6 @@
 
 
 </body>
-<!-- ------------------------------------------------------------------------------------------------------------------------ -->
 
 
 </html>

@@ -1,0 +1,45 @@
+.Rbutton {
+  background-color: #4548de;
+  border: 1px solid #000000b8;
+  color: white;
+  padding: 7px 7px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 7px;
+  transition-duration: 0.4s;
+}
+
+.Rbutton:hover {
+  background-color: #d3e4f8;
+  color: black;
+}
+
+.Rbutton:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton {
+  background-color: #454fde;
+  border: 1px solid #000000b8;
+  color: white;
+  padding: 7px 7px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 7px;
+  transition-duration: 0.4s;
+}
+
+.submitButton:hover {
+  background-color: #8fbff6;
+  color: black;
+}
+
+.submitButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}

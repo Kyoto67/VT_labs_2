@@ -101,7 +101,7 @@
         </p>
         <input type="hidden" id="valueR" name="R"></input>
         <br>
-        <button class="submitButton" type="button" onclick="valAndSub()">Send</button>
+        <button class="submitButton" type="button" onclick="validatingAndSend()">Send</button>
     </div>
 </div>
 <div><button type="button" id="themebutton" onclick="changeOnDark()"></button></div>

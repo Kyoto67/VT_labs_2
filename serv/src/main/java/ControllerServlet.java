@@ -1,15 +1,20 @@
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
 
+@WebServlet(name = "Controller", value = "/app")
 public class ControllerServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.getWriter().println("test");
         if (request.getParameter("x") == null || request.getParameter("y") == null ||
                 request.getParameter("r") == null ) {
         } else {
-            getServletContext().getNamedDispatcher("AreaChecker").forward(request, response);
+            getServletContext().getNamedDispatcher("AreaCheck").forward(request, response);
         }
     }
 

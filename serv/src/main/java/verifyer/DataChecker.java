@@ -4,15 +4,9 @@ import exception.WrongValueException;
 
 public class DataChecker {
 
-    private double x;
-    private double y;
-    private double r;
-    private double xMin = -3.0;
-    private double xMax = 5;
-    private double yMin = -5;
-    private double yMax = 3;
-    private double rMin = 1;
-    private double rMax = 3;
+    private final double x;
+    private final double y;
+    private final double r;
 
     public DataChecker(double x, double y, double r) {
         this.x = x;
@@ -28,14 +22,20 @@ public class DataChecker {
     }
 
     private boolean verifyX() {
+        final double xMin = -3.0;
+        final double xMax = 5;
         return x >= xMin && x <= xMax;
     }
 
     private boolean verifyY() {
+        final double yMin = -5;
+        final double yMax = 3;
         return y > yMin && y < yMax;
     }
 
     private boolean verifyR() {
+        final double rMin = 1;
+        final double rMax = 3;
         return r >= rMin && r <= rMax;
     }
 

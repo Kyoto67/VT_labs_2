@@ -10,13 +10,4 @@
         <location>/page_not_found.jsp</location>
     </error-page>
 
-<!--    <servlet>-->
-<!--        <servlet-name>Wrong_data</servlet-name>-->
-<!--        <jsp-file>/wrong_data.jsp</jsp-file>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>Wrong_data</servlet-name>-->
-<!--        <url-pattern>/wrong_data.jsp</url-pattern>-->
-<!--    </servlet-mapping>-->
-
 </web-app>

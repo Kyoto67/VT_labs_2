@@ -92,7 +92,7 @@
         <option disabled>Выберите значение</option>
         <option value="1">1</option>
         <option value="1.5">1.5</option>
-        <option value="3">2</option>
+        <option value="2">2</option>
         <option value="2.5">2.5</option>
         <option value="3">3</option>
         </select></p>

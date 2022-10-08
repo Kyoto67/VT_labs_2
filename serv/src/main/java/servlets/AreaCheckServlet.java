@@ -93,7 +93,7 @@ public class AreaCheckServlet extends HttpServlet {
         ArrayList<Double> valuesX = new ArrayList<>();
         rawArray = rawArray.substring(1, rawArray.length() - 1);
         String[] array = rawArray.split(",");
-        for (String s : array) valuesX.add(Double.parseDouble(s.substring(1, s.length() - 1)));
+        for (String s : array) valuesX.add(Double.parseDouble(s));
         return valuesX;
     }
 }

@@ -98,9 +98,10 @@ $(document).ready(function () {
     $(document.getElementById("area")).on("click", function (event) {
         let rawX = event.pageX - this.offsetLeft;
         let rawY = event.pageY - this.offsetTop;
+        console.log("x: " + rawX + "\ny: " + rawY);
         r = document.getElementById("RvalueSelector").value;
-        let trueX = r * (rawX - 510) / 80;
-        let trueY = r * -((rawY - 340)) / 80;
+        let trueX = r * (rawX - 1120) / 80;
+        let trueY = r * -((rawY - 460)) / 80;
 
         x.push(trueX);
         y = trueY;

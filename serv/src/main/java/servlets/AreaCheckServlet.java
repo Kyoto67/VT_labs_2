@@ -5,10 +5,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import verifyer.DataChecker;
+import verifyer.Result;
+import verifyer.ResultContainer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,65 +25,56 @@ public class AreaCheckServlet extends HttpServlet {
         starttime = System.currentTimeMillis();
         HttpSession session = request.getSession();
         PrintWriter writer = response.getWriter();
-        response.setContentType("text/html;charset=UTF-8");
-        List<String> tableRows = (List) session.getAttribute("tableRows");
-        if (tableRows == null || tableRows.size() == 0) {
-            tableRows = new ArrayList<String>();
-            tableRows.add("<table border=\"1\" class=\"resultTable\">\n" +
-                    "        <tr>\n" + "            <td class=\"cellNum\">Num</td>\n" +
-                    "            <td class=\"cellNum\">X</td>\n" +
-                    "            <td class=\"cellNum\">Y</td>\n" +
-                    "            <td class=\"cellNum\">R</td>\n" +
-                    "            <td class=\"cellRes\">Result</td>\n" +
-                    "            <td class=\"cellTime\">Working time</td>\n" +
-                    "            <td class=\"cellTime\">Current time</td>\n" +
-                    "        </tr>");
-            tableRows.add("    </table>\n");
-        }
-        tableRows.remove(tableRows.size() - 1);
+        ResultContainer tableContent = (ResultContainer) session.getAttribute("tableContent");
+        if (tableContent == null) tableContent = new ResultContainer();
+        List<Result> results = tableContent.getResults();
         ArrayList<Double> x = new ArrayList<>();
         try {
-            x.add(Double.parseDouble(request.getParameter("x")));
-        } catch (Exception e) {
-            x = parseXValues(request.getParameter("x"));
-        }
-        double y = Double.parseDouble(request.getParameter("y"));
-        double r = Double.parseDouble(request.getParameter("r"));
-        int timeShift = Integer.parseInt(request.getParameter("time"));
-        List<String> finalTableRows = tableRows;
-        x.forEach((x_value) -> {
-            DataChecker dataChecker = new DataChecker(x_value, y, r);
             try {
-                if (dataChecker.verification())
-                    finalTableRows.add(pointToString(x_value, y, r, dataChecker.hitCheck(), finalTableRows.size(), timeShift));
-            } catch (WrongValueException e) {
-                response.setStatus(480);
-                request.setAttribute("error_message", e.getMessage());
-                try {
-                    getServletContext().getRequestDispatcher("/wrong_data.jsp").forward(request, response);
-                } catch (ServletException | IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                x.add(Double.parseDouble(request.getParameter("x")));
+            } catch (Exception e) {
+                x = parseXValues(request.getParameter("x"));
             }
-        });
-        finalTableRows.add("    </table>\n");
-        for (String tableRow : finalTableRows) writer.println(tableRow);
+            double y = Double.parseDouble(request.getParameter("y"));
+            double r = Double.parseDouble(request.getParameter("r"));
+            int timeShift = Integer.parseInt(request.getParameter("time"));
+            Date date = new Date();
+            date.setHours(date.getHours() - timeShift / 60);
+            x.forEach((x_value) -> {
+                DataChecker dataChecker = new DataChecker(x_value, y, r);
+                try {
+                    if (dataChecker.verification())
+                        results.add(new Result(results.size() + 1, x_value, y, r, dataChecker.hitCheck(), "0.00" +
+                                (System.currentTimeMillis() - starttime) + "s" , date.toString()));
+                } catch (WrongValueException e) {
+                    response.setStatus(480);
+                    request.setAttribute("error_message", e.getMessage());
+                    try {
+                        getServletContext().getRequestDispatcher("/wrong_data.jsp").forward(request, response);
+                    } catch (ServletException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            response.sendError(404);
+        }
+        writer.println(resultsToJSON(results));
         writer.close();
-        session.setAttribute("tableRows", finalTableRows);
+        session.setAttribute("tableContent", tableContent);
     }
 
-    private String pointToString(double x, double y, double r, boolean coordsStatus, int number, int timeShift) {
-        Date date = new Date();
-        date.setHours(date.getHours() - timeShift / 60);
-        System.out.println("COMPLETE TASK:  x="+x+"; y="+y+"; r="+r+"; result="+coordsStatus);
-        return "<tr><td>" + number + "</td>"
-                + "<td>" + x + "</td>" +
-                "<td>" + y + "</td>" +
-                "<td>" + r + "</td>" +
-                "<td style='color: " + ((coordsStatus) ? "green" : "red") + "'>" + coordsStatus + "</td>" +
-                "<td>0.00" + (System.currentTimeMillis() - starttime) + "s</td>" +
-                "<td>" + date + "</td></tr>";
-    }
+//    private String pointToString(double x, double y, double r, boolean coordsStatus, int number, int timeShift) {
+//
+//        System.out.println("COMPLETE TASK:  x="+x+"; y="+y+"; r="+r+"; result="+coordsStatus);
+//        return "<tr><td>" + number + "</td>"
+//                + "<td>" + x + "</td>" +
+//                "<td>" + y + "</td>" +
+//                "<td>" + r + "</td>" +
+//                "<td style='color: " + ((coordsStatus) ? "green" : "red") + "'>" + coordsStatus + "</td>" +
+//                "<td></td>" +
+//                "<td>" + date + "</td></tr>";
+//    }
 
     @Override
     public String getServletInfo() {
@@ -96,4 +90,13 @@ public class AreaCheckServlet extends HttpServlet {
         for (String s : array) valuesX.add(Double.parseDouble(s));
         return valuesX;
     }
+
+    private String resultsToJSON(List<Result> results) {
+        String[] output = {"["};
+        results.forEach( (obj) -> output[0]+= obj.toString() + ", \n");
+        output[0] = output[0].substring( 0, output[0].length() - 3);
+        output[0] += "]";
+        return output[0];
+    }
 }
+

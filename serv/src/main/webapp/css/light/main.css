@@ -78,7 +78,10 @@ body {
 }
 
 .cellTime {
-    width: 200px;
+    width: 50px;
+}
+.cellCurTime {
+    width: 300px;
 }
 
 #themebutton {

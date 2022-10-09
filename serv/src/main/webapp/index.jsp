@@ -1,4 +1,11 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page session= "true" %>
+<%@ page import ="verifyer.Result" %>
+<%@ page import ="verifyer.ResultContainer" %>
+<jsp:useBean id="tableContent" scope="session" class="verifyer.ResultContainer"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE HTML>
 <html lang="en">
 
@@ -111,13 +118,42 @@
             <td class="cellNum">R</td>
             <td class="cellRes">Result</td>
             <td class="cellTime">Working time</td>
-            <td class="cellTime">Current time</td>
+            <td class="cellCurTime">Current time</td>
         </tr>
-    </table>
+
+            <c:forEach var="res" items="${tableContent.results}">
+                <tr>
+                    <td class="cellNum">${res.sequenceNumber}</td>
+                    <td class="cellNum">${res.x}</td>
+                    <td class="cellNum">${res.y}</td>
+                    <td class="cellNum">${res.r}</td>
+                    <td class="cellRes">${res.match}</td>
+                    <td class="cellTime">${res.workingTime}</td>
+                    <td class="cellCurTime">${res.currentDateandTime}</td>
+                </tr>
+            </c:forEach>
+            </table>
+
+
 </div>
+
+<%
+//    ArrayList<String> session_val = (ArrayList<String>) session.getAttribute("tableRows");
+//    if (session_val != null) session_val.forEach( (s) -> out.println);
+
+%>
+
 
 
 </body>
+<script type="text/javascript">
+window.addEventListener("load", function () {
+        // setTheme();
+//        var id = [];
+//            session.getAttribute("tableRows");
+    // id.forEach( (elem) => console.log(elem + "\n"));
+});
+</script>
 
 
 </html>

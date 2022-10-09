@@ -33,7 +33,22 @@ function sendData() {
 
 
 function onAnswer(ans) {
-    document.getElementById("outputContainer").innerHTML = ans;
+    console.log(ans)
+    let table = tableHat
+    let data = [];
+    data = JSON.parse(ans);
+    data.forEach(obj => {
+        table += "<tr>\n" +
+        "        <td className=\"cellNum\">" + obj.sequenceNumber + "</td>\n" +
+        "        <td className=\"cellNum\">" + obj.x + "</td>\n" +
+        "        <td className=\"cellNum\">" + obj.y + "</td>\n" +
+        "        <td className=\"cellNum\">" + obj.r + "</td>\n" +
+        "        <td className=\"cellRes\">" + obj.match + "</td>\n" +
+        "        <td className=\"cellTime\">" + obj.workingTime + "</td>\n" +
+        "        <td className=\"cellCurTime\">" + obj.currentDateandTime + "</td>\n" +
+        "    </tr>"});
+    table += tableFoot
+    document.getElementById("outputContainer").innerHTML = table;
 }
 
 
@@ -48,23 +63,34 @@ function valid_y() {
     try {
         y = parseFloat(y);
         if (y > ymin && y < ymax) return true;
-        else { alert("Укажите значении координаты Y числом в интервале (-5;3)"); return false; }
+        else {
+            alert("Укажите значении координаты Y числом в интервале (-5;3)");
+            return false;
+        }
     } catch (error) {
         alert("Укажите значении координаты Y числом в интервале (-5;3)")
         return false;
     }
 }
 
-function getY(){
+function getY() {
     y = document.getElementById('y_value').value;
 
 }
 
 function valid_x() {
-    let x_Min=-3;
-    let x_Max=5
-    if (x.length === 0) { alert("Выберите координату X!"); return false; }
-    x.forEach( (x_value) => { if (x_value>x_Max || x_value<x_Min) { alert("Выбрано неподходящее значение X!"); return false; } } );
+    let x_Min = -3;
+    let x_Max = 5
+    if (x.length === 0) {
+        alert("Выберите координату X!");
+        return false;
+    }
+    x.forEach((x_value) => {
+        if (x_value > x_Max || x_value < x_Min) {
+            alert("Выбрано неподходящее значение X!");
+            return false;
+        }
+    });
     return true;
 }
 
@@ -79,7 +105,7 @@ function valid_R() {
 
 }
 
-function getR(){
+function getR() {
     r = document.getElementById("RvalueSelector").value;
 }
 
@@ -109,3 +135,15 @@ $(document).ready(function () {
         if (valid_x() && valid_y()) sendData();
     });
 });
+
+let tableHat = "<table border=\"1\" class=\"resultTable\">\n" +
+    "        <tr>\n" +
+    "            <td class=\"cellNum\">№</td>\n" +
+    "            <td class=\"cellNum\">X</td>\n" +
+    "            <td class=\"cellNum\">Y</td>\n" +
+    "            <td class=\"cellNum\">R</td>\n" +
+    "            <td class=\"cellRes\">Result</td>\n" +
+    "            <td class=\"cellTime\">Working time</td>\n" +
+    "            <td class=\"cellCurTime\">Current time</td>\n" +
+    "        </tr>\n"
+let tableFoot = "</table>"

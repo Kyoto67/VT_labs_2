@@ -1,8 +1,8 @@
 package servlets;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 
 import java.io.IOException;
 
@@ -11,19 +11,7 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("x") == null || request.getParameter("y") == null ||
-                request.getParameter("r") == null || request.getParameter("time") == null) {
-            response.setStatus(481);
-            String error = "";
-            if (request.getParameter("x") == null) error += "Missing X value\n";
-            if (request.getParameter("y") == null) error += "Missing Y value\n";
-            if (request.getParameter("r") == null) error += "Missing R value\n";
-            if (request.getParameter("time") == null) error += "Missing TimeShift value\n";
-            request.setAttribute("error_message", error);
-            getServletContext().getRequestDispatcher("/wrong_data.jsp").forward(request, response);
-        } else {
-            getServletContext().getNamedDispatcher("AreaCheck").forward(request, response);
-        }
+        getServletContext().getRequestDispatcher("/areacheck").forward(request, response);
     }
 
     @Override

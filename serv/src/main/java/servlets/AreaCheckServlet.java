@@ -1,22 +1,25 @@
 package servlets;
 
 import exception.WrongValueException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import verifyer.DataChecker;
 import verifyer.Result;
 import verifyer.ResultContainer;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "AreaCheck", value = "/areacheck")
 public class AreaCheckServlet extends HttpServlet {
+
+    @EJB
+    DataChecker dataHandler;
 
     long starttime = System.currentTimeMillis();
 
@@ -41,11 +44,11 @@ public class AreaCheckServlet extends HttpServlet {
             Date date = new Date();
             date.setHours(date.getHours() - timeShift / 60);
             x.forEach((x_value) -> {
-                DataChecker dataChecker = new DataChecker(x_value, y, r);
                 try {
-                    if (dataChecker.verification())
-                        results.add(new Result(results.size() + 1, x_value, y, r, dataChecker.hitCheck(), "0.00" +
-                                (System.currentTimeMillis() - starttime) + "s" , date.toString()));
+                    if (dataHandler.verification(x_value, y, r)) {
+                        results.add(new Result(results.size() + 1, x_value, y, r, dataHandler.hitCheckerHandle(x_value, y, r), "0.00" +
+                                (System.currentTimeMillis() - starttime) + "s", date.toString()));
+                    }
                 } catch (WrongValueException e) {
                     response.setStatus(480);
                     request.setAttribute("error_message", e.getMessage());
@@ -57,24 +60,13 @@ public class AreaCheckServlet extends HttpServlet {
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
             response.sendError(404);
         }
-        writer.println(resultsToJSON(results));
+        if ( results.size() > 0 )writer.println(resultsToJSON(results));
         writer.close();
         session.setAttribute("tableContent", tableContent);
     }
-
-//    private String pointToString(double x, double y, double r, boolean coordsStatus, int number, int timeShift) {
-//
-//        System.out.println("COMPLETE TASK:  x="+x+"; y="+y+"; r="+r+"; result="+coordsStatus);
-//        return "<tr><td>" + number + "</td>"
-//                + "<td>" + x + "</td>" +
-//                "<td>" + y + "</td>" +
-//                "<td>" + r + "</td>" +
-//                "<td style='color: " + ((coordsStatus) ? "green" : "red") + "'>" + coordsStatus + "</td>" +
-//                "<td></td>" +
-//                "<td>" + date + "</td></tr>";
-//    }
 
     @Override
     public String getServletInfo() {

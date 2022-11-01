@@ -137,23 +137,7 @@
 
 </div>
 
-<%
-//    ArrayList<String> session_val = (ArrayList<String>) session.getAttribute("tableRows");
-//    if (session_val != null) session_val.forEach( (s) -> out.println);
-
-%>
-
-
 
 </body>
-<script type="text/javascript">
-window.addEventListener("load", function () {
-        // setTheme();
-//        var id = [];
-//            session.getAttribute("tableRows");
-    // id.forEach( (elem) => console.log(elem + "\n"));
-});
-</script>
-
 
 </html>

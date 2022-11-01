@@ -1,8 +1,11 @@
 package verifyer;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class ResultContainer {
 
     private List<Result> results;
@@ -15,7 +18,4 @@ public class ResultContainer {
         this.results = results;
     }
 
-    public List<Result> getResults() {
-        return results;
-    }
 }

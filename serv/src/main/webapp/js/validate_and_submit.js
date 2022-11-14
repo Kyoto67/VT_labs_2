@@ -49,6 +49,18 @@ function onAnswer(ans) {
         "    </tr>"});
     table += tableFoot
     document.getElementById("outputContainer").innerHTML = table;
+    let points = "";
+    if (data.length<3) {
+        data.forEach( obj => {
+            points+= "   <span class=\"point\" id=\"" + obj.match.toString() + "\" title=\"x = " + obj.x + ", y = " + obj.y + "\" style=\"left: " + (87+obj.x/obj.r*80) + "px; top: " + (147+obj.y/obj.r*-80) + "px;\"></span>";
+        });
+    } else {
+        data.forEach( obj => {
+            points += "   <span class=\"point\" id=\"" + obj.match.toString() + "\" title=\"x = " + obj.x + ", y = " + obj.y + "\" style=\"left: " + (93+obj.x/obj.r*80) + "px; top: " + (147+obj.y/obj.r*-80) + "px;\"></span>";
+        });
+    }
+    console.log(points);
+    document.getElementById("plot").innerHTML = points;
 }
 
 

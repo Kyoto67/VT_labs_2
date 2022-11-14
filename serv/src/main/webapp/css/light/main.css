@@ -99,3 +99,20 @@ body {
     height: 45px;
   transition-duration: 0.2s;
 }
+
+.point {
+    position: absolute;
+    display: block;
+    width: 6px;
+    height: 6px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+#true {
+    background-color: green;
+}
+
+#false {
+    background-color: red;
+}

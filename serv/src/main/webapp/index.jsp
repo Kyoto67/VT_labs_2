@@ -45,7 +45,17 @@
 <div class="Input_Block">
 
     <div class="area">
-        <div class="label">График:<br><br></div><img id="area" src="img/areas.png">
+        <div class="label">График:<br><br></div>
+        <div id="plot">
+            <c:forEach var="res" items="${tableContent.results}">
+                <span title="x = ${res.x}, y = ${res.y}, r = ${res.r}"
+                          class="point"
+                          id="${res.match}"
+                          style="left: ${ res.x/res.r * 80 + 93}px; top: ${ res.y/res.r * -80 + 147}px;">
+					</span>
+            </c:forEach>
+        </div>
+        <img id="area" src="img/areas.png">
     </div>
 
     <div class="data">

@@ -12,7 +12,7 @@ import java.util.Date;
 public class Result {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HitsIdGenerator")
     @SequenceGenerator(name="weblab3", sequenceName="HIT_ID", allocationSize = 1)
     @Column(name = "id", updatable = false, nullable = false)
     long id;

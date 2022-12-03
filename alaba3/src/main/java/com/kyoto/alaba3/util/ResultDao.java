@@ -1,5 +1,6 @@
 package com.kyoto.alaba3.util;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -11,7 +12,8 @@ import javax.persistence.Persistence;
 public class ResultDao {
     private EntityManagerFactory entityManagerFactory;
 
-    public ResultDao() {
+    @PostConstruct
+    public void init() {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");
     }
 

@@ -2,6 +2,8 @@ package com.kyoto.alaba3.util;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @SessionScoped
-@ManagedBean(name = "AppBean")
+@ManagedBean(name = "appbean")
 public class AppBean {
 
     private double x = 1;
@@ -20,6 +22,8 @@ public class AppBean {
     private double oldR = 2;
     private int timeOffset;
     private List<Result> results;
+
+    @EJB
     private ResultServiceRealization service;
 
     public AppBean(){

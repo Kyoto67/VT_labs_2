@@ -3,12 +3,20 @@ package com.kyoto.alaba3.util;
 import com.kyoto.alaba3.exception.WrongValueException;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Singleton;
 import java.util.Date;
 
+@Singleton
+@LocalBean
 public class ResultServiceRealization implements ResultService {
 
     @EJB
     ResultDao dao;
+
+    public ResultServiceRealization() {
+
+    }
 
     @Override
     public boolean verification(double x, double y, double r) {
@@ -21,17 +29,17 @@ public class ResultServiceRealization implements ResultService {
     }
 
     private boolean verifyX(double x) throws WrongValueException{
-        if (!(x<-5 || x>5)) throw new WrongValueException("wrong X value");
+        if (x<-5 || x>5) throw new WrongValueException("wrong X value");
         return true;
     }
 
     private boolean verifyY(double y) throws WrongValueException{
-        if (!(y<-5 || y>5)) throw new WrongValueException("wrong Y value");
+        if (y<-5 || y>5) throw new WrongValueException("wrong Y value");
         return true;
     }
 
     private boolean verifyR(double r) throws WrongValueException{
-        if (!(r<2 || r>5)) throw new WrongValueException("wrong R value");
+        if (r<2 || r>5) throw new WrongValueException("wrong R value");
         return true;
     }
 

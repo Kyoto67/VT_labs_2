@@ -4,7 +4,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.Date;
 
 @Data
 @Entity
@@ -38,6 +37,10 @@ public class Result {
 
     @OneToOne (mappedBy = "result", cascade = CascadeType.ALL)
     MyEntityDate currentDateandTime;
+
+    public Result() {
+
+    }
 
 
     public Result(int sequenceNumber, double x, double y, double r, boolean match, String workingTime, MyEntityDate currentDateandTime) {

@@ -9,6 +9,9 @@
         <class>com.kyoto.alaba3.util.MyEntityDate</class>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true" />
+            <!--            <property name="slow_query_log" value="true"/>-->
         </properties>
     </persistence-unit>
 <!--    <persistence-unit name="date">-->

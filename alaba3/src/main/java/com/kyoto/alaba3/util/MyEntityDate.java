@@ -1,6 +1,5 @@
 package com.kyoto.alaba3.util;
 
-import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;

@@ -38,9 +38,10 @@ public class AppBean {
     public void submit(){
         if ( service.verification(x, y, r) ) {
             boolean hitCheck = service.hitCheck(x, y, r);
-            Date date = service.getDatewithOffset(timeOffset);
             String workingTime = service.getFormattedWorkingTime();
+            MyEntityDate date = service.getDatewithOffset(timeOffset);
             Result result = new Result(results.size() +1 , x, y, r, hitCheck, workingTime, date);
+            result.getCurrentDateandTime().setResult(result);
             results.add(result);
             service.pushToBase(result);
         }

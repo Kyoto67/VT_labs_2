@@ -22,30 +22,25 @@ public class Result {
 
     @Max(5)
     @Min(-5)
-    @Column
     double x;
 
     @Max(5)
     @Min(-5)
-    @Column
     double y;
 
     @Max(5)
     @Min(2)
-    @Column
     double r;
 
-    @Column
     boolean match;
 
-    @Column
     String workingTime;
 
-    @Column
-    Date currentDateandTime;
+    @OneToOne (mappedBy = "result", cascade = CascadeType.ALL)
+    MyEntityDate currentDateandTime;
 
 
-    public Result(int sequenceNumber, double x, double y, double r, boolean match, String workingTime, Date currentDateandTime) {
+    public Result(int sequenceNumber, double x, double y, double r, boolean match, String workingTime, MyEntityDate currentDateandTime) {
         this.sequenceNumber = sequenceNumber;
         this.x = x;
         this.y = y;

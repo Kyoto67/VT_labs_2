@@ -79,8 +79,8 @@ public class ResultServiceRealization implements ResultService {
     }
 
     @Override
-    public Date getDatewithOffset(int offset) {
-        Date date = new Date();
+    public MyEntityDate getDatewithOffset(int offset) {
+        MyEntityDate date = new MyEntityDate();
         date.setHours(date.getHours() - (offset+180) / 60);
         return date;
     }

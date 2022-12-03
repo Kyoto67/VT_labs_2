@@ -10,18 +10,25 @@ import javax.persistence.Persistence;
 @Singleton
 @LocalBean
 public class ResultDao {
-    private EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory resultFactory;
+//    private EntityManagerFactory dateFactory;
 
     @PostConstruct
     public void init() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        resultFactory = Persistence.createEntityManagerFactory("result");
+//        dateFactory = Persistence.createEntityManagerFactory("date");
     }
 
-    public void uploadNewEntityToBase( Result result) {
-        final EntityManager entityManager = entityManagerFactory.createEntityManager();
+    public void uploadNewEntityToBase( Result result ) {
+        EntityManager entityManager = resultFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(result);
+        entityManager.persist(result.getCurrentDateandTime());
         entityManager.getTransaction().commit();
+
+//        entityManager = dateFactory.createEntityManager();
+//        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().commit();
     }
 
 }

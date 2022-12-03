@@ -2,6 +2,8 @@ package com.kyoto.alaba3.util;
 
 import lombok.Data;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Data
@@ -18,12 +20,18 @@ public class Result {
     @Transient
     int sequenceNumber;
 
+    @Max(5)
+    @Min(-5)
     @Column
     double x;
 
+    @Max(5)
+    @Min(-5)
     @Column
     double y;
 
+    @Max(5)
+    @Min(2)
     @Column
     double r;
 

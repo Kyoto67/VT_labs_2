@@ -17,11 +17,14 @@ public class MyEntityDate extends Date {
     @Column(name = "id", updatable = false, nullable = false)
     long id;
 
+    private String currDateandTime;
+
     @OneToOne (fetch = FetchType.LAZY)
     private Result result;
 
     public MyEntityDate() {
         super();
+        currDateandTime = this.toString();
     }
 
 

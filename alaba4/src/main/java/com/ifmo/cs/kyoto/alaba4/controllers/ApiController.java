@@ -11,6 +11,7 @@ import com.ifmo.cs.kyoto.alaba4.util.ResultsPair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
@@ -37,8 +38,23 @@ public class ApiController {
         return "Wrong data";
     }
 
+    @GetMapping("mydata")
+    public @ResponseBody String getData(Principal principal) {
+        User user = (User) usersService.loadUserByUsername(principal.getName());
+        List<Result> results = resultService.getResultsByUser(user);
+        return resultsToJSON(results);
+    }
+
     @GetMapping("bebra")
     public String bebrotka(){
         return "bebra";
+    }
+
+    private String resultsToJSON(List<Result> results) {
+        String[] output = {"["};
+        results.forEach( (obj) -> output[0]+= obj.toString() + ", \n");
+        output[0] = output[0].substring( 0, output[0].length() - 3);
+        output[0] += "]";
+        return output[0];
     }
 }

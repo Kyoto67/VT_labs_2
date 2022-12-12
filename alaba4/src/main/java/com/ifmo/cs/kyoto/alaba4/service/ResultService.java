@@ -2,6 +2,7 @@ package com.ifmo.cs.kyoto.alaba4.service;
 
 import com.ifmo.cs.kyoto.alaba4.dao.ResultsCrudRepository;
 import com.ifmo.cs.kyoto.alaba4.entities.Result;
+import com.ifmo.cs.kyoto.alaba4.entities.User;
 import com.ifmo.cs.kyoto.alaba4.exceptions.WrongValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,6 +97,11 @@ public class ResultService {
     @Transactional
     public List<Result> getResults() {
         return resultsCrudRepository.findAll();
+    }
+
+    @Transactional
+    public List<Result> getResultsByUser(User user) {
+        return resultsCrudRepository.findAllByOwner(user);
     }
 
     public Date getDatewithOffset(int offset) {

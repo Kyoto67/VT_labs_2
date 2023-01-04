@@ -18,19 +18,14 @@ public class ResultService {
 
     Long startTime;
 
-    public boolean verification(double x, double y, double r) {
+    public boolean verification(double x, double y, double r) throws WrongValueException {
         startTime = System.nanoTime();
-        try {
-            return verifyX(x) && verifyY(y) && verifyR(r);
-        } catch (WrongValueException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+        return verifyX(x) && verifyY(y) && verifyR(r);
     }
 
     private boolean verifyX(double x) throws WrongValueException{
         try {
-            if (x < -5 || x > 5) throw new WrongValueException("wrong X value");
+            if (x < -3 || x > 5) throw new WrongValueException("wrong X value");
         } catch (Exception e) {
             throw new WrongValueException(e.getMessage());
         }
@@ -39,7 +34,7 @@ public class ResultService {
 
     private boolean verifyY(double y) throws WrongValueException{
         try {
-            if (y<-5 || y>5) throw new WrongValueException("wrong Y value");
+            if (y<-3 || y>5) throw new WrongValueException("wrong Y value");
         } catch (Exception e) {
             throw new WrongValueException(e.getMessage());
         }
@@ -48,7 +43,7 @@ public class ResultService {
 
     private boolean verifyR(double r) throws WrongValueException{
         try {
-            if (r<2 || r>5) throw new WrongValueException("wrong R value");
+            if (r<-3 || r>5) throw new WrongValueException("wrong R value");
         } catch (Exception e) {
             throw new WrongValueException(e.getMessage());
         }
@@ -101,7 +96,7 @@ public class ResultService {
 
     @Transactional
     public List<Result> getResultsByUser(User user) {
-        return resultsCrudRepository.findAllByOwner(user);
+        return resultsCrudRepository.findByOwner(user);
     }
 
     public Date getDatewithOffset(int offset) {
@@ -122,5 +117,9 @@ public class ResultService {
 
     private int getRandomFromTo(int from, int to) {
         return (int) ( (Math.random() * to + from) * 100 + (Math.random() * to + from) * 10 + (Math.random() * to + from) );
+    }
+
+    public void deleteHistory(User user) {
+        resultsCrudRepository.deleteByOwner(user);
     }
 }

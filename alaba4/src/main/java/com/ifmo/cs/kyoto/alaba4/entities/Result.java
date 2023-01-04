@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="weblab4")
-public class Result {
+public class  Result {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,7 +35,7 @@ public class Result {
     Date currentDateandTime;
 
     @JoinColumn(name = "userid")
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     User owner;
 
     public Result() {

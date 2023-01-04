@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private String password;
 
     @EqualsAndHashCode.Exclude
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner")
     private List<Result> results;
 
     public User(String username, String password) {

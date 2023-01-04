@@ -4,11 +4,14 @@ import com.ifmo.cs.kyoto.alaba4.dto.HitDTO;
 import com.ifmo.cs.kyoto.alaba4.dto.ResultDTO;
 import com.ifmo.cs.kyoto.alaba4.entities.Result;
 import com.ifmo.cs.kyoto.alaba4.entities.User;
+import com.ifmo.cs.kyoto.alaba4.exceptions.WrongValueException;
 import com.ifmo.cs.kyoto.alaba4.service.ResultPackageService;
 import com.ifmo.cs.kyoto.alaba4.service.ResultService;
 import com.ifmo.cs.kyoto.alaba4.service.UsersService;
 import com.ifmo.cs.kyoto.alaba4.util.ResultsPair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
@@ -27,21 +30,23 @@ public class ApiController {
     ResultPackageService resultPackageService;
 
     @PostMapping("hit")
-    public @ResponseBody String hit(@RequestBody HitDTO hit, Principal principal ) {
-        if (resultService.verification(hit.getX(), hit.getY(), hit.getR())) {
-            User user = (User) usersService.loadUserByUsername(principal.getName());
-            ResultsPair<Result, ResultDTO> resultsPair = resultPackageService.service(user, hit);
-            resultService.uploadToBase(resultsPair.getResult());
-            usersService.uploadToBase(user);
-            return resultsPair.getResultDTO().toString();
-        }
-        return "Wrong data";
+    public @ResponseBody ResponseEntity hit(@RequestBody HitDTO hit, Principal principal ) throws WrongValueException {
+            if (resultService.verification(hit.getX(), hit.getY(), hit.getR())) {
+                User user = usersService.loadUserByUsername(principal.getName());
+                ResultsPair<Result, ResultDTO> resultsPair = resultPackageService.service(user, hit);
+                resultService.uploadToBase(resultsPair.getResult());
+                usersService.uploadToBase(user);
+                System.out.println(resultsPair.getResultDTO().toString());
+                return new ResponseEntity<>(resultsPair.getResultDTO().toString(), HttpStatus.OK) ;
+            }
+        throw new WrongValueException("Wrong data");
     }
 
     @GetMapping("mydata")
     public @ResponseBody String getData(Principal principal) {
         User user = (User) usersService.loadUserByUsername(principal.getName());
         List<Result> results = resultService.getResultsByUser(user);
+        if (results == null) return null;
         return resultsToJSON(results);
     }
 

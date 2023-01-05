@@ -12,6 +12,10 @@ const authAPI = {
     async register(username, password) {
         return axiosInstance.post('register', { username, password });
     },
+
+    async oauthLogin() {
+        return axios.create( {baseURL: 'http://localhost:8080/'} ).get("login/oauth2/code/github");
+    }
 }
 
 

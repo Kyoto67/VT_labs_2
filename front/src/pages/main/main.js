@@ -29,7 +29,6 @@ function Main() {
     };
 
     function logout() {
-        localStorage.removeItem("token");
         myNavigate();
     }
 
@@ -116,7 +115,7 @@ function submit() {
     let x = document.getElementById("x").value;
     let y = document.getElementById("y").value;
     let r = document.getElementById("r").value;
-    mainAPI.hit(x, y, r, localStorage.getItem("token")).then(response => {
+    mainAPI.hit(x, y, r).then(response => {
         if (response.status === 200){
             data.push(response.data);
             drawHits();
@@ -133,7 +132,7 @@ function submit() {
     return true;
 }
 function getMyData( ) {
-    mainAPI.getData(localStorage.getItem("token")).then(response => {
+    mainAPI.getData().then(response => {
         data = response.data;
         drawHits();
     });

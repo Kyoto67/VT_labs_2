@@ -40,14 +40,22 @@ public class SecureConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.cors().and().csrf().disable().httpBasic().disable()
-                .exceptionHandling().authenticationEntryPoint(entryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests().antMatchers("/auth/**", "/bebra/**").permitAll().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/auth/**", "api/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .oauth2Login();
         return http.build();
     }
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+//        http.cors().and().csrf().disable().httpBasic().disable()
+//                .exceptionHandling().authenticationEntryPoint(entryPoint).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and().addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class)
+//                .authorizeRequests().antMatchers("/auth/**", "/bebra/**").permitAll().anyRequest().authenticated();
+//        return http.build();
+//    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer(){

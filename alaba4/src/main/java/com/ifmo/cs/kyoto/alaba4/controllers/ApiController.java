@@ -20,6 +20,9 @@ import java.util.List;
 @RequestMapping("api")
 public class ApiController {
 
+
+    private final User oauthUser = new User("oauth", "github");
+
     @Autowired
     ResultService resultService;
 
@@ -30,9 +33,9 @@ public class ApiController {
     ResultPackageService resultPackageService;
 
     @PostMapping("hit")
-    public @ResponseBody ResponseEntity hit(@RequestBody HitDTO hit, Principal principal ) throws WrongValueException {
+    public @ResponseBody ResponseEntity hit(@RequestBody HitDTO hit ) throws WrongValueException {
             if (resultService.verification(hit.getX(), hit.getY(), hit.getR())) {
-                User user = usersService.loadUserByUsername(principal.getName());
+                User user = oauthUser;
                 ResultsPair<Result, ResultDTO> resultsPair = resultPackageService.service(user, hit);
                 resultService.uploadToBase(resultsPair.getResult());
                 usersService.uploadToBase(user);
@@ -43,8 +46,8 @@ public class ApiController {
     }
 
     @GetMapping("mydata")
-    public @ResponseBody String getData(Principal principal) {
-        User user = (User) usersService.loadUserByUsername(principal.getName());
+    public @ResponseBody String getData() {
+        User user = oauthUser;
         List<Result> results = resultService.getResultsByUser(user);
         if (results == null) return null;
         return resultsToJSON(results);

@@ -44,15 +44,10 @@ public class ApiController {
 
     @GetMapping("mydata")
     public @ResponseBody String getData(Principal principal) {
-        User user = (User) usersService.loadUserByUsername(principal.getName());
+        User user = usersService.loadUserByUsername(principal.getName());
         List<Result> results = resultService.getResultsByUser(user);
         if (results == null) return null;
         return resultsToJSON(results);
-    }
-
-    @GetMapping("bebra")
-    public String bebrotka(){
-        return "bebra";
     }
 
     private String resultsToJSON(List<Result> results) {

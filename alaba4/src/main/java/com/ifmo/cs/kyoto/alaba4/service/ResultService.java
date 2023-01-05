@@ -54,17 +54,17 @@ public class ResultService {
         double normalizedX = x / r;
         double normalizedY = y / r;
 
-        if (normalizedY>0) {
-            return ( checkSquare(normalizedX, normalizedY) );
-        } else if(normalizedY<0) {
-            return ( checkCircle(normalizedX, normalizedY) || checkTriangle(normalizedX, normalizedY));
+        if (normalizedY<0) {
+            return ( checkSquare(normalizedX, normalizedY) || checkTriangle(normalizedX, normalizedY));
+        } else if(normalizedY>0) {
+            return ( checkCircle(normalizedX, normalizedY) );
         } else {
             return checkYZeroLine(normalizedX);
         }
     }
 
     private boolean checkSquare(double x, double y) {
-        return (y <= 0.5 && x <=0 && x >= -1 );
+        return (y >= -0.5 && x <=0 && x >= -1 );
     }
 
     private boolean checkCircle(double x, double y) {
@@ -72,7 +72,7 @@ public class ResultService {
     }
 
     private boolean checkTriangle(double x, double y) {
-        return y >= -1 && x <= 0 && x >= (-y - 1) / 2;
+        return y >= -1 && x >= 0 && x <= (y + 1) / 2;
     }
 
     private boolean checkYZeroLine(double x) {

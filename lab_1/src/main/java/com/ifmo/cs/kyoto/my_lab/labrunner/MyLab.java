@@ -1,37 +1,48 @@
 package com.ifmo.cs.kyoto.my_lab.labrunner;
 
-import com.ifmo.cs.kyoto.my_lab.gauss_lib.api.MatrixCalulatorHandler;
-import com.ifmo.cs.kyoto.my_lab.gauss_lib.src.MatrixCalculatorHandlerImpl;
-import com.ifmo.cs.kyoto.my_lab.matrix_entity.Matrix;
-import com.ifmo.cs.kyoto.my_lab.matrix_read_lib.api.Reader;
-import com.ifmo.cs.kyoto.my_lab.matrix_read_lib.src.ReaderMatrixFromConsole;
-import com.ifmo.cs.kyoto.my_lab.matrix_read_lib.src.ReaderMatrixFromFile;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.api.MatrixCalulatorHandler;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.api.Printer;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.calculator.MatrixCalculatorHandlerImpl;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.entity.Matrix;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.api.Reader;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixCreateException;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryCalculateNotDIagMatrixException;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryResidualWithCalculateSolutionsFromOtherMatrixException;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.readers.ReaderMatrixFromConsole;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.readers.ReaderMatrixFromFile;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.util.PrinterImpl;
+
+import java.io.FileNotFoundException;
 
 public class MyLab {
     Reader reader;
     Matrix matrix;
     MatrixCalulatorHandler matrixCalulatorHandler;
+    Printer printer = new PrinterImpl();
 
-    public void start(String[] args) {
+    public void start(String[] args) throws MatrixCreateException, TryCalculateNotDIagMatrixException, TryResidualWithCalculateSolutionsFromOtherMatrixException {
         if (args.length != 0) {
-            reader = new ReaderMatrixFromFile(args[0]);
+            try {
+                reader = new ReaderMatrixFromFile(args[0]);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found.");
+                return;
+            }
         } else {
             reader = new ReaderMatrixFromConsole();
         }
-        while (matrix == null) {
             try {
                 matrix = reader.read();
             } catch (Exception e) {
-                System.out.println("Произошла ошибка при чтении матрицы:");
-                e.printStackTrace();
+                System.out.println("Data corrupted: " + e.getMessage());
                 return;
             }
-        }
-        matrixCalulatorHandler= new MatrixCalculatorHandlerImpl();
-        double[] res = matrixCalulatorHandler.calculate(matrix);
-        System.out.print("Answer: ");
-        for (int i=0; i<res.length; i++) {
-            System.out.print("x" + i + " = " + res[i] + "\n\t\t");
-        }
+        matrixCalulatorHandler= new MatrixCalculatorHandlerImpl(matrix);
+        printer.printMatrix(matrixCalulatorHandler.transformToDiagForm());
+        printer.printDet(matrixCalulatorHandler.calcDet());
+        double[] roots = matrixCalulatorHandler.calcSolutions();
+        double[] residual = matrixCalulatorHandler.calcResidual(matrix,roots);
+        printer.printResidual(residual);
+        printer.printRoots(roots);
     }
 }

@@ -7,4 +7,6 @@ public interface Printer {
     void printDet(double det);
     void printResidual(double[] residual);
     void printMatrix(Matrix matrix);
+    void printForDiagonalizedMatrix(Matrix matrix);
+    void printSolutionCheck(Matrix matrix, double[] roots);
 }

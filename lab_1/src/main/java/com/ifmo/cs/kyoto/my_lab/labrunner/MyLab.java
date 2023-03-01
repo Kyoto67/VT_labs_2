@@ -6,6 +6,7 @@ import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.calculator.Matr
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.entity.Matrix;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.api.Reader;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixCreateException;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixHasNoSolutionsException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryCalculateNotDIagMatrixException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryResidualWithCalculateSolutionsFromOtherMatrixException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.readers.ReaderMatrixFromConsole;
@@ -38,11 +39,15 @@ public class MyLab {
                 return;
             }
         matrixCalulatorHandler= new MatrixCalculatorHandlerImpl(matrix);
-        printer.printMatrix(matrixCalulatorHandler.transformToDiagForm());
-        printer.printDet(matrixCalulatorHandler.calcDet());
-        double[] roots = matrixCalulatorHandler.calcSolutions();
-        double[] residual = matrixCalulatorHandler.calcResidual(matrix,roots);
-        printer.printResidual(residual);
-        printer.printRoots(roots);
+        try {
+            printer.printForDiagonalizedMatrix(matrixCalulatorHandler.transformToDiagForm());
+            printer.printDet(matrixCalulatorHandler.calcDet());
+            double[] roots = matrixCalulatorHandler.calcSolutions();
+            double[] residual = matrixCalulatorHandler.calcResidual(matrix,roots);
+            printer.printResidual(residual);
+            printer.printRoots(roots);
+        } catch (MatrixHasNoSolutionsException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.calculator;
 
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.entity.Matrix;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixCreateException;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixHasNoSolutionsException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryCalculateNotDIagMatrixException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryResidualWithCalculateSolutionsFromOtherMatrixException;
 
@@ -15,11 +16,12 @@ public class MatrixCalculator {
     }
 
 
-    void toTriangleForm() throws MatrixCreateException {
+    void toTriangleForm() throws MatrixCreateException { //TODO:debug
         double[][] A = matrix.getA();
         double[] B = matrix.getB();
         int n = matrix.getSize();
         for (int i = 0; i < n; i++) {
+            replaceLinesInMatrix(A, B, i, chooseMainEl(A, i));
             lineNormalization(A[i], A[i][i], B, i);
             for (int j = i + 1; j < n; j++) {
                 lineSub(A[j], A[i], B, j, i, A[j][i]);
@@ -39,12 +41,13 @@ public class MatrixCalculator {
         this.myMatrixIsDiagonal = true;
     }
 
-    double calcDetFromDiag() throws TryCalculateNotDIagMatrixException {
+    double calcDetFromDiag() throws TryCalculateNotDIagMatrixException, MatrixHasNoSolutionsException {
         if (myMatrixIsDiagonal){
             double det=1;
             for (int i=0; i< matrix.getSize(); i++) {
                 det*=matrix.getA()[i][i];
             }
+            if (det == 0) throw new MatrixHasNoSolutionsException();
             return det;
         } else {
             throw new TryCalculateNotDIagMatrixException();
@@ -97,5 +100,26 @@ public class MatrixCalculator {
 
     public Matrix getMatrix() {
         return matrix;
+    }
+
+    private void replaceLinesInMatrix(double[][] A, double[] B, int n1, int n2) {
+        double b = B[n1];
+        double[] a = A[n1];
+        B[n1] = B[n2];
+        B[n1] = b;
+        A[n1] = A[n2];
+        A[n2] = a;
+    }
+
+    private int chooseMainEl(double[][] A, int j) {
+        int numberOfMainElLine = j;
+        double maxEl = A[j][j];
+        for (int i=j; i<A.length; i++) {
+            if (A[i][j] > maxEl) {
+                maxEl = A[i][j];
+                numberOfMainElLine = i;
+            }
+        }
+        return numberOfMainElLine;
     }
 }

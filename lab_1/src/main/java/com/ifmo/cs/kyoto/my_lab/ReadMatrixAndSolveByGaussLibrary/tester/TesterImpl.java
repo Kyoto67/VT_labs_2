@@ -25,6 +25,7 @@ public class TesterImpl extends ReaderMatrixFromConsole implements Tester {
             for (int i=0; i<roots.length; i++) {
                 System.out.println("x" + (i+1) + " = " + roots[i] + ";");
             }
+            System.out.println();
         }
 
         @Override
@@ -40,6 +41,16 @@ public class TesterImpl extends ReaderMatrixFromConsole implements Tester {
         @Override
         public void printMatrix(Matrix matrix) {
         }
+
+        @Override
+        public void printForDiagonalizedMatrix(Matrix matrix) {
+
+        }
+
+        @Override
+        public void printSolutionCheck(Matrix matrix, double[] roots) {
+
+        }
     };
     Printer printer = new PrinterImpl();
 
@@ -52,6 +63,7 @@ public class TesterImpl extends ReaderMatrixFromConsole implements Tester {
         MatrixCalulatorHandler calculator = new MatrixCalculatorHandlerImpl(matrix);
         calculator.transformToDiagForm();
         roots = calculator.calcSolutions();
+        printer.printSolutionCheck(matrix, roots);
         printer.printRoots(roots);
     }
 }

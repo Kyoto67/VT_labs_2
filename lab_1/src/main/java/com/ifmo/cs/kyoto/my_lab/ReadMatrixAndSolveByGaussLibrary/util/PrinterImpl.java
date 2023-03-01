@@ -40,4 +40,33 @@ public class PrinterImpl implements Printer {
         }
         System.out.println();
     }
+
+    @Override
+    public void printForDiagonalizedMatrix(Matrix matrix) {
+        System.out.println("Diagonalized matrix:");
+        double[][] A = matrix.getA();
+        double[] B = matrix.getB();
+        for (int i=0; i<matrix.getSize(); i++) {
+            System.out.print("\t\t");
+            for (int j=0; j< matrix.getSize(); j++) {
+                System.out.print(A[i][j] + " ");
+            }
+            System.out.println("| " + B[i]);
+        }
+        System.out.println();
+    }
+
+    @Override
+    public void printSolutionCheck(Matrix matrix, double[] roots) {
+        System.out.println("Check my solutions: ");
+        for (int i=0; i<matrix.getSize(); i++) {
+            double b=0;
+            for (int j=0; j<matrix.getSize(); j++) {
+                b+=matrix.getA()[i][j]*roots[j];
+            }
+            System.out.print("My b: " + b + " == Original b: " + matrix.getB()[i] + " ? ");
+            System.out.println(b==matrix.getB()[i]);
+        }
+        System.out.println();
+    }
 }

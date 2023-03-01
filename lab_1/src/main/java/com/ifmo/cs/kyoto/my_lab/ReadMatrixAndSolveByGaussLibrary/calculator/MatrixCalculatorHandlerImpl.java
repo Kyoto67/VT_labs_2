@@ -3,6 +3,7 @@ package com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.calculator;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.api.MatrixCalulatorHandler;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.entity.Matrix;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixCreateException;
+import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixHasNoSolutionsException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryCalculateNotDIagMatrixException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryResidualWithCalculateSolutionsFromOtherMatrixException;
 
@@ -20,7 +21,7 @@ public class MatrixCalculatorHandlerImpl implements MatrixCalulatorHandler {
     }
 
     @Override
-    public double calcDet() throws TryCalculateNotDIagMatrixException {
+    public double calcDet() throws TryCalculateNotDIagMatrixException, MatrixHasNoSolutionsException {
         return matrixCalculator.calcDetFromDiag();
     }
 

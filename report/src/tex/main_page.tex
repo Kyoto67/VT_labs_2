@@ -1,0 +1,126 @@
+\thispagestyle{empty}
+\BgThispage
+\section{Описание метода} \par
+Суть метода заключается в последовательном алгоритме, проходящему по диагонали:
+\begin{enumerate}
+    \item Выбор главного элемента - максимальный коэффициент в стобце текущего элемента, между строкой с текущим элементом и располагающимися ниже.
+    \item Свап текущей строки и строки с выбранным текущим главным элементом
+    \item Нормализация текущей строки по коэффициенту текущего главного элемента.
+    \item Последовательное вычитание из строк, располагающихся ниже, текущей строки, умноженной на коэффициент элемента, располагающегося в столбце текущего главного элемента в вычитаемой строке.
+\end{enumerate}
+После прохождения алгоритмом, описанным выше, до конца диагонали, получим треугольную матрицу, из которой необходимо сделать диагональную обратным алгоритмом -- последовательно вычитаем каждую строку из строк, располагающихся выше, умноженную на коэффициент множителя из этой строки, располагающегося в столбце с элементом диагонали (главным элементом, выбранным ранее).
+Таким образом, получим диагональную матрицу, из которой можно получить множество решений $X$, где для каждого $x_{i}$ = $\frac{B_{i}}{A_{i,i}}$.
+\newpage
+\thispagestyle{empty}
+\BgThispage
+\section{Блок-схема численного метода}
+skip\\
+\newpage
+\thispagestyle{empty}
+\BgThispage
+\section{Listing реализованного численного метода}
+\tiny
+\begin{verbatim}
+    void toTriangleForm() throws MatrixCreateException {
+        double[][] A = matrix.getA();
+        double[] B = matrix.getB();
+        int n = matrix.getSize();
+        for (int i = 0; i < n; i++) {
+            replaceLinesInMatrix(A, B, i, chooseMainEl(A, i));
+            lineNormalization(A[i], A[i][i], B, i);
+            for (int j = i + 1; j < n; j++) {
+                lineSub(A[j], A[i], B, j, i, A[j][i]);
+            }
+        }
+        this.matrix = new Matrix(A, B, n);
+    }
+
+    void fromTriangleToDiag() throws MatrixCreateException {
+            double[][] A = matrix.getA();
+            double[] B = matrix.getB();
+            for (int i = matrix.getSize() - 1; i >= 0; i--) {
+                for (int j= i -1; j>=0 ; j--) {
+                    lineSub(A[j], A[i], B, j, i, A[j][i]);
+                }
+            }
+            matrix = new Matrix(A, B, matrix.getSize());
+        this.myMatrixIsDiagonal = true;
+    }
+
+    private void lineNormalization(double[] line, double a, double[] B, int lineIndex) {
+        if (a == 0 || a == 1) return;
+        for (int i = 0; i < line.length; i++) {
+            line[i] /= a;
+        }
+        B[lineIndex] /= a;
+    }
+
+    private void lineSub(double[] line2, double[] line1, double[] B, int lineIndex2, int lineIndex1, double multiplier) {
+        for (int i=0; i<line2.length; i++) {
+            line2[i] -= line1[i]*multiplier;
+        }
+        B[lineIndex2] -= B[lineIndex1]*multiplier;
+    }
+
+    private void replaceLinesInMatrix(double[][] A, double[] B, int n1, int n2) {
+        double b = B[n1];
+        double[] a = A[n1];
+        B[n1] = B[n2];
+        B[n1] = b;
+        A[n1] = A[n2];
+        A[n2] = a;
+    }
+
+    private int chooseMainEl(double[][] A, int j) {
+        int numberOfMainElLine = j;
+        double maxEl = A[j][j];
+        for (int i=j; i<A.length; i++) {
+            if (A[i][j] > maxEl) {
+                maxEl = A[i][j];
+                numberOfMainElLine = i;
+            }
+        }
+        return numberOfMainElLine;
+    }
+\end{verbatim}
+\normalsize
+\newpage
+\thispagestyle{empty}
+\BgThispage
+\section{Examples}
+Enter the coefficients of the equation? (otherwise will be generated automatically) Y/N: Y
+Enter the dimensionality of the matrix: 5
+Enter the coefficients of matrices A and B line by line, separating them with a space:
+0 0 0 0 0 1
+0 0 0 0 0 2
+0 0 0 0 0 3
+0 0 0 0 0 4
+0 0 0 0 0 5
+Input completed.
+Diagonalized matrix:
+		0.0 0.0 0.0 0.0 0.0 | 1.0
+		0.0 0.0 0.0 0.0 0.0 | 2.0
+		0.0 0.0 0.0 0.0 0.0 | 3.0
+		0.0 0.0 0.0 0.0 0.0 | 4.0
+		0.0 0.0 0.0 0.0 0.0 | 5.0
+
+This matrix has no solutions!
+
+Enter the coefficients of the equation? (otherwise will be generated automatically) Y/N: Y
+Enter the dimensionality of the matrix: 5
+Enter the coefficients of matrices A and B line by line, separating them with a space:
+1 1 1 1 1 1
+1 1 1 1 1 2
+1 1 1 1 1 3
+1 1 1 1 1 4
+1 1 1 1 1 5
+Input completed.
+Diagonalized matrix:
+		1.0 1.0 1.0 1.0 1.0 | -9.0
+		0.0 0.0 0.0 0.0 0.0 | 1.0
+		0.0 0.0 0.0 0.0 0.0 | 2.0
+		0.0 0.0 0.0 0.0 0.0 | 3.0
+		0.0 0.0 0.0 0.0 0.0 | 4.0
+
+This matrix has no solutions!
+\section{Вывод}

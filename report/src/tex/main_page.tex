@@ -5,8 +5,7 @@
 \begin{enumerate}
     \item Выбор главного элемента - максимальный коэффициент в стобце текущего элемента, между строкой с текущим элементом и располагающимися ниже.
     \item Свап текущей строки и строки с выбранным текущим главным элементом
-    \item Нормализация текущей строки по коэффициенту текущего главного элемента.
-    \item Последовательное вычитание из строк, располагающихся ниже, текущей строки, умноженной на коэффициент элемента, располагающегося в столбце текущего главного элемента в вычитаемой строке.
+    \item Последовательное вычитание из строк, располагающихся ниже, текущей строки, умноженной на частное коэффициента элемента, располагающегося в столбце текущего главного элемента в вычитаемой строке, и главного элемента.
 \end{enumerate}
 После прохождения алгоритмом, описанным выше, до конца диагонали, получим треугольную матрицу, из которой необходимо сделать диагональную обратным алгоритмом -- последовательно вычитаем каждую строку из строк, располагающихся выше, умноженную на коэффициент множителя из этой строки, располагающегося в столбце с элементом диагонали (главным элементом, выбранным ранее).
 Таким образом, получим диагональную матрицу, из которой можно получить множество решений $X$, где для каждого $x_{i}$ = $\frac{B_{i}}{A_{i,i}}$.
@@ -88,6 +87,8 @@ skip\\
 \thispagestyle{empty}
 \BgThispage
 \section{Examples}
+\tiny
+\begin{verbatim}
 Enter the coefficients of the equation? (otherwise will be generated automatically) Y/N: Y
 Enter the dimensionality of the matrix: 5
 Enter the coefficients of matrices A and B line by line, separating them with a space:
@@ -105,7 +106,11 @@ Diagonalized matrix:
 		0.0 0.0 0.0 0.0 0.0 | 5.0
 
 This matrix has no solutions!
-
+\end{verbatim}
+\normalsize
+Вывод верен - матрица действительно не имеет решений\\
+\tiny
+\begin{verbatim}
 Enter the coefficients of the equation? (otherwise will be generated automatically) Y/N: Y
 Enter the dimensionality of the matrix: 5
 Enter the coefficients of matrices A and B line by line, separating them with a space:
@@ -116,11 +121,52 @@ Enter the coefficients of matrices A and B line by line, separating them with a 
 1 1 1 1 1 5
 Input completed.
 Diagonalized matrix:
-		1.0 1.0 1.0 1.0 1.0 | -9.0
+		1.0 1.0 1.0 1.0 1.0 | 1.0
 		0.0 0.0 0.0 0.0 0.0 | 1.0
 		0.0 0.0 0.0 0.0 0.0 | 2.0
 		0.0 0.0 0.0 0.0 0.0 | 3.0
 		0.0 0.0 0.0 0.0 0.0 | 4.0
 
 This matrix has no solutions!
+\end{verbatim}
+\normalsize
+Вывод верен - матрица действительно не имеет решений\\
+\tiny
+\begin{verbatim}
+Enter the coefficients of the equation? (otherwise will be generated automatically) Y/N: Y
+Enter the dimensionality of the matrix: 5
+5.5 2.3 6.7 5.3 4.8 4.2
+5.68 5.12 9 8.56 7.432 5
+3 5 3 2 1 6.23
+5 0 0 4 2.1 1
+1 1 1 4 5 7
+Enter the coefficients of matrices A and B line by line, separating them with a space:
+Input completed.
+Diagonalized matrix:
+		5.68 0.0 0.0 0.0 0.0 | -120.120633
+		0.0 2.295775 0.0 0.0 0.0 | 8.822536
+		0.0 0.0 -0.509202 0.0 0.0 | 8.262291
+		0.0 -0.0 0.0 -26.569904 0.0 | -1952.403274
+		0.0 0.0 0.0 -0.0 -4.961458 | 252.562687
+
+Determinant: -875.3204265714517
+
+Residual:
+		r1 = 1.4210854715202004E-14
+		r2 = 0.0
+		r3 = 0.0
+		r4 = 0.0
+		r5 = 0.0
+
+Answer: x1 = -21.147998767605635
+		x2 = 3.8429445394256843
+		x3 = -16.22595944242167
+		x4 = 73.4817586845628
+		x5 = -50.90493298542485
+\end{verbatim}
+\normalsize
+Детерминант, корни матрицы и невязка вычислены верно\\
+\newpage
+\thispagestyle{empty}
+\BgThispage
 \section{Вывод}

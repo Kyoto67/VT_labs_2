@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 public class DoubleRounder {
 
-    private static DecimalFormat format = new DecimalFormat("#.######");
+    private static DecimalFormat format = new DecimalFormat("#.########");
 
     public static double roundDoubleForMatrix(double d) {
         String s = format.format(d);

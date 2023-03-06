@@ -14,19 +14,19 @@ public class MatrixCalculatorHandlerImpl implements MatrixCalulatorHandler {
         matrixCalculator = new MatrixCalculator(m);
     }
     @Override
-    public Matrix transformToDiagForm() throws MatrixCreateException {
+    public Matrix transformToTriangleForm() throws MatrixCreateException {
         matrixCalculator.toTriangleForm();
-        matrixCalculator.fromTriangleToDiag();
         return matrixCalculator.getMatrix();
     }
 
     @Override
     public double calcDet() throws MatrixHasNoSolutionsException, TryCalculateNotDIagMatrixException {
-        return matrixCalculator.calcDetFromDiag();
+        return matrixCalculator.calcDetFromTriangle();
     }
 
     @Override
-    public double[] calcSolutions() throws TryCalculateNotDIagMatrixException {
+    public double[] calcSolutions() throws TryCalculateNotDIagMatrixException, MatrixCreateException {
+        matrixCalculator.fromTriangleToDiag();
         return matrixCalculator.calculateSolutionsFromDiag();
     }
 

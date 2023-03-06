@@ -10,6 +10,7 @@ import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.util.DoubleRoun
 public class MatrixCalculator {
     private Matrix matrix;
     private boolean myMatrixIsDiagonal = false;
+    private boolean myMatrixIsTriangle = false;
 
     MatrixCalculator(Matrix matrix) throws MatrixCreateException {
         this.matrix = new Matrix(matrix.getA(), matrix.getB(), matrix.getSize());
@@ -27,6 +28,7 @@ public class MatrixCalculator {
             }
         }
         this.matrix = new Matrix(A, B, n);
+        this.myMatrixIsTriangle = true;
     }
 
     void fromTriangleToDiag() throws MatrixCreateException {
@@ -41,8 +43,8 @@ public class MatrixCalculator {
         this.myMatrixIsDiagonal = true;
     }
 
-    double calcDetFromDiag() throws TryCalculateNotDIagMatrixException, MatrixHasNoSolutionsException {
-        if (myMatrixIsDiagonal) {
+    double calcDetFromTriangle() throws TryCalculateNotDIagMatrixException, MatrixHasNoSolutionsException {
+        if (myMatrixIsTriangle) {
             double det = 1;
             for (int i = 0; i < matrix.getSize(); i++) {
                 det *= matrix.getA()[i][i];

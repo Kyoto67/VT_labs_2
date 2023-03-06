@@ -44,7 +44,7 @@ public class TesterImpl extends ReaderMatrixFromConsole implements Tester {
         }
 
         @Override
-        public void printForDiagonalizedMatrix(Matrix matrix) {
+        public void printForTriangledMatrix(Matrix matrix) {
 
         }
 
@@ -62,9 +62,11 @@ public class TesterImpl extends ReaderMatrixFromConsole implements Tester {
         matrix = matrixGenerator.generate(size, roots);
         printerSource.printRoots(roots);
         MatrixCalulatorHandler calculator = new MatrixCalculatorHandlerImpl(matrix);
-        calculator.transformToDiagForm();
+        long start = System.currentTimeMillis();
+        calculator.transformToTriangleForm();
         roots = calculator.calcSolutions();
         printer.printSolutionCheck(matrix, roots);
         printer.printRoots(roots);
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
     }
 }

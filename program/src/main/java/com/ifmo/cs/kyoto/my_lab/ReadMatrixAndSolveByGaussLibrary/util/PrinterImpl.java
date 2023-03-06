@@ -42,16 +42,16 @@ public class PrinterImpl implements Printer {
     }
 
     @Override
-    public void printForDiagonalizedMatrix(Matrix matrix) {
-        System.out.println("Diagonalized matrix:");
+    public void printForTriangledMatrix(Matrix matrix) {
+        System.out.println("Triangled matrix:");
         double[][] A = matrix.getA();
         double[] B = matrix.getB();
         for (int i=0; i<matrix.getSize(); i++) {
             System.out.print("\t\t");
             for (int j=0; j< matrix.getSize(); j++) {
-                System.out.print(A[i][j] + " ");
+                System.out.print(DoubleRounder.roundDoubleForOutputFormat(A[i][j]) + " ");
             }
-            System.out.println("| " + B[i]);
+            System.out.println("| " + DoubleRounder.roundDoubleForOutputFormat(B[i]));
         }
         System.out.println();
     }

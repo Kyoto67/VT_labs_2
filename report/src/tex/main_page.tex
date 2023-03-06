@@ -1,5 +1,7 @@
 \thispagestyle{empty}
 \BgThispage
+
+
 \section{Описание метода} \par
 Суть метода заключается в последовательном алгоритме, проходящему по диагонали:
 \begin{enumerate}
@@ -12,11 +14,18 @@
 \newpage
 \thispagestyle{empty}
 \BgThispage
+
+
 \section{Блок-схема численного метода}
-skip\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.3]{img/блок-схема}
+\end{figure}
 \newpage
 \thispagestyle{empty}
 \BgThispage
+
+
 \section{Listing реализованного численного метода}
 \tiny
 \begin{verbatim}
@@ -26,39 +35,47 @@ skip\\
         int n = matrix.getSize();
         for (int i = 0; i < n; i++) {
             replaceLinesInMatrix(A, B, i, chooseMainEl(A, i));
-            lineNormalization(A[i], A[i][i], B, i);
             for (int j = i + 1; j < n; j++) {
-                lineSub(A[j], A[i], B, j, i, A[j][i]);
+                lineSub(A, B, i, j);
             }
         }
         this.matrix = new Matrix(A, B, n);
+        this.myMatrixIsTriangle = true;
     }
 
     void fromTriangleToDiag() throws MatrixCreateException {
-            double[][] A = matrix.getA();
-            double[] B = matrix.getB();
-            for (int i = matrix.getSize() - 1; i >= 0; i--) {
-                for (int j= i -1; j>=0 ; j--) {
-                    lineSub(A[j], A[i], B, j, i, A[j][i]);
-                }
+        double[][] A = matrix.getA();
+        double[] B = matrix.getB();
+        for (int i = matrix.getSize() - 1; i >= 0; i--) {
+            for (int j = i - 1; j >= 0; j--) {
+                lineSub(A, B, i, j);
             }
-            matrix = new Matrix(A, B, matrix.getSize());
+        }
+        matrix = new Matrix(A, B, matrix.getSize());
         this.myMatrixIsDiagonal = true;
     }
 
-    private void lineNormalization(double[] line, double a, double[] B, int lineIndex) {
-        if (a == 0 || a == 1) return;
-        for (int i = 0; i < line.length; i++) {
-            line[i] /= a;
+    double[] calculateSolutionsFromDiag() throws TryCalculateNotDIagMatrixException {
+        if (myMatrixIsDiagonal) {
+            double[][] A = matrix.getA();
+            double[] B = matrix.getB();
+            double[] solutions = new double[matrix.getSize()];
+            for (int i = 0; i < matrix.getSize(); i++) {
+                solutions[i] = B[i] / A[i][i];
+            }
+            return solutions;
+        } else {
+            throw new TryCalculateNotDIagMatrixException();
         }
-        B[lineIndex] /= a;
     }
 
-    private void lineSub(double[] line2, double[] line1, double[] B, int lineIndex2, int lineIndex1, double multiplier) {
-        for (int i=0; i<line2.length; i++) {
-            line2[i] -= line1[i]*multiplier;
+    private void lineSub(double[][] A, double[] B, int i, int j) {
+        if (A[i][i] == 0) return;
+        double m = A[j][i]/A[i][i];
+        for (int k = 0; k < A.length; k++) {
+            A[j][k] -= DoubleRounder.roundDoubleForMatrix(A[i][k] * m);
         }
-        B[lineIndex2] -= B[lineIndex1]*multiplier;
+        B[j] -= DoubleRounder.roundDoubleForMatrix(B[i] * m);
     }
 
     private void replaceLinesInMatrix(double[][] A, double[] B, int n1, int n2) {
@@ -73,7 +90,7 @@ skip\\
     private int chooseMainEl(double[][] A, int j) {
         int numberOfMainElLine = j;
         double maxEl = A[j][j];
-        for (int i=j; i<A.length; i++) {
+        for (int i = j; i < A.length; i++) {
             if (A[i][j] > maxEl) {
                 maxEl = A[i][j];
                 numberOfMainElLine = i;
@@ -81,11 +98,14 @@ skip\\
         }
         return numberOfMainElLine;
     }
+}
 \end{verbatim}
 \normalsize
 \newpage
 \thispagestyle{empty}
 \BgThispage
+
+
 \section{Examples}
 \tiny
 \begin{verbatim}
@@ -98,7 +118,7 @@ Enter the coefficients of matrices A and B line by line, separating them with a 
 0 0 0 0 0 4
 0 0 0 0 0 5
 Input completed.
-Diagonalized matrix:
+Triangled matrix:
 		0.0 0.0 0.0 0.0 0.0 | 1.0
 		0.0 0.0 0.0 0.0 0.0 | 2.0
 		0.0 0.0 0.0 0.0 0.0 | 3.0
@@ -120,8 +140,8 @@ Enter the coefficients of matrices A and B line by line, separating them with a 
 1 1 1 1 1 4
 1 1 1 1 1 5
 Input completed.
-Diagonalized matrix:
-		1.0 1.0 1.0 1.0 1.0 | 1.0
+Triangled matrix:
+        1.0 1.0 1.0 1.0 1.0 | 1.0
 		0.0 0.0 0.0 0.0 0.0 | 1.0
 		0.0 0.0 0.0 0.0 0.0 | 2.0
 		0.0 0.0 0.0 0.0 0.0 | 3.0
@@ -142,12 +162,12 @@ Enter the dimensionality of the matrix: 5
 1 1 1 4 5 7
 Enter the coefficients of matrices A and B line by line, separating them with a space:
 Input completed.
-Diagonalized matrix:
-		5.68 0.0 0.0 0.0 0.0 | -120.120633
-		0.0 2.295775 0.0 0.0 0.0 | 8.822536
-		0.0 0.0 -0.509202 0.0 0.0 | 8.262291
-		0.0 -0.0 0.0 -26.569904 0.0 | -1952.403274
-		0.0 0.0 0.0 -0.0 -4.961458 | 252.562687
+Triangled matrix:
+		5.7 5.1 9.0 8.6 7.4 | 4.2
+		0.0 2.3 -1.8 -2.5 -2.9 | 0.9
+		0.0 -0.0 -0.5 2.6 3.8 | 5.1
+		0.0 0.0 0.0 -26.6 -36.1 | -114.5
+		0.0 0.0 0.0 0.0 -5.0 | 252.6
 
 Determinant: -875.3204265714517
 
@@ -169,4 +189,13 @@ Answer: x1 = -21.147998767605635
 \newpage
 \thispagestyle{empty}
 \BgThispage
+
+
 \section{Вывод}
+Алгоритмическая сложность: O($N^3$)
+Отличие от простого Метода Гаусса - существенное уменьшение невязки, за счёт выбора главного элемента.
+Различие прямых методов от итерационных:
+\begin{enumerate}
+    \item Итерационным методом можно как быстрее найти решение, так и дольше - выше разброс, в то время, как прямой метод выполняется за определённое число итераций.
+    \item На больших матрицах у итерационных методов ниже погрешность и не накапливаются ошибки, в отличие от прямых.
+\end{enumerate}

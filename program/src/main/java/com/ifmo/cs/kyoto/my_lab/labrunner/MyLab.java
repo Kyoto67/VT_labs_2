@@ -40,7 +40,7 @@ public class MyLab {
             }
         matrixCalulatorHandler= new MatrixCalculatorHandlerImpl(matrix);
         try {
-            printer.printForDiagonalizedMatrix(matrixCalulatorHandler.transformToDiagForm());
+            printer.printForTriangledMatrix(matrixCalulatorHandler.transformToTriangleForm());
             printer.printDet(matrixCalulatorHandler.calcDet());
             double[] roots = matrixCalulatorHandler.calcSolutions();
             double[] residual = matrixCalulatorHandler.calcResidual(matrix,roots);

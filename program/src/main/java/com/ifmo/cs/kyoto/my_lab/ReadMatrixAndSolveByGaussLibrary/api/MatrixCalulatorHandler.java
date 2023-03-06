@@ -7,8 +7,8 @@ import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryC
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryResidualWithCalculateSolutionsFromOtherMatrixException;
 
 public interface MatrixCalulatorHandler {
-    Matrix transformToDiagForm() throws MatrixCreateException, MatrixHasNoSolutionsException, TryCalculateNotDIagMatrixException;
+    Matrix transformToTriangleForm() throws MatrixCreateException, MatrixHasNoSolutionsException, TryCalculateNotDIagMatrixException;
     double calcDet() throws TryCalculateNotDIagMatrixException, MatrixHasNoSolutionsException;
-    double[] calcSolutions() throws TryCalculateNotDIagMatrixException;
+    double[] calcSolutions() throws TryCalculateNotDIagMatrixException, MatrixCreateException;
     double[] calcResidual(Matrix matrix, double[] solutions) throws TryResidualWithCalculateSolutionsFromOtherMatrixException;
 }

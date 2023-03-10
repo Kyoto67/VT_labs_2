@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2023.2.21)  24 FEB 2023 19:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2023.2.21)  10 MAR 2023 15:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1642,90 +1642,64 @@ Package hyperref Info: Link coloring OFF on input line 36.
 
 
 (./tex/front_page.tex
-<background-image.pdf, id=23, 597.432pt x 845.07718pt>
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 37.
+<background-image2.pdf, id=23, 597.432pt x 845.07718pt>
+File: background-image2.pdf Graphic file (type pdf)
+<use background-image2.pdf>
+Package pdftex.def Info: background-image2.pdf  used on input line 37.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./background-image.pdf>]) 
-(./tex/main_page.tex
-LaTeX Font Info:    Trying to load font information for T2A+cmtt on input line 
-10.
-
-(/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
-File: t2acmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
-)
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 49.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./background-image2.pdf>])
+ (./tex/main_page.tex
+File: background-image2.pdf Graphic file (type pdf)
+<use background-image2.pdf>
+Package pdftex.def Info: background-image2.pdf  used on input line 5.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
  [2]
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 76.
+File: background-image2.pdf Graphic file (type pdf)
+<use background-image2.pdf>
+Package pdftex.def Info: background-image2.pdf  used on input line 11.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
  [3]
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 150.
+File: background-image2.pdf Graphic file (type pdf)
+<use background-image2.pdf>
+Package pdftex.def Info: background-image2.pdf  used on input line 17.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [4]
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 167.
+ [4])
+File: background-image2.pdf Graphic file (type pdf)
+<use background-image2.pdf>
+Package pdftex.def Info: background-image2.pdf  used on input line 39.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
-
-[5]
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 255.
-(pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [6]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 260
-.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 260
-.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 39.
-(pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [7]
+ [5]
 (/home/kyoto/git/out/report.aux)
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 733A9CB1D4EE34FBE41F20E1860FCB03;753.
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: 733A9CB1D4EE34FBE41F20E1860FCB03;753
+(rerunfilecheck)             After:  06DF87A69097C42C505D39C39AEE3011;572.
  ) 
 Here is how much of TeX's memory you used:
- 37714 strings out of 478023
- 837790 string characters out of 5841208
- 1215158 words of memory out of 5000000
- 55543 multiletter control sequences out of 15000+600000
- 480014 words of font info for 50 fonts, out of 8000000 for 9000
+ 37647 strings out of 478023
+ 836454 string characters out of 5841208
+ 1197159 words of memory out of 5000000
+ 55497 multiletter control sequences out of 15000+600000
+ 476865 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,12n,103p,729b,769s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/share/texmf
-/fonts/enc/dvips/cm-super/cm-super-t2a.enc}</usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-sup
-er/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></us
-r/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-supe
-r/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb></usr
-/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/t
-ype1/public/cm-super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
-w/zapfding/uzdr.pfb>
-Output written on /home/kyoto/git/out/report.pdf (7 pages, 14373644 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t2a.enc}</usr/share/texmf
+/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb
+>
+Output written on /home/kyoto/git/out/report.pdf (5 pages, 15919803 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 138 compressed objects within 2 object streams
- 12 named destinations out of 1000 (max. 500000)
+ 164 PDF objects out of 1000 (max. 8388607)
+ 109 compressed objects within 2 object streams
+ 10 named destinations out of 1000 (max. 500000)
  50 words of extra memory for PDF output out of 10000 (max. 10000000)
 

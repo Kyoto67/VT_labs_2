@@ -5,7 +5,6 @@ import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.Matr
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.MatrixHasNoSolutionsException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryCalculateNotDIagMatrixException;
 import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.exceptions.TryResidualWithCalculateSolutionsFromOtherMatrixException;
-import com.ifmo.cs.kyoto.my_lab.ReadMatrixAndSolveByGaussLibrary.util.DoubleRounder;
 
 public class MatrixCalculator {
     private Matrix matrix;
@@ -89,9 +88,9 @@ public class MatrixCalculator {
         if (A[i][i] == 0) return;
         double m = A[j][i]/A[i][i];
         for (int k = 0; k < A.length; k++) {
-            A[j][k] -= DoubleRounder.roundDoubleForMatrix(A[i][k] * m);
+            A[j][k] -= A[i][k] * m;
         }
-        B[j] -= DoubleRounder.roundDoubleForMatrix(B[i] * m);
+        B[j] -= B[i] * m;
     }
 
     public Matrix getMatrix() {

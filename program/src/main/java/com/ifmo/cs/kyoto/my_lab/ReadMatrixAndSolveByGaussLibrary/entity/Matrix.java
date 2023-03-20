@@ -16,8 +16,6 @@ public class Matrix {
         for (double[] a : A) {
             if (a.length != size) throw new MatrixCreateException("The matrix is not square or the size is incorrect.");
         }
-        DoubleRounder.roundAForMatrix(A);
-        DoubleRounder.roundBForMatrix(B);
         this.A = A;
         this.B = B;
         this.size = size;

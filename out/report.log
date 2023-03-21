@@ -1,6 +1,7 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2023.2.21)  22 FEB 2023 16:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2023.2.21)  21 MAR 2023 14:17
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
 **report.tex
 (./report.tex
@@ -1520,7 +1521,7 @@ File: l3backend-pdftex.def 2022-07-01 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count344
 \l__pdf_internal_box=\box119
 )
-(/home/kyoto/git/VT_labs_2/out/report.aux)
+(/home/kyoto/git/out/report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
@@ -1621,12 +1622,12 @@ Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count351
 Package hyperref Info: Link coloring OFF on input line 34.
-(/home/kyoto/git/VT_labs_2/out/report.out)
-(/home/kyoto/git/VT_labs_2/out/report.out)
+(/home/kyoto/git/out/report.out) (/home/kyoto/git/out/report.out)
 \@outlinefile=\write4
 \openout4 = `report.out'.
 
- (./tex/front_page.tex
+
+(./tex/front_page.tex
 <background-image.pdf, id=7, 597.432pt x 845.07718pt>
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
@@ -1634,144 +1635,139 @@ Package pdftex.def Info: background-image.pdf  used on input line 31.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./background-image.pdf>])
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./background-image.pdf>]) 
 (./tex/main_page.tex
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 34.
+Package pdftex.def Info: background-image.pdf  used on input line 33.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
  [2]
 LaTeX Font Info:    Trying to load font information for T2A+cmtt on input line 
-35.
+34.
 
 (/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
 File: t2acmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 35.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 34.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 35.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 34.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+) [3]
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 67.
+Package pdftex.def Info: background-image.pdf  used on input line 106.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [3]
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 84.
+Package pdftex.def Info: background-image.pdf  used on input line 106.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [4]
-Underfull \hbox (badness 10000) in paragraph at lines 112--119
+ [4] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 138--145
 
  []
 
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 119.
-(pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 130--132
-
- []
-
-File: background-image.pdf Graphic file (type pdf)
-<use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 170.
+Package pdftex.def Info: background-image.pdf  used on input line 145.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
 [6]
+Underfull \hbox (badness 10000) in paragraph at lines 156--158
+
+ []
+
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 264.
+Package pdftex.def Info: background-image.pdf  used on input line 196.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [7]
+[7]
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 350.
+Package pdftex.def Info: background-image.pdf  used on input line 290.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
  [8]
-Overfull \hbox (959.10727pt too wide) in paragraph at lines 353--354
+File: background-image.pdf Graphic file (type pdf)
+<use background-image.pdf>
+Package pdftex.def Info: background-image.pdf  used on input line 376.
+(pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
+ [9]
+Overfull \hbox (959.10727pt too wide) in paragraph at lines 379--380
  []
  []
 
 
-Overfull \hbox (2.31546pt too wide) in paragraph at lines 377--396
+Overfull \hbox (2.31546pt too wide) in paragraph at lines 403--422
  [][] 
  []
 
-<img/Untitled Workspace-6.png, id=186, 1746.525pt x 1425.325pt>
+<img/Untitled Workspace-6.png, id=191, 1746.525pt x 1425.325pt>
 File: img/Untitled Workspace-6.png Graphic file (type png)
 <use img/Untitled Workspace-6.png>
-Package pdftex.def Info: img/Untitled Workspace-6.png  used on input line 399.
+Package pdftex.def Info: img/Untitled Workspace-6.png  used on input line 425.
 (pdftex.def)             Requested size: 314.36093pt x 256.54742pt.
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 402.
+Package pdftex.def Info: background-image.pdf  used on input line 428.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
-[9 <./img/Untitled Workspace-6.png>]
+[10 <./img/Untitled Workspace-6.png>]
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
-Package pdftex.def Info: background-image.pdf  used on input line 433.
+Package pdftex.def Info: background-image.pdf  used on input line 459.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [10]
-<img/Untitled.png, id=217, 1717.41624pt x 176.66pt>
+ [11]
+<img/Untitled.png, id=222, 1717.41624pt x 176.66pt>
 File: img/Untitled.png Graphic file (type png)
 <use img/Untitled.png>
-Package pdftex.def Info: img/Untitled.png  used on input line 438.
+Package pdftex.def Info: img/Untitled.png  used on input line 464.
 (pdftex.def)             Requested size: 343.47717pt x 35.33136pt.
-<img/my_photo.jpg, id=218, 1445.4pt x 1445.4pt>
+<img/my_photo.jpg, id=223, 1445.4pt x 1445.4pt>
 File: img/my_photo.jpg Graphic file (type jpg)
 <use img/my_photo.jpg>
-Package pdftex.def Info: img/my_photo.jpg  used on input line 442.
+Package pdftex.def Info: img/my_photo.jpg  used on input line 468.
 (pdftex.def)             Requested size: 216.80064pt x 216.80064pt.
-<img/dora.png, id=219, 963.6pt x 955.57pt>
+<img/dora.png, id=224, 963.6pt x 955.57pt>
 File: img/dora.png Graphic file (type png)
 <use img/dora.png>
-Package pdftex.def Info: img/dora.png  used on input line 443.
+Package pdftex.def Info: img/dora.png  used on input line 469.
 (pdftex.def)             Requested size: 216.81535pt x 215.00854pt.
 )
 File: background-image.pdf Graphic file (type pdf)
 <use background-image.pdf>
 Package pdftex.def Info: background-image.pdf  used on input line 37.
 (pdftex.def)             Requested size: 597.41231pt x 845.04684pt.
- [11 <./img/Untitled.png> <./img/my_photo.jpg> <./img/dora.png>] (/home/kyoto/g
-it/VT_labs_2/out/report.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+ [12 <./img/Untitled.png> <./img/my_photo.jpg> <./img/dora.png>] (/home/kyoto/g
+it/out/report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 37807 strings out of 478023
- 838850 string characters out of 5841208
- 1205704 words of memory out of 5000000
- 55565 multiletter control sequences out of 15000+600000
- 484573 words of font info for 62 fonts, out of 8000000 for 9000
+ 37812 strings out of 478023
+ 838806 string characters out of 5841208
+ 1205751 words of memory out of 5000000
+ 55568 multiletter control sequences out of 15000+600000
+ 484908 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,12n,103p,729b,1151s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t2a.enc}</usr/share/texmf
-/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/
-cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pf
-b></usr/share/texmf/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf/
-fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/c
-m-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb
-></usr/share/texmf/fonts/type1/public/cm-super/sfti0500.pfb></usr/share/texmf/f
-onts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm
--super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
-
-Output written on /home/kyoto/git/VT_labs_2/out/report.pdf (11 pages, 16967961 
-bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t2a.enc}{/usr/share/texmf
+/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public
+/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfti0500.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
+Output written on /home/kyoto/git/out/report.pdf (12 pages, 16970725 bytes).
 PDF statistics:
- 296 PDF objects out of 1000 (max. 8388607)
- 214 compressed objects within 3 object streams
- 79 named destinations out of 1000 (max. 500000)
+ 304 PDF objects out of 1000 (max. 8388607)
+ 220 compressed objects within 3 object streams
+ 80 named destinations out of 1000 (max. 500000)
  38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

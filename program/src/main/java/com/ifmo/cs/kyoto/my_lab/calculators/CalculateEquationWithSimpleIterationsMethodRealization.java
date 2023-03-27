@@ -9,28 +9,17 @@ public class CalculateEquationWithSimpleIterationsMethodRealization implements C
         double v1 = Math.abs(derivativeFunc.apply(a));
         double v2 = Math.abs(derivativeFunc.apply(b));
         double v = (-1) * (1 / Math.max(v1, v2));
-        if (v1>v2) return new double[]{v,a};
+        if (v1 > v2) return new double[]{v, a};
         else return new double[]{v, b};
     }
 
     @Override
     public double calculate(SimpleFunction func, double lyambda, double x, double epsilon) {
-        double x_i = x + lyambda* func.apply(x);
+        double x_i = x + lyambda * func.apply(x);
         if (Math.abs(x_i - x) <= epsilon) {
             return x_i;
         } else {
             return calculate(func, lyambda, x_i, epsilon);
         }
-    }
-
-    @Override
-    public double[] chooseAandB(SimpleFunction func) {
-        double a = 1.0;
-        double b = 1.0;
-        while (!(func.apply(a) * func.apply(b) < 0)) {
-            a *= 2;
-            b *= 2;
-        }
-        return new double[]{a, b};
     }
 }

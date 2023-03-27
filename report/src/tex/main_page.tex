@@ -2,6 +2,7 @@
 
 \newpage
 
+
 \section{Решение нелинейных уравнений}
 
 \subsection{Метод хорд}
@@ -68,12 +69,22 @@ b%\begin{figure}[H]
 \subsection{Метод простой итерации}
 
 \subsubsection{Описание метода}
+\underline{Суть метода:} Уравнение $f(x)$=0 приведём к эквивалентному виду: $x$=$\phi(x)$б выразив $x$ из исходного
+уравнения.Если на отрезке локализации $[a,b]$ функция $\phi(x)$ определена, непрерывна и дифференцируема, то независимо
+от выбора начального приближения $x_0$$\in$$[a,b]$ итерационная последовательность ${x_n}$ метода будет сходиться к корню
+уравнения.
 
+
+\underline{Алгоритм метода:} Сперва необходимо выразить функцию $x$=$\phi(x)$. Есть несколько способов это сделать, я выбрал
+наиболее используемый и стабильный, где $\phi(x)$=$x$+$\lambda f(x)$, где $\lambda$=-$\frac{1}{\max_{[a,b]}|f(x)|}$\\
+Далее, $x_i$ = $\phi(x_{i-1})$. Выполняем итерации до тех пор, пока $|x_i - x| > \epsilon$\\
+В результате получим приближённое значение корня $x^*$=$x_n$.
 
 \subsubsection{Блок-схема численного метода}
 d
 
 \subsubsection{Listing реализованного численного метода}
+\tiny
 \begin{verbatim}
     public class CalculateEquationWithSimpleIterationsMethodRealization implements CalculateEquationWithSimpleIterationsMethod {
 
@@ -96,8 +107,8 @@ d
         }
     }
 }
-
 \end{verbatim}
+\normalsize
 
 
 \section{Решение систем нелинейных уравнений:}
@@ -105,7 +116,28 @@ d
 \subsection{Метод Ньютона}
 
 \subsubsection{Описание метода}
-e
+\underline{Алгоритм метода (на примере матрицы 2-го порядка):}
+\begin{enumerate}
+    \item Вычислить матрицу Якоби: $J(x,y)$=
+    $\begin{vmatrix}
+        \frac{\partial f(x,y)}{\partial x} & \frac{\partial f(x,y)}{\partial y} \\
+        \frac{\partial g(x,y)}{\partial x} & \frac{\partial g(x)}{\partial y} \\
+    \end{vmatrix}$
+    \item Решить СНАУ $\begin{vmatrix}
+        \frac{\partial f(x,y)}{\partial x} & \frac{\partial f(x,y)}{\partial y} \\
+        \frac{\partial g(x,y)}{\partial x} & \frac{\partial g(x)}{\partial y} \\
+    \end{vmatrix}$$\left( \begin{array}{c}
+                       \Delta x \\
+                       \Delta y \\
+    \end{array}\right)$ = --$\left( \begin{array}{c}
+                                          f(x,y) \\
+                                          g(x,y) \\
+    \end{array}\right)$ , относительно $\Delta x$, $\Delta y$
+    \item А далее вычислять на каждой итерации: $x_{i+1}$=$x_i$+$\Delta x_i$ и $y_{i+1}$=$y_i$+$\Delta y_i$, где
+    $x_i$, $y_i$ - текущее приближение к корню, $x_{i+1}$, $y_{i+1}$ - последующее приближение, $\Delta x$, $\Delta y$ -
+    приращения к очередным приближениям.
+    \item Процесс вычисления заканчивается при выполнении условий $|x_{i+1} - x_i|$ $\leq$ $\epsilon$, $|y_{i+1} - y_i$|$\leq$ $\epsilon$
+\end{enumerate}
 
 \subsubsection{Блок-схема численного метода}
 f
@@ -161,7 +193,8 @@ The solution obtained by the method of simple iterations: 4.712645995323825
 \end{verbatim}
 
 \begin{verbatim}
-Enter "1" to solve the equation, enter "2" for NSAE:\end{verbatim} \textbf{2} \begin{verbatim}
+Enter "1" to solve the equation, enter "2" for NSAE:
+\end{verbatim} \textbf{2} \begin{verbatim}
 Choose the NSAE that you want to solve:
 1.  x² + y² - 4 = 0
     -3x² + y = 0
@@ -175,6 +208,7 @@ Solutions: x1 = 0.7832125666191059
            x2 = 1.8402657654730223
 \end{verbatim}
 \normalsize
+
 
 \section{Вывод}
 g%Алгоритмическая сложность: O($N^3$)

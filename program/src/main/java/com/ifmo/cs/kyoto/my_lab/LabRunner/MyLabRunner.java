@@ -111,7 +111,7 @@ public class MyLabRunner {
                     CalculateEquationWithSimpleIterationsMethod simpleIterationsMethod = new CalculateEquationWithSimpleIterationsMethodRealization();
                     double[] lyambdaAndX0Simple = simpleIterationsMethod.chooseLyambdaAndX_0(derivativeFunc, a, b);
                     double solSimple = simpleIterationsMethod.calculate(function, lyambdaAndX0Simple[0], lyambdaAndX0Simple[1], 0.01);
-                    double solChord = chordMethod.calculate(function, a, b, 0, 0.01, 0);
+                    double solChord = chordMethod.calculate(function, a, b, 0, 0.01, 0 );
                     printer.printChordandSimpleIterationsSolutions(solChord, solSimple);
                 }
             }

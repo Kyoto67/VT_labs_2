@@ -23,10 +23,7 @@
 \end{enumerate}
 
 \subsubsection{Блок-схема численного метода}
-b%\begin{figure}[H]
-%    \centering
-%    \includegraphics[scale=0.3]{img/блок-схема}
-%\end{figure}
+\includegraphics[scale=0.3]{img/block_2_chord}
 
 \subsubsection{Listing реализованного численного метода}
 \tiny
@@ -65,6 +62,7 @@ b%\begin{figure}[H]
 }
 \end{verbatim}
 \normalsize
+\newpage
 
 \subsection{Метод простой итерации}
 
@@ -81,7 +79,7 @@ b%\begin{figure}[H]
 В результате получим приближённое значение корня $x^*$=$x_n$.
 
 \subsubsection{Блок-схема численного метода}
-d
+\includegraphics[scale=0.4]{img/block_2_iter}
 
 \subsubsection{Listing реализованного численного метода}
 \tiny
@@ -110,6 +108,8 @@ d
 \end{verbatim}
 \normalsize
 
+\newpage
+
 
 \section{Решение систем нелинейных уравнений:}
 
@@ -120,19 +120,31 @@ d
 \begin{enumerate}
     \item Вычислить матрицу Якоби: $J(x,y)$=
     $\begin{vmatrix}
-        \frac{\partial f(x,y)}{\partial x} & \frac{\partial f(x,y)}{\partial y} \\
-        \frac{\partial g(x,y)}{\partial x} & \frac{\partial g(x)}{\partial y} \\
+         \frac{\partial f_0(x_0 ... x_n)}{\partial x_0} & \ldots & \frac{\partial f(x_0 ... x_n)}{\partial x_n} \\
+         \vdots                                         &        &                                              \\
+         \frac{\partial f_n(x_0 ... x_n)}{\partial x_0} & \ldots & \frac{\partial g(x_0 ... x_n)}{\partial x_n} \\
     \end{vmatrix}$
-    \item Решить СНАУ $\begin{vmatrix}
-        \frac{\partial f(x,y)}{\partial x} & \frac{\partial f(x,y)}{\partial y} \\
-        \frac{\partial g(x,y)}{\partial x} & \frac{\partial g(x)}{\partial y} \\
-    \end{vmatrix}$$\left( \begin{array}{c}
-                       \Delta x \\
-                       \Delta y \\
-    \end{array}\right)$ = --$\left( \begin{array}{c}
-                                          f(x,y) \\
-                                          g(x,y) \\
-    \end{array}\right)$ , относительно $\Delta x$, $\Delta y$
+    \item Решить СНАУ
+    $\begin{vmatrix}
+         \frac{\partial f_0(x_0 ... x_n)}{\partial x_0} & \ldots & \frac{\partial f(x_0 ... x_n)}{\partial x_n} \\
+         \vdots                                         &        &                                              \\
+         \frac{\partial f_n(x_0 ... x_n)}{\partial x_0} & \ldots & \frac{\partial g(x_0 ... x_n)}{\partial x_n} \\
+    \end{vmatrix}$
+    $\left(
+    \begin{array}{c}
+        \Delta x_0 \\
+        \vdots     \\
+        \Delta x_n \\
+    \end{array}
+    \right)$
+    = --$\left(
+    \begin{array}{c}
+        f_0(x_0 ... x_n) \\
+        \vdots           \\
+        f_n(x_0 ... x_n) \\
+    \end{array}
+    \right)$
+    , относительно \\ $\Delta x_0$ ... $\Delta x_n$
     \item А далее вычислять на каждой итерации: $x_{i+1}$=$x_i$+$\Delta x_i$ и $y_{i+1}$=$y_i$+$\Delta y_i$, где
     $x_i$, $y_i$ - текущее приближение к корню, $x_{i+1}$, $y_{i+1}$ - последующее приближение, $\Delta x$, $\Delta y$ -
     приращения к очередным приближениям.
@@ -140,7 +152,7 @@ d
 \end{enumerate}
 
 \subsubsection{Блок-схема численного метода}
-f
+\includegraphics[scale=0.3]{img/block_2_newtone}
 
 \subsubsection{Listing реализованного численного метода}
 \tiny
@@ -173,6 +185,7 @@ f
 }
 \end{verbatim}
 \normalsize
+
 
 \section{Examples}
 \tiny
@@ -211,5 +224,35 @@ Solutions: x1 = 0.7832125666191059
 
 
 \section{Вывод}
-я долбоеб
-&&&
+\subsection{Достоинства и недостатки метода хорд}
+\subsubsection{Достоинства:}
+\begin{itemize}
+    \item Простота реализации
+\end{itemize}
+\subsubsection{Недостатки:}
+\begin{itemize}
+    \item Скорость сходимости - линейная.
+    \item Зависит от выбора начального приближения.
+\end{itemize}
+
+\subsection{Достоинства и недостатки метода простой итерации:}
+\subsubsection{Достоинства:}
+\begin{itemize}
+    \item Простота
+\end{itemize}
+\subsubsection{Недостатки:}
+\begin{itemize}
+    \item Сходимость в малой окрестности корня и вытекающая отсюда необходимость выбора начального приближения к корню
+    из этой малой окрестности. В противном случае итерационный процесс расходится или сходится к другому корню этого уравнения.
+    \item Если |$\phi '(x)$| $\approx$ 1, то сходимость может быть очень медленной.
+\end{itemize}
+\subsection{Достоинства и недостатки метода Ньютона:}
+\subsubsection{Достоинства:}
+\begin{itemize}
+    \item Квадратичная сходимость.
+\end{itemize}
+\subsubsection{Недостатки:}
+\begin{itemize}
+    \item Важен удачный выбор начального приближения для обеспечения хорошей сходимости.
+    \item Сходимость ухудшается с увеличением числа уравнений системы.
+\end{itemize}

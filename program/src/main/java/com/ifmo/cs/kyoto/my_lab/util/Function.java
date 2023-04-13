@@ -7,8 +7,11 @@ import lombok.Getter;
 public enum Function {
 
     FIRST (x -> Math.pow(x, 2)),
-    SECOND(x -> Math.sin(x)/x),
-    THIRD(x -> x*14 + 88),
+    SECOND(x -> {
+        if (x==0) return x;
+        return Math.sin(x)/x;
+    }),
+    THIRD(x -> x*1000 - 7),
     FOURTH(Math::sqrt);
 
     private SimpleFunction function;

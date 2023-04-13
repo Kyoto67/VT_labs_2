@@ -16,7 +16,7 @@ public class IntegrationBySimpsonCalculator {
         return (b-a)/n/2;
     }
 
-    static double[] sectioning(double a, double b, int n, double h) {
+    static double[] sectioning(double a, int n, double h) {
         double x=a;
         double[] X = new double[n*2+1];
         for (int i=0; i<X.length; i++) {

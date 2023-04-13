@@ -3,7 +3,7 @@ package com.ifmo.cs.kyoto.my_lab.api;
 import com.ifmo.cs.kyoto.my_lab.util.Function;
 
 public interface Asker {
-    int askHowManySections();
+    double askAccuracy();
 
     Function askWhichFunction();
 

@@ -84,9 +84,9 @@ public class AskerRealization implements Asker {
     }
 
     @Override
-    public int askHowManySections() {
-        System.out.println("Enter the number of sections into which you want to divide the subintegral function");
-        return readEvenNumber();
+    public double askAccuracy() {
+        System.out.print("Set the accuracy of calculations: ");
+        return readDecimal();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AskerRealization implements Asker {
         System.out.println("Choose the function that you want to integrate:");
         System.out.println("1. f(x) = x²");
         System.out.println("2. f(x) = sin(x)/x");
-        System.out.println("3. f(x) = 14x + 88");
+        System.out.println("3. f(x) = 1000x - 7");
         System.out.println("4. f(x) = sqrt(x)");
         switch (readNumberFromRange(1, 4)) {
             case 1 -> {

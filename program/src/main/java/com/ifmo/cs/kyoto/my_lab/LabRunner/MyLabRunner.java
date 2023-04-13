@@ -15,17 +15,21 @@ public class MyLabRunner {
         Function function = asker.askWhichFunction();
         double leftBoundary;
         double rightBoundary;
-        if (function == Function.FOURTH) {
+        Printer printer = new PrinterRealization();
+        IntegrationBySimpson integrator = new IntegrateBySimpsonHandler();
+        if (function == Function.SECOND) {
+            printer.printMessageAboutDiscontinuity();
+            leftBoundary = asker.askLeftIntegrationBoundary();
+            rightBoundary = asker.askRightIntegrationBoundary();
+        } else if (function == Function.FOURTH) {
             leftBoundary = asker.askLeftIntegrationBoundary(0);
             rightBoundary = asker.askRightIntegrationBoundary();
         } else {
             leftBoundary = asker.askLeftIntegrationBoundary();
             rightBoundary = asker.askRightIntegrationBoundary();
         }
-        int sectionsCount = asker.askHowManySections();
-        IntegrationBySimpson integrator = new IntegrateBySimpsonHandler();
-        Printer printer = new PrinterRealization();
-        double result = integrator.integrate(function.getFunction(), leftBoundary, rightBoundary, sectionsCount);
+        double epsilon = asker.askAccuracy();
+        double result = integrator.integrate(function.getFunction(), leftBoundary, rightBoundary, epsilon);
         printer.printIntegrationResult(result);
     }
 }

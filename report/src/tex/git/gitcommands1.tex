@@ -1,0 +1,44 @@
+%! Author = kyoto
+%! Date = 18.04.2023
+
+\tiny
+\begin{verbatim}
+git add *
+git commit -m "merge r33 into r34"
+mv -f ~/src/commit34/* ./
+git add *
+git commit -m "commit r34"
+
+# r35
+git checkout fork_from_r25
+mv -f ~/src/commit35/* ./
+git add *
+git commit -m "commit r35"
+
+# r36
+git config --global user.name "DoraGotova"
+git config --global user.email "DoraGotova@gmail.com"
+git checkout fork_from_r15
+mv -f ~/src/commit36/* ./
+git add *
+git commit -m "commit r36"
+
+# r37
+git checkout master
+mv -f ~/src/commit37/* ./
+git add *
+git commit -m "commit r37"
+
+# r38
+git checkout fork_from_r15
+mv -f ~/src/commit38/* ./
+git add *
+git commit -m "commit r38"
+
+# r39 - conflict
+git checkout fork_from_r4
+git merge fork_from_r15 -m "merge r38 into r39"
+
+
+\end{verbatim}
+\normalsize

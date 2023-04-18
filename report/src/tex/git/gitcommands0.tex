@@ -1,0 +1,230 @@
+%! Author = kyoto
+%! Date = 18.04.2023
+
+\tiny
+\begin{verbatim}
+# r0
+git config --global user.name "DoraGotova"
+git config --global user.email "DoraGotova@gmail.com"
+mv -f ~/src/commit0/* ./
+git add *
+git commit -m "commit r0"
+
+# r1
+git config --global user.name "maybemaybebaby"
+git config --global user.email "maybemaybebay@gmail.com"
+git checkout -b fork_from_r0
+mv -f ~/src/commit1/* ./
+git add *
+git commit -m "commit r1"
+
+# r2
+git checkout -b fork_from_r1
+mv -f ~/src/commit2/* ./
+git add *
+git commit -m "commit r2"
+
+# r3
+git checkout -b fork_from_r2
+mv -f ~/src/commit3/* ./
+git add *
+git commit -m "commit r3"
+
+# r4
+git checkout fork_from_r1
+mv -f ~/src/commit4/* ./
+git add &
+git commit -m "commit r4"
+
+# r5
+git checkout -b fork_from_r4
+mv -f ~/src/commit5/* ./
+git add *
+git commit -m "commit r5"
+
+# r6
+git checkout -b fork_from_r5
+mv -f ~/src/commit6/* ./
+git add *
+git commit -m "commit r6"
+
+# r7
+git checkout fork_from_r0
+mv -f ~/src/commit7/* ./
+git add *
+git commit -m "commit r7"
+
+# r8
+mv -f ~/src/commit8/* ./
+git add *
+git commit -m "commit r8"
+
+# r9
+git checkout fork_from_r2
+mv -f ~/src/commit9/* ./
+git add *
+git commit -m "commit r9"
+
+# r10
+mv -f ~/src/commit10/* ./
+git add *
+git commit -m "commit r10"
+
+# r11
+git config --global user.name "DoraGotova"
+git config --global user.email "DoraGotova@gmail.com"
+git checkout master
+mv -f ~/src/commit11/* ./
+git add *
+git commit -m "commit r11"
+
+# r12
+git config --global user.name "maybemaybebaby"
+git config --global user.email "maybemaybebay@gmail.com"
+git checkout fork_from_r4
+mv -f ~/src/commit12/* ./
+git add *
+git commit -m "commit r12"
+
+# r13
+git checkout fork_from_r0
+mv -f ~/src/commit13/* ./
+git add *
+git commit -m "commit r13"
+
+# r14
+git checkout fork_from_r2
+mv -f ~/src/commit14/* ./
+git add *
+git commit -m "commit r14"
+
+# r15
+git checkout fork_from_r0
+mv -f ~/src/commit15/* ./
+git add *
+git commit -m "commit r15"
+
+# r16
+git config --global user.name "DoraGotova"
+git config --global user.email "DoraGotova@gmail.com"
+git checkout -b fork_from_r15
+mv -f ~/src/commit16/* ./
+git add *
+git commit -m "commit r16"
+
+# r17
+mv -f ~/src/commit17/* ./
+git add *
+git commit -m "commit r17"
+
+# r18
+git config --global user.name "maybemaybebaby"
+git config --global user.email "maybemaybebay@gmail.com"
+git checkout fork_from_r0
+mv -f ~/src/commit18/* ./
+git add *
+git commit -m "commit r18"
+
+# r19
+git checkout fork_from_r2
+mv -f ~/src/commit19/* ./
+git add *
+git commit -m "commit r19"
+
+# r20
+git checkout fork_from_r1
+mv -f ~/src/commit20/* ./
+git add *
+git commit -m "commit r20"
+
+# r21
+git checkout fork_from_r2
+mv -f ~/src/commit21/* ./
+git add *
+git commit -m "commit r21"
+
+# r22
+git checkout fork_from_r4
+mv -f ~/src/commit22/* ./
+git add *
+git commit -m "commit r22"
+
+# r23
+git checkout fork_from_r1
+mv -f ~/src/commit23/* ./
+git add *
+git commit -m "commit r23"
+
+# r24
+git checkout fork_from_r2
+mv -f ~/src/commit24/* ./
+git add *
+git commit -m "commit r24"
+
+# r25
+mv -f ~/src/commit25/* ./
+git add *
+git commit -m "commit r25"
+git checkout -b fork_from_r25
+
+# r26
+mv -f ~/src/commit26/* ./
+git add *
+git commit -m "commit r26"
+
+# r27
+git checkout fork_from_r4
+mv -f ~/src/commit27/* ./
+git add *
+git commit -m "commit r27"
+
+# r28
+git config --global user.name "DoraGotova"
+git config --global user.email "DoraGotova@gmail.com"
+git checkout master
+mv -f ~/src/commit28/* ./
+git add *
+git commit -m "commit r28"
+
+# r29
+git config --global user.name "maybemaybebaby"
+git config --global user.email "maybemaybebay@gmail.com"
+git checkout fork_from_r2
+mv -f ~/src/commit29/* ./
+git add *
+git commit -m "commit r29"
+
+# r30
+git checkout fork_from_r5
+mv -f ~/src/commit30/* ./
+git add *
+git commit -m "commit r30"
+
+# r31
+git checkout fork_from_r1
+git merge fork_from_r5 -m "merge r30 into r31"
+mv -f ~/src/commit31/* ./
+git add *
+git commit -m "commit r31"
+
+# r32
+git config --global user.name "DoraGotova"
+git config --global user.email "DoraGotova@gmail.com"
+git checkout fork_from_r15
+mv -f ~/src/commit32/* ./
+git add *
+git commit -m "commit r32"
+
+# r33
+git config --global user.name "maybemaybebaby"
+git config --global user.email "maybemaybebay@gmail.com"
+git checkout fork_from_r0
+mv -f ~/src/commit33/* ./
+git add *
+git commit -m "commit r33"
+
+# r34
+git checkout fork_from_r2
+git merge fork_from_r0 -m "merge r33 into r34"
+\end{verbatim}
+\normalsize

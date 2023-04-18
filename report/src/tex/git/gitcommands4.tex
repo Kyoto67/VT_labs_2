@@ -1,0 +1,17 @@
+%! Author = kyoto
+%! Date = 18.04.2023
+
+\tiny
+\begin{verbatim}
+git add *
+git commit -m "merge r42 into r43"
+mv -f ~/src/commit43/* ./
+git add *
+git commit -m "commit r43"
+
+# r44
+git checkout fork_from_r25
+git merge fork_from_r2 -m "merge r43 into r44"
+
+\end{verbatim}
+\normalsize

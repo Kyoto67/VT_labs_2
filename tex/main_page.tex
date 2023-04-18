@@ -1,204 +1,194 @@
-\BgThispage
-
-
-\section{1322. Шпион}
+\section{1067. Структура папок}
 \textit{Условие задачи:} \par
-Спецслужбы обнаружили действующего иностранного агента. Шпиона то есть. Установили наблюдение и выяснили, что каждую
-неделю он через Интернет посылает кому-то странные нечитаемые тексты. Чтобы выяснить, к какой информации получил доступ
-шпион, требуется расшифровать информацию. Сотрудники спецслужб проникли в квартиру разведчика, изучили шифрующее устройство
-и выяснили принцип его работы. На вход устройства подается строка текста $S_1$ = $s_1$$s_2$...$s_N$. Получив ее, устройство
-строит все циклические перестановки этой строки, то есть $S_2$ = $s_2$$s_3$...$s_N$$s_1$, ..., $S_N$ = $s_N$$s_1$$s_2$...$s_{N-1}$.
-Затем множество строк $S_1$, $S_2$, ..., $S_N$ сортируется лексикографически по возрастанию. И в этом порядке строчки
-выписываются в столбец, одна под другой. Получается таблица размером N $\times$ N. В какой-то строке K этой таблицы
-находится исходное слово. Номер этой строки вместе с последним столбцом устройство и выдает на выход.\\
-Например, если исходное слово $S_1$ = \textit{abracadabra}, то таблица имеет такой вид:
-\begin{enumerate}
-    \item \textit{aabracadabr} = $S_11$
-    \item \textit{abraabracad} = $S_8$
-    \item \textit{abracadabra} = $S_1$
-    \item \textit{acadabraabr} = $S_4$
-    \item \textit{adabraabrac} = $S_6$
-    \item \textit{braabracada} = $S_9$
-    \item \textit{bracadabraa} = $S_2$
-    \item \textit{cadabraabra} = $S_5$
-    \item \textit{dabraabraca} = $S_7$
-    \item \textit{raabracadab} = $S_10$
-    \item \textit{racadabraab} = $S_3$
-\end{enumerate}
-И результатом работы устройства является число 3 и строка \textit{rdarcaaaabb}.
-Это все, что известно про шифрующее устройство. А вот дешифрующего устройства не нашли. Но поскольку заведомо известно,
-что декодировать информацию можно (а иначе зачем же ее передавать?), Вам предложили помочь в борьбе с хищениями секретов
-и придумать алгоритм для дешифровки сообщений. А заодно и реализовать дешифратор.
-\newpage
+Хакер Билл случайно потерял всю информацию с жесткого диска своего компьютера, и у него нет резервных копий его
+содержимого. Но он сожалеет не о потере самих файлов, а о потере очень понятной и удобной структуры папок, которую
+он создавал и сохранял в течение многих лет работы. К счастью, у Билла есть несколько копий списков папок с его
+жесткого диска. С помощью этих списков он смог восстановить полные пути к некоторым папкам (например,
+«WINNT\textbackslash SYSTEM32\textbackslash CERTSRV\textbackslash CERTCO~1\textbackslash X86»).
+Он поместил их все в файл, записав каждый найденный путь в отдельную строку. Напишите программу, которая восстановит
+структуру папок Билла и выведет ее в виде отформатированного дерева.
+
 \textit{Пояснение к примененному алгоритму:} \par
-Пусть \textit{M} - матрица всех перестановок, отсортированная лексикографически, \textit{$M_S$} - неотсортированная матрица всех перестановок \textit{F} - первый столбец, \textit{L} - последний, \textit{S} - исходная строка.  \par
-\textbf{Теорема 1 (отображение L$\leftrightarrow$F)} Для каждого символа \textit{c}, \textit{i-е} вхождение \textit{c} в \textit{L} соответствует
-тому же символу в \textit{S}, что и \textit{i-е} вхождение \textit{c} в \textit{F}, для каждого \textit{i}. \par
-\textbf{Доказательство:} Определим правый контекст символа \textit{$F_i$} как \textit{n-1} оставшихся столбцов матрицы \textit{M}.
-В \textit{F} все вхождения \textit{c} находятся вместе в одном интервале, и они упорядочены по их правому контексту.
-В \textit{L} вхождения \textit{c} могут быть разбросаны по \textit{L}, но они также упорядочены по их правому контексту,
-поскольку \textit{$M_S$} состоит из циклических вращений. Поскольку они отсортированы в соответствии с одной и той же строкой,
-они расположены в одном и том же порядке. Вот рисунок, иллюстрирующий приведенное выше доказательство:
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.2]{img/proof}
-\end{figure}
-\BgThispage
-\newpage
-\begin{wrapfigure}{r}{0.25\textwidth} %this figure will be at the right
-    \centering
-    \includegraphics[width=0.25\textwidth]{img/example2}
-\end{wrapfigure}
-Свойство L$\leftrightarrow$F позволяет нам инвертировать шифрование напрямую. Мы восстанавливаем \textit{S}, начиная с конца \textit{S}.
-\textit{S} заканчивается на \$, который является первым символом \textit{F}. Какой символ идет в $S$ перед \$? Первый
-символ стобца \textit{L}. Итак, теперь мы знаем, что \textit{S} заканчивается на $L_0$\$. Это общий случай: пары
-($L_i$ , $F_i$) дают отношения предшествования. То есть, $F_i$ это символ, непосредственно предшествующий $L_i$ в $S$.
-Это следует (опять же) из того факта, что мы имеем дело с циклическими вращениями. Продолжим наш пример: Мы знаем,
-что строка заканчивается на $L_0$$F_0$, и теперь мы хотим найти предшественника $L_0$. Для этого нам нужно найти правильное
-вхождение $L_0$ в $F$. Вот где мы используем свойство отображения L$\leftrightarrow$F: Если $L_0$ является \textit{i-м} вхождением
-символа $L_0$ в $L$, тогда соответствующий символ является \textit{i-м} вхождением символа $L_0$ в $F$.\\
-\\
-\vspace{0.7cm}
-\\
-Собственно, так и реализован мой алгоритм: я составляю соответствия между $L_i$$F_i$, сопоставляя \textit{i-му} вхождению $c$ в $L$
-\textit{i-е} вхождение $c$ в $F$. Так как ограничение по времени не позволяет обойти $L$ и $F$ "в тупую", я использую бинарный поиск
-по $F$, так как $F$ отсортирована - нахожу любое вхождение $c$ в $F$, перемещаюсь к первому вхождению $c$, а потом отступаю на
-столько символов, сколько вхождений уже было найдено. Таким образом, формируется массив $N$, где в каждом $N_i$ записан
-индекс $j$, а $i$,$j$ такие, что $F_i$ = $L_j$ = $c$ (дублирование $c$ учтено и описано выше). По известному номеру строки,
-содержащей $S$, я нахожу начало $S$, а дальше вывожу всю строку: для каждого $i$, $F_i$ - буква, очерёдность которой в $S$ совпадает с
-очерёдностью вызова $i$, а $N_i$ - новый $i$ для следующего шага.\par
-Сложность алгоритма: |O($Nln(N)$) - сортировка F| + |O($Nln(N)$) - бинпоиск N символов| + |операции с unordered\_map O(1)| $\approx$ \underline{O($Nln(N)$)}
-\BgThispage
-\newpage
+Читаем и сохраняем все строки. Сортируем строки лексикографически в иерархическом порядке. Проходим по всем строкам,
+сравнивая их с предыдущими - если у них общий "корень", то стираем его и выводим оставшуюся часть строки с нужным отступом.
+
+
+\underline{Сложность алгоритма:} O(N)  чтение + O(Nlog(N)M) сортировка строк + O(N*M) сравнение и вывод строк $\approx$
+O(MNlog(N)), где M - длина наибольшей строки ( $\leq$ 80)
+
 \textit{Код:}
 \small
 \begin{center}
     \begin{verbatim}
-    uint32_t N;
-    std::string line;
-    std::cin >> N >> line;
-    std::string sorted_line = line;
-    std::sort(sorted_line.begin(), sorted_line.end());
-    std::vector<int> list(line.length());
-    std::unordered_map<char, int> count_literals;
-    for (int i = 0; i < line.length(); ++i) {
-        int L = 0;
-        int R = sorted_line.length() - 1;
-        int M;
-        while (R - L > 1) {
-            M = (R + L) / 2;
-            if (sorted_line[M] > line[i]) R = M;
-            if (sorted_line[M] < line[i]) L = M;
-            if (sorted_line[M] == line[i]) break;
-        }
-        if (sorted_line[M] != line[i]) {
-            if (sorted_line[M-1] == line[i]) M--;
-            if (sorted_line[M+1] == line[i]) M++;
-        }
-        while (M > 0 && sorted_line[M] == sorted_line[M - 1]) {
-            M--;
-        }
-        int shift = 0;
-        if (count_literals.find(sorted_line[M]) != count_literals.end()) {
-            shift = count_literals.at(sorted_line[M]);
-            count_literals.at(sorted_line[M])++;
-        } else {
-            count_literals.emplace(sorted_line[M], 1);
-        }
-        list[M + shift] = i;
-    }
-    uint32_t x = N - 1;
-    for (int i = 0; i < list.size(); ++i) {
-        std::cout << sorted_line[x];
-        x = list[x];
-    }
-    return 0;
-    \end{verbatim}
-\end{center}
-\normalsize
-\BgThispage
-\newpage
+    static const char DELIM = 92;
 
-
-\section{1604. В Стране Дураков}
-\textit{Условие задачи:} \par
-Главный бульдог-полицейский Страны Дураков решил ввести ограничение скоростного режима на автомобильной трассе, ведущей
-от Поля Чудес к пруду Черепахи Тортиллы. Для этого он заказал у Папы Карло n знаков ограничения скорости. Папа Карло
-слабо разбирался в дорожном движении и поэтому изготовил знаки с разными ограничениями на скорость: 49 км/ч, 34 км/ч, 42 км/ч, и т.д.
-Всего получилось k различных ограничений: n1 знаков с одним ограничением, n2 знаков со вторым ограничением, и т.д. ($n_1$ + … + $n_k$ = $n$)
-Бульдог-полицейский ничуть не расстроился, получив такие знаки, напротив, он решил извлечь из этого экономическую выгоду.
-Дело в том, что по Правилам дорожного движения Страны Дураков ограничение на скорость действует вплоть до следующего знака.
-Если на знаке написано число 60, это означает, что участок от данного знака до следующего нужно проехать ровно со скоростью
-60 километров в час — не больше и не меньше. Бульдог распорядился расставить знаки так, чтобы обогатившимся на Поле Чудес
-автолюбителям во время своего движения по трассе приходилось как можно больше раз менять скорость. Для этого нужно расставить
-имеющиеся знаки в правильном порядке. Если Вы поможете бульдогу это сделать, то он готов будет поделиться с Вами частью своих доходов.\\
-\textit{Пояснение к примененному алгоритму:} \par
-Мой алгоритм выбирает на каждом шаге существующий максимум по количеству знаков одного вида, отличный от предыдущего (другой знак),
-и ставит знак этого вида.\\
-\textbf{Доказательство:} \par
-Очевидно, что максимальное количество смен скоростей в последовательности ограничено сверху $n$.
-Пусть таким алгоритмом количество смен скоростей по итогу получилось меньше, чем n. Значит, в полученной
-строке идут неодинаковые пары, а в конце плато (выбираем максимумы, пока можем чередовать, а после подряд ставим оставшиеся знаки одного вида):
-$n_0$,$n_i$ , ... , $n_j$,$n_0$, ... , $n_0$.
-Рассмотрим другую возможность расположить знаки в последовательности так, чтобы количество смен скоростей было максимально,
-и предположим, что количество смен знаков в таком случае будет больше. Тогда возьмём эту последовательность, и
-будем перемещать все $n_i$, соседствующие друг с другом, в конец последовательности так, чтобы плато было только в конце.
-Очевидно, что оно будет одно, так как знаки из двух наборов, идущих подряд, мы можем просто чередовать, пока не закончится один из них.
-Заметим, что в таком случае мы получим нашу исходную последовательность. Значит, количество смен знаков в рассматриваемой последовательности
-такое же, как в исходной. Противоречие.
-\BgThispage
-\newpage
-\textit{Код:}
-\small
-\begin{center}
-    \begin{verbatim}
-void findMaxEl(std::vector<size_t> *vec, size_t *iter) {
-    size_t max = (*vec)[*iter];
-    for (size_t i = (*iter)+1; i < (*vec).size(); ++i) {
-        if ((*vec)[i] > max) {
-            max = (*vec)[i];
-            *iter = i;
+size_t comp_paths(const std::string prev, const std::string curr, size_t *count_delims) {
+    size_t saved_len = 0;
+    size_t curr_len = 0;
+    if (prev.length() == 0) return saved_len;
+    for (size_t i = 0; i < prev.length(); i++) {
+        if (prev[i] != curr[i]) {
+            if (i != prev.length() && (*count_delims) != 0) (*count_delims)--;
+            return saved_len;
         }
+        if (curr[i] == DELIM) {
+            (*count_delims)++;
+            saved_len = curr_len;
+        }
+        curr_len++;
     }
+    if (curr[prev.length()] == DELIM) return curr_len;
+    (*count_delims)--;
+    return saved_len;
 }
 
-void findPredMaxEl(std::vector<size_t> *vec, size_t *jiter, size_t *iter) {
-    size_t max = 0;
-    for (size_t i = (*jiter)+1; i < (*vec).size(); ++i) {
-        if (i!=(*iter) && (*vec)[i] > max) {
-            max = (*vec)[i];
-            *jiter = i;
-        }
+bool comp(std::string s1, std::string s2) {
+    for (size_t i = 0; i < std::min(s1.length(), s2.length()); i++) {
+        if (s1[i] == DELIM && s2[i] != DELIM) return true;
+        if (s2[i] == DELIM && s1[i] != DELIM) return false;
+        if (s2[i] < s1[i]) return false;
+        if (s1[i] < s2[i]) return true;
     }
+    if (s1.length() < s2.length()) return true;
+    else return false;
 }
 
 int main() {
-    size_t k;
-    std::cin >> k;
-    std::vector<size_t> n(k);
-    for (int i = 0; i < k; ++i) {
-        size_t m;
-        std::cin >> m;
-        n[i] = m;
+    size_t N;
+    std::cin >> N;
+    std::vector<std::string> set;
+    for (size_t i = 0; i < N; i++) {
+        std::string line;
+        std::cin >> line;
+        set.push_back(line);
     }
-    size_t iter = 0;
-    findMaxEl(&n,&iter);
-    while (n[iter]>0) {
-        std::cout << iter+1 << " ";
-        n[iter]--;
-        size_t jiter = 0;
-        findPredMaxEl(&n,&jiter,&iter);
-        if (n[jiter] > 0) {
-            std::cout << jiter +1 << " ";
-            n[jiter]--;
+    std::sort(set.begin(), set.end(), comp);
+    std::string last_line;
+    for (std::string s: set) {
+        size_t count_delims = 0;
+        size_t len_to_trim = comp_paths(last_line, s, &count_delims);
+        if (len_to_trim == s.length()) {
+            continue;
         }
-        iter = 0;
-        findMaxEl(&n,&iter);
+        last_line = s;
+        s = s.substr(len_to_trim);
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == DELIM) {
+                count_delims++;
+                for (int j = 0; j < count_delims; j++) {
+                    std::cout << " ";
+                }
+            } else {
+                std::cout << s[i];
+                if (s[i + 1] == DELIM) std::cout << std::endl;
+            }
+        }
+        std::cout << std::endl;
     }
     return 0;
 }
     \end{verbatim}
 \end{center}
 \normalsize
-\BgThispage
 \newpage
+
+\section{1628. Белые полосы}
+\textit{Условие задачи:} \par
+У каждого неудачника в жизни бывают не только чёрные, но и белые полосы. Марсианин Вась-Вась отмечает в календаре,
+представляющем собой таблицу m × n, те дни, когда ему ужасно не повезло. Если Вась-Васю не повезло в j-й день i-й недели,
+то он закрашивает ячейку таблицы (i, j) в чёрный цвет. Все незакрашенные ячейки в таблице имеют белый цвет. Будем называть
+отрезками жизни прямоугольники размером 1 × l либо l × 1. Белыми полосами Вась-Вась считает все максимальные по
+включению белые отрезки таблицы. А сможете ли Вы определить, сколько всего белых полос было в жизни Вась-Вася?
+\textit{Пояснение к примененному алгоритму:} \par
+Читаем координаты занятых ячеек и записываем их в вектор в виде пары координат {x,y}, так же добавляем в вектор ячейки,
+формирующие границы календаря. Сортируем вектор так, чтобы ячейки шли по порядку своего расположения в строках (слева-направо, сверху-вниз).
+Проходим по порядку вектор, считая все свободные "стрики" длиной > 1, и сохраняя в unordered set все одиночные свободные дни.
+Далее сортируем вектор по порядку расположения в столбцах (сверху-вниз, слева-направо). Опять проходим по нему, считая
+все свободные "стрики" длиной > 1, а, встречая одиночный свободный день, проверяем, был ли он одиночным при прошлом проходе,
+если да - это изолированный свободный день, и его считаем как "стрик" длиной 1.
+
+
+\underline{Сложность алгоритма:} O(X) чтение + O(XlogX) сортировка + O(X) проход по вектору $\approx$ O(XlogX), где X=N+M+K.
+
+
+\textit{Код:}
+\small
+\begin{center}
+    \begin{verbatim}
+static size_t m, n, k;
+
+bool sort_for_horizontal(std::pair<int64_t, int64_t> p1, std::pair<int64_t, int64_t> p2) {
+    if (p1.first < p2.first) return true;
+    else if (p1.first == p2.first) return p1.second < p2.second;
+    else return false;
+}
+
+bool sort_for_vertical(std::pair<int64_t, int64_t> p1, std::pair<int64_t, int64_t> p2) {
+    if (p1.second < p2.second) return true;
+    else if (p2.second == p1.second) return p1.first < p2.first;
+    else return false;
+}
+
+int main() {
+    std::cin >> m >> n >> k;
+    std::vector<std::pair<int64_t, int64_t>> busy_cells;
+    for (size_t i = 0; i < m + 2; i++) {
+        busy_cells.push_back({i, 0});
+        busy_cells.push_back({i, n + 1});
+    }
+    for (size_t i = 1; i < n + 1; i++) {
+        busy_cells.push_back({0, i});
+        busy_cells.push_back({m + 1, i});
+    }
+    for (size_t i = 0; i < k; i++) {
+        size_t x;
+        size_t y;
+        std::cin >> x >> y;
+        busy_cells.push_back({(x), (y)});
+    }
+
+    std::unordered_set<uint32_t> one_days;
+    size_t count_stripes = 0;
+
+    std::sort(busy_cells.begin(), busy_cells.end(), sort_for_horizontal);
+    for (size_t i = 1; i < busy_cells.size(); i++) {
+        std::pair<int64_t, int64_t> prev = busy_cells[i - 1];
+        std::pair<int64_t, int64_t> curr = busy_cells[i];
+
+        if (curr.first == prev.first) {
+
+            int64_t dist = curr.second - prev.second - 1;
+            if (dist == 1) {
+                one_days.emplace(curr.first * n + curr.second - 1);
+            } else if (dist > 1) {
+                count_stripes++;
+            }
+        }
+
+    }
+
+    std::sort(busy_cells.begin(), busy_cells.end(), sort_for_vertical);
+
+    for (size_t i = 1; i < busy_cells.size(); i++) {
+        std::pair<int64_t, int64_t> prev = busy_cells[i - 1];
+        std::pair<int64_t, int64_t> curr = busy_cells[i];
+
+        if (curr.second == prev.second) {
+
+            int64_t dist = curr.first - prev.first - 1;
+            if (dist == 1) {
+                auto item = one_days.find((curr.first - 1) * n + curr.second);
+                if (item != one_days.end()) {
+                    count_stripes++;
+                }
+            } else if (dist > 1) {
+                count_stripes++;
+            }
+        }
+
+    }
+    std::cout << count_stripes;
+    return 0;
+}
+    \end{verbatim}
+\end{center}

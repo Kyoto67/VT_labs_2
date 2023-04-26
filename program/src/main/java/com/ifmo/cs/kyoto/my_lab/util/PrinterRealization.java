@@ -6,7 +6,7 @@ public class PrinterRealization implements Printer {
 
     @Override
     public void printIntegrationResult(double x) {
-        System.out.println("Result of integration: " + x);
+        System.out.println("com.ifmo.cs.kyoto.my_lab.Result of integration: " + x);
     }
 
     @Override

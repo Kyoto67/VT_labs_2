@@ -9,6 +9,7 @@
     <property name="soundf" location="sound/Unravel.wav"/>
     <property name="localization_dir" location="src/main/java/com/kyoto/alaba3/tests"/>
     <property name="copy_localization_dir" location="copy_localization"/>
+    <property name="diff_file" value="diff.txt"/>
 
     <path id="classpath">
         <fileset dir="lib" includes="*.jar"/>
@@ -53,6 +54,8 @@
         <echo>Cleaning...</echo>
         <delete dir="${class}"/>
         <delete dir="${alt}/classes"/>
+        <delete dir="${copy_localization_dir}"/>
+        <delete file="${diff_file}"/>
         <echo>Done.</echo>
     </target>
     <target name="music" depends="build" description="воспроизведение музыки по завершению сборки (цель build).">
@@ -121,7 +124,6 @@
             <arg value="--show-item"/>
             <arg value="revision"/>
         </exec>
-        <property name="diff_file" value="diff.txt"/>
 
         <!-- Try to compile the project -->
         <trycatch>

@@ -220,6 +220,9 @@
                     <arg value="'трахать'"/>
                 </exec>
             </then>
+            <else>
+                <echo>Commit failed.</echo>
+            </else>
         </if>
     </target>
 </project>

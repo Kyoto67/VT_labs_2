@@ -58,4 +58,8 @@ public class Result {
         return "{\"sequenceNumber\":\"" + sequenceNumber + "\",\"x\":\"" + x + "\",\"y\":\"" + y +"\",\"r\":\"" + r + 
                 "\",\"match\":\"" + match + "\",\"workingTime\":\"" + workingTime + "\",\"currentDateandTime\":\"" + currentDateandTime + "\"}";
     }
+
+    public MyEntityDate getCurrentDateandTime() {
+        return currentDateandTime;
+    }
 }

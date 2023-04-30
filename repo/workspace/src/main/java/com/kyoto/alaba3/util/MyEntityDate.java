@@ -27,6 +27,7 @@ public class MyEntityDate extends Date {
         currDateandTime = this.toString();
     }
 
-
-
+    public void setResult(Result result) {
+        this.result = result;
+    }
 }

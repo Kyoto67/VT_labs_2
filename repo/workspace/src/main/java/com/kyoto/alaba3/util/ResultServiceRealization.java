@@ -5,7 +5,6 @@ import com.kyoto.alaba3.exception.WrongValueException;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
-import java.util.Date;
 
 @Singleton
 @LocalBean
@@ -27,6 +26,7 @@ public class ResultServiceRealization implements ResultService {
             return false;
         }
     }
+
 
     private boolean verifyX(double x) throws WrongValueException{
         if (x<-5 || x>5) throw new WrongValueException("wrong X value");

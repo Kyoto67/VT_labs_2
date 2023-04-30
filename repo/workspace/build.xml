@@ -1,0 +1,225 @@
+<project name="WEB3" default="compile" xmlns:antcontrib="http://ant-contrib.sourceforge.net"
+         xmlns:ant="http://www.w3.org/1999/XSL/Transform">
+    <property name="src" location="src"/>
+    <property name="class" location="ant_out/classes"/>
+    <property name="jar" location="ant_out/artifacts"/>
+    <property name="alt" location="ant_out/alt"/>
+    <property name="main_class" location="src/main/java/com/kyoto/alaba3/util/AppBean.java"/>
+    <property name="sounds" location="sound/Unravel.wav"/>
+    <property name="soundf" location="sound/Unravel.wav"/>
+    <path id="classpath">
+        <fileset dir="lib" includes="*.jar"/>
+    </path>
+    <path id="svnant.classpath">
+        <pathelement location="lib/svnant.jar"/>
+        <pathelement location="lib/svnClientAdapter.jar"/>
+        <pathelement location="lib/svnkit.jar"/>
+    </path>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="lib/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="lib/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="compile" description="компиляция исходных кодов проекта.">
+        <echo>Compiling...</echo>
+        <mkdir dir="${class}"/>
+        <javac includeantruntime="false" srcdir="${src}" destdir="${class}">
+            <classpath refid="classpath"/>
+        </javac>
+        <echo>Done.</echo>
+    </target>
+    <target name="build" depends="compile" description="упаковка скомпилированных файлов в исполняемый jar-архив">
+        <echo>Building..</echo>
+        <mkdir dir="${jar}"/>
+        <jar basedir="${class}" destfile="${jar}/${ant.project.name}.jar">
+            <manifest>
+                <attribute name="Main-Class" value="${main_class}"/>
+            </manifest>
+        </jar>
+        <echo>Done.</echo>
+    </target>
+    <target name="clean" description="удаление скомпилированных классов проекта и всех временных файлов">
+        <echo>Cleaning...</echo>
+        <delete dir="${class}"/>
+        <delete dir="${alt}/classes"/>
+        <echo>Done.</echo>
+    </target>
+    <target name="music" depends="build" description="воспроизведение музыки по завершению сборки (цель build).">
+        <taskdef name="sound" classname="org.apache.tools.ant.taskdefs.optional.sound.SoundTask"/>
+        <sound>
+            <success source="${sounds}"/>
+            <fail source="${soundf}"/>
+        </sound>
+    </target>
+    <target name="alt"
+            description="создаёт альтернативную версию программы с измененными именами переменных и классов (используя задание replace/replaceregexp в файлах параметров) и упаковывает её в jar-архив.">
+        <echo>Making alternative version...</echo>
+        <mkdir dir="${alt}/src"/>
+        <copy todir="${alt}/src">
+            <fileset dir="${src}"/>
+        </copy>
+        <mkdir dir="${alt}/artifacts"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/util/ResultServiceRealization.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/util/AlternativeResultServiceRealization.java"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/util/ResultService.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/util/AlternativeResultService.java"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/util/ResultDao.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/util/AlternativeResultDao.java"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/util/Result.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/util/AlternativeResult.java"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/util/MyEntityDate.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/util/AlternativeMyEntityDate.java"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/util/AppBean.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/util/AlternativeAppBean.java"/>
+        <move file="${alt}/src/main/java/com/kyoto/alaba3/exception/WrongValueException.java"
+              tofile="${alt}/src/main/java/com/kyoto/alaba3/exception/AlternativeWrongValueException.java"/>
+        <replace token="Result" value="AlternativeResult">
+            <fileset dir="${alt}/src/main/java/com/kyoto/alaba3/util" includes="**/*.java"/>
+        </replace>
+        <replace token="MyEntityDate" value="AlternativeMyEntityDate">
+            <fileset dir="${alt}/src/main/java/com/kyoto/alaba3/util" includes="**/*.java"/>
+        </replace>
+        <replace token="AppBean" value="AlternativeAppBean">
+            <fileset dir="${alt}/src/main/java/com/kyoto/alaba3/util" includes="**/*.java"/>
+        </replace>
+        <replace token="WrongValueException" value="AlternativeWrongValueException">
+            <fileset dir="${alt}/src/main/java/com/kyoto/alaba3/util" includes="**/*.java"/>
+        </replace>
+        <replace token="WrongValueException" value="AlternativeWrongValueException">
+            <fileset dir="${alt}/src/main/java/com/kyoto/alaba3/exception" includes="**/*.java"/>
+        </replace>
+        <antcall target="build">
+            <param name="src" value="${alt}/src"/>
+            <param name="jar" value="${alt}/artifacts"/>
+        </antcall>
+        <echo>Done.</echo>
+    </target>
+    <target name="xml" description="валидация всех xml-файлов в проекте.">
+        <xmlvalidate file="src/main/webapp/WEB-INF/faces-config.xml"/>
+        <xmlvalidate file="src/main/webapp/WEB-INF/web.xml"/>
+        <xmlvalidate file="src/main/resources/META-INF/beans.xml"/>
+        <xmlvalidate file="src/main/resources/META-INF/persistence.xml"/>
+        <xmlvalidate file="src/main/resources/hibernate.cfg.xml"/>
+    </target>
+
+    <target name="history"
+            description="если проект не удаётся скомпилировать (цель compile), загружается предыдущая версия из репозитория svn. Операция повторяется до тех пор, пока проект не удастся собрать, либо не будет получена самая первая ревизия из репозитория. Если такая ревизия найдена, то формируется файл, содержащий результат операции diff для всех файлов, измёненных в ревизии, следующей непосредственно за последней работающей.">
+        <!-- Set variables -->
+        <exec executable="svn" outputproperty="revision">
+            <arg value="info"/>
+            <arg value="--show-item"/>
+            <arg value="revision"/>
+        </exec>
+        <property name="diff_file" value="diff.txt"/>
+
+        <!-- Try to compile the project -->
+        <trycatch>
+            <try>
+                <antcall target="compile"/>
+            </try>
+            <catch>
+                <exec executable="svn">
+                    <arg value="update"/>
+                    <arg value="-r"/>
+                    <arg value="${revision}"/>
+                    <redirector outputproperty="svn.output"/>
+                </exec>
+                <var name="break.flag" unset="true"/>
+                <for param="i" begin="${revision}" end="0" step="-1">
+                    <sequential>
+                        <if>
+                            <not>
+                                <isset property="break.flag"/>
+                            </not>
+                            <then>
+                                <echo>Revision: ${revision}</echo>
+                                <trycatch>
+                                    <try>
+                                        <antcall target="compile"/>
+                                        <property name="prev_revision" value="0"/>
+                                        <script language="javascript">
+                                            var rev = project.getProperty("revision");
+                                            rev = rev -1;
+                                            project.setProperty("prev_revision", rev);
+                                        </script>
+                                        <exec executable="svn">
+                                            <arg value="diff"/>
+                                            <arg value="-r"/>
+                                            <arg value="${prev_revision}:${revision}"/>
+                                            <arg value="--summarize"/>
+                                            <redirector output="${diff_file}"/>
+                                        </exec>
+                                        <property name="break.flag" value="true"/>
+                                    </try>
+                                    <catch>
+                                        <script language="javascript">
+                                            var rev = project.getProperty("revision");
+                                            rev = rev -1;
+                                            project.setProperty("revision", rev);
+                                        </script>
+                                        <exec executable="svn">
+                                            <arg value="update"/>
+                                            <arg value="-r"/>
+                                            <arg value="${revision}"/>
+                                            <redirector outputproperty="svn.output"/>
+                                        </exec>
+                                    </catch>
+                                </trycatch>
+                            </then>
+                        </if>
+                    </sequential>
+                </for>
+            </catch>
+        </trycatch>
+    </target>
+
+    <target name="diff"
+            description="осуществляет проверку состояния рабочей копии, и, если изменения не касаются классов, указанных в файле параметров выполняет commit в репозиторий git.">
+        <loadfile property="params" srcFile="params.props"/>
+        <exec executable="git" outputproperty="differences">
+            <arg value="diff"/>
+            <arg value="--name-only"/>
+        </exec>
+        <var name="commit.flag" unset="true"/>
+        <script language="javascript">
+            var diffs = project.getProperty("differences").split("\n");
+            var params = project.getProperty("params").split("\n");
+            for (var i=0; i&lt;params.length; i++) {
+                for (var j=0; j&lt;diffs.length; j++) {
+                    if (params[i] === diffs[j]) {
+                        var flag = true;
+                        project.setProperty("commit.flag", true);
+                        break;
+                    }
+                }
+                if (flag) {
+                    break;
+                }
+            }
+        </script>
+        <if>
+            <not>
+                <isset property="commit.flag"/>
+            </not>
+            <then>
+                <exec executable="git">
+                    <arg value="add"/>
+                    <arg value="*"/>
+                </exec>
+                <exec executable="git">
+                    <arg value="commit"/>
+                    <arg value="-m"/>
+                    <arg value="'трахать'"/>
+                </exec>
+            </then>
+        </if>
+    </target>
+</project>

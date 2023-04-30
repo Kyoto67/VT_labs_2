@@ -1,0 +1,17 @@
+
+compile:
+     [echo] Compiling...
+    [javac] Compiling 7 source files to /home/kyoto/git/ant_out/classes
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+     [echo] Done.
+
+build:
+     [echo] Building..
+      [jar] Building jar: /home/kyoto/git/ant_out/artifacts/WEB3.jar
+     [echo] Done.
+
+music:
+
+BUILD SUCCESSFUL
+Total time: 1 second

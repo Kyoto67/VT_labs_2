@@ -14,4 +14,5 @@ public interface ResultService {
     Date getDatewithOffset(int offset);
 
     String getFormattedWorkingTime();
+    asdadas
 }

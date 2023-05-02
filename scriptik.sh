@@ -7,10 +7,10 @@ cd workspace
 # r0
 cp -R ~/git/src ./
 svn add *
-svn commit -m "working" --username="govno"
+svn commit -m "working" --username="trahat"
 rm src/main/java/com/kyoto/alaba3/util/Result*
 echo "adfsdfg" >> src/main/java/com/kyoto/alaba3/exception/WrongValueException.java 
 svn add *
-svn commit -m "not working" --username="mocha"
+svn commit -m "not working" --username="trahat"
 svn switch file:///home/kyoto/git/repo/trunk
 svn log

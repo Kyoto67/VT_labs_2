@@ -6,99 +6,97 @@
 
 namespace mp = matplot;
 
-double a,b;
+typedef double fn_t(double x, double y);
 
-size_t approximate_linear_least_squares(const std::vector<double> &x_axis, const std::vector<double> &y_axis,
-                                        std::vector<double> &P, std::vector<double> &x_new) {
-    size_t n = x_axis.size();
-    double sx = 0;
-    double sxx = 0;
-    double sy = 0;
-    double sxy = 0;
-    for (int i = 0; i < n; i++) {
-        sx += x_axis.at(i);
-        sxx += x_axis.at(i) * x_axis.at(i);
-        sy += y_axis.at(i);
-        sxy += x_axis.at(i) * y_axis.at(i);
-    }
-    a = (sxy * n - sx * sy) / (sxx * n - sx * sx);
-    b = (sy - sx * a) / n;
-    double worst_el = 0;
-    size_t iter = 0;
-    for (int i = 0; i < x_new.size(); i++) {
-        double p = a * x_new[i] + b;
-        P.push_back(p);
-        if (i % 10 == 0) {
-            double epsilon = std::abs(p - y_axis.at(i / 10));
-            if (epsilon > worst_el) {
-                iter = i;
-                worst_el = epsilon;
-            }
-        }
-    }
-    return iter;
+double first_function(double x, double y) {
+    return std::sin(x);
 }
 
+double second_function(double x, double y) {
+    return (x * y) / 2;
+}
+
+double third_function(double x, double y) {
+    return y - (2 * x) / y;
+}
+
+double fourth_function(double x, double y) {
+    return x + y;
+}
+
+double default_function(double x, double y) {
+    return 0.0;
+}
+
+fn_t &get_function(int n) {
+    switch (n) {
+        case 1:
+            return first_function;
+        case 2:
+            return second_function;
+        case 3:
+            return third_function;
+        case 4:
+            return fourth_function;
+        default:
+            return default_function;
+    }
+}
+
+std::vector<double> X;
+std::vector<double> Y;
+
+double solveByAdams(int f, double a, double y_a, double b) {
+    fn_t &func = get_function(f);
+    int n = 100;
+    double h = (b - a) / n;
+    X.resize(n + 1);
+    X[0] = a;
+    for (int i = 1; i <= n; i++) {
+        X[i] = X[i - 1] + h;
+    }
+
+    Y.resize(n + 1);
+    Y[0] = y_a;
+    for (int i = 0; i < 4; i++) {
+        double k1 = h * func(X[i], Y[0]);
+        double k2 = h * func(X[i] + h / 2, Y[i] + k1 / 2);
+        double k3 = h * func(X[i] + h / 2, Y[i] + k2 / 2);
+        double k4 = h * func(X[i] + h, Y[i] + k3);
+        Y[i + 1] = Y[i] + (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+    }
+    for (int i = 4; i < n; i++) {
+        double delta_f_1 = func(X[i], Y[i]);
+        double delta_f_2 = func(X[i], Y[i]) - 2 * func(X[i - 1], Y[i - 1]) + func(X[i - 2], Y[i - 2]);
+        double delta_f_3 =
+                func(X[i], Y[i]) - 3 * func(X[i - 1], Y[i - 1]) + 3 * func(X[i - 2], Y[i - 2]) -
+                func(X[i - 3], Y[i - 3]);
+        Y[i + 1] = Y[i] + h * func(X[i], Y[i]) + std::pow(h, 2) / 2 * delta_f_1 +
+                   std::pow(h, 3) * 5 / 12 * delta_f_2 + std::pow(h, 4) * 3 / 8 * delta_f_3;
+    }
+    return Y[n];
+}
 
 auto main() -> int {
     mp::hold(true);
 
+    double a = 5;
+    double b = 12;
+    double y_a = 2;
+    int f = 3;
 
-//    std::vector<double> _x = {0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7};
-    std::vector<double> _x = {0, 0.5, 1, 1.5, 2, 2.5, 3};
-    std::vector<double> _y(_x.size());
-    for (size_t i = 0; i < _x.size(); i++) {
-        _y[i] = _x[i] * _x[i] + std::rand() / RAND_MAX - 0.5;
-    }
-    std::vector<double> x_new = _x;
-//    for (int i = 1; i < _x.size(); i++) {
-//        double k = (_x[i] - _x[i - 1]) / 10;
-//        for (size_t j = 0; j < 10; j++) {
-//            x_new.push_back(_x[i - 1] + (k * j));
-//        }
-//    }
-    std::vector<double> P;
+    std::cout << "Начальное условие:" << std::endl
+              << "Номер функции: " << f << std::endl
+              << "Левая граница: " << a << std::endl
+              << "Значение функции y в точке левой границы: " << y_a << std::endl
+              << "Правая граница: " << b << std::endl;
 
+    solveByAdams(f, a, y_a, b);
 
-    size_t iter = approximate_linear_least_squares(_x, _y, P, x_new);
-
-    std::vector<double> _P = P;
-    std::vector<double> _x_new = x_new;
-
-    auto iterator_x = _x_new.begin();
-    auto iterator_P = _P.begin();
-    for (size_t i = 0; i < iter; i++) {
-        iterator_x++;
-        iterator_P++;
-    }
-    _x_new.erase(iterator_x);
-    _P.erase(iterator_P);
-
-    std::vector<double> P_new;
-    std::vector<double> x_new_new = _x_new;
-
-    approximate_linear_least_squares(_x_new, _P, P_new, x_new_new);
-
-    auto scattered = mp::scatter(_x, _y, 10);
+    auto scattered = mp::scatter(X, Y, 10);
     scattered->marker_face(true);
 
-    auto scattered_approx = mp::scatter(x_new, P, 10);
-    scattered_approx->marker_face(true);
-
-    std::cout << "a: " << a << " , b: " << b << std::endl;
-
-    mp::show();
-
-    auto scattered_approx_second = mp::scatter(x_new_new, P_new, 10);
-    scattered_approx_second->marker_face(true);
-
-    mp::show();
-
-    std::cout << "a: " << a << " , b: " << b << std::endl;
-
-//    mp::plot(_x, _y, "-");
-    mp::plot(x_new, P, "-");
-    mp::plot(x_new_new, P_new, "-");
+    mp::plot(X, Y, "-");
 
     mp::show();
 

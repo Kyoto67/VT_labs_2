@@ -25,7 +25,7 @@
 [Lab1](https://github.com/Kyoto67/VT_labs_2/tree/Computational_Mathematics_1)
 [Lab2](https://github.com/Kyoto67/VT_labs_2/tree/Computational_Mathematics_2)
 [Lab3](https://github.com/Kyoto67/VT_labs_2/tree/Computational_Mathematics_3)
-
+[Lab4](https://github.com/Kyoto67/VT_labs_2/tree/Computational_Mathematics_4)
 
 ## Modern Tools of Data Analysis:
 [Lab1](https://github.com/Kyoto67/VT_labs_2/tree/Modern_Tools_of_Data_Analysis)

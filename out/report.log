@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2023.2.21)  7 MAY 2023 07:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2023.2.21)  7 MAY 2023 08:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1659,13 +1659,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 157--158
  []
 
 ) [5] (/home/kyoto/git/out/report.aux)
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: DF4288C109A569D44BEF8B5DE57DA5D8;491.
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: DF4288C109A569D44BEF8B5DE57DA5D8;491
+(rerunfilecheck)             After:  BFDA56BBDA53A533F19C1B6375B308A5;496.
  ) 
 Here is how much of TeX's memory you used:
  37332 strings out of 478023
  830044 string characters out of 5841208
- 1206245 words of memory out of 5000000
+ 1206246 words of memory out of 5000000
  55180 multiletter control sequences out of 15000+600000
  479679 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1679,7 +1685,7 @@ public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx
 ublic/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1
 000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/
 texmf/fonts/type1/public/cm-super/sftt0800.pfb>
-Output written on /home/kyoto/git/out/report.pdf (5 pages, 206248 bytes).
+Output written on /home/kyoto/git/out/report.pdf (5 pages, 206263 bytes).
 PDF statistics:
  99 PDF objects out of 1000 (max. 8388607)
  71 compressed objects within 1 object stream

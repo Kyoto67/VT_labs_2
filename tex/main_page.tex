@@ -1,90 +1,217 @@
-\section{1067. Структура папок}
+\section{M. Цивилизация}
 \textit{Условие задачи:} \par
-Хакер Билл случайно потерял всю информацию с жесткого диска своего компьютера, и у него нет резервных копий его
-содержимого. Но он сожалеет не о потере самих файлов, а о потере очень понятной и удобной структуры папок, которую
-он создавал и сохранял в течение многих лет работы. К счастью, у Билла есть несколько копий списков папок с его
-жесткого диска. С помощью этих списков он смог восстановить полные пути к некоторым папкам (например,
-«WINNT\textbackslash SYSTEM32\textbackslash CERTSRV\textbackslash CERTCO~1\textbackslash X86»).
-Он поместил их все в файл, записав каждый найденный путь в отдельную строку. Напишите программу, которая восстановит
-структуру папок Билла и выведет ее в виде отформатированного дерева.
+Карта мира в компьютерной игре «Цивилизация» версии 1 представляет собой прямоугольник, разбитый на квадратики. Каждый квадратик может иметь один из
+нескольких возможных рельефов, для простоты ограничимся тремя видами рельефов — поле, лес и вода. Поселенец перемещается по карте, при этом на перемещение
+в клетку, занятую полем, необходима одна единица времени, на перемещение в лес — две единицы времени, а перемещаться в клетку с водой нельзя.\\
+У вас есть один поселенец, вы определили место, где нужно построить город, чтобы как можно скорее завладеть всем миром. Найдите маршрут переселенца,
+приводящий его в место строительства города, требующий минимального времени. На каждом ходе переселенец может перемещаться в клетку, имеющую общую сторону
+с той клеткой, где он сейчас находится.\\
 
 \textit{Пояснение к примененному алгоритму:} \par
-Читаем и сохраняем все строки. Сортируем строки лексикографически в иерархическом порядке. Проходим по всем строкам,
-сравнивая их с предыдущими - если у них общий "корень", то стираем его и выводим оставшуюся часть строки с нужным отступом.
+Суть задачи - дан ориентированный граф с заданным весом рёбер, нужно найти минимальный путь от одной заданной вершины к другой. Наиболее популярные
+алгоритмы, решающие эту задачу: Дейкстра( O($nlog(n)$) ), Беллман-Форд ( O($|V| * |E|$) ), A* ( экспоненциальный рост сложности при большом количестве
+рёбер, оптимален, если исследуемый граф дерево ), Флойд-Уоршелл ( O($N^3$) ). Очевидно, что в нашем случае (количество рёбер в графе приближено к 2$N^2$)
+оптимальным вариантом будет алгоритм Дейкстры.\\
+Так же, чтобы оптимизировать память, заходя в каждую вершину, я сохраняю откуда я в неё пришел, а в конце прохожу маршрут в обратную сторону и собираю строку
+пути.\\
+\underline{Сложность алгоритма:} Дейкстра O($nlog(n)$) + Восстановление пути O($n$) $\approx$ O($nlog(n)$)\\
 
-
-\underline{Сложность алгоритма:} O(N)  чтение + O(Nlog(N)M) сортировка строк + O(N*M) сравнение и вывод строк $\approx$
-O(MNlog(N)), где M - длина наибольшей строки ( $\leq$ 80)
 
 \textit{Код:}
-\small
+\tiny
 \begin{center}
     \begin{verbatim}
-    static const char DELIM = 92;
-
-size_t comp_paths(const std::string prev, const std::string curr, size_t *count_delims) {
-    size_t saved_len = 0;
-    size_t curr_len = 0;
-    if (prev.length() == 0) return saved_len;
-    for (size_t i = 0; i < prev.length(); i++) {
-        if (prev[i] != curr[i]) {
-            if (i != prev.length() && (*count_delims) != 0) (*count_delims)--;
-            return saved_len;
-        }
-        if (curr[i] == DELIM) {
-            (*count_delims)++;
-            saved_len = curr_len;
-        }
-        curr_len++;
+  int64_t n, m, sx, sy, fx, fy;
+  std::cin >> n >> m >> sy >> sx >> fy >> fx;
+  sy--;
+  sx--;
+  fy--;
+  fx--;
+  int64_t y = sy;
+  int64_t x = sx;
+  std::vector<std::vector<int64_t>> matrix(n, std::vector<int64_t>(m));
+  for (int64_t i = 0; i < n; i++) {
+    for (int64_t j = 0; j < m; j++) {
+      char c;
+      std::cin >> c;
+      if (c == '.')
+        matrix[i][j] = 1;
+      if (c == 'W')
+        matrix[i][j] = 2;
+      if (c == '#')
+        matrix[i][j] = -1;
     }
-    if (curr[prev.length()] == DELIM) return curr_len;
-    (*count_delims)--;
-    return saved_len;
+  }
+  matrix[y][x] = 0;
+  std::vector<std::vector<char>> paths_matrix(n, std::vector<char>(m));
+  std::priority_queue<
+      std::pair<int64_t, std::pair<int64_t, int64_t>>,
+      std::vector<std::pair<int64_t, std::pair<int64_t, int64_t>>>,
+      std::greater<>>
+      queue;
+  if (x > 0 && matrix[y][x - 1] != -1) {
+    std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {matrix[y][x - 1],
+                                                            {y, x - 1}};
+    matrix[y][x - 1] = 0;
+    paths_matrix[y][x - 1] = 'W';
+    queue.emplace(pair);
+  }
+  if ((x + 1) < m && matrix[y][x + 1] != -1) {
+    std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {matrix[y][x + 1],
+                                                            {y, x + 1}};
+    matrix[y][x + 1] = 0;
+    paths_matrix[y][x + 1] = 'E';
+    queue.emplace(pair);
+  }
+  if (y > 0 && matrix[y - 1][x] != -1) {
+    std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {matrix[y - 1][x],
+                                                            {y - 1, x}};
+    matrix[y - 1][x] = 0;
+    paths_matrix[y - 1][x] = 'N';
+    queue.emplace(pair);
+  }
+  if ((y + 1) < n && matrix[y + 1][x] != -1) {
+    std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {matrix[y + 1][x],
+                                                            {y + 1, x}};
+    matrix[y + 1][x] = 0;
+    paths_matrix[y + 1][x] = 'S';
+    queue.emplace(pair);
+  }
+  int64_t ans = -1;
+  while (!queue.empty()) {
+    std::pair<int64_t, std::pair<int64_t, int64_t>> curr = queue.top();
+    queue.pop();
+    y = curr.second.first;
+    x = curr.second.second;
+    int64_t cost = curr.first;
+    if (y == fy && x == fx) {
+      ans = cost;
+      break;
+    }
+    if (x > 0 && matrix[y][x - 1] != -1 && matrix[y][x - 1] != 0) {
+      std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {
+          cost + matrix[y][x - 1], {y, x - 1}};
+      matrix[y][x - 1] = 0;
+      paths_matrix[y][x - 1] = 'W';
+      queue.emplace(pair);
+    }
+    if ((x + 1) < m && matrix[y][x + 1] != -1 && matrix[y][x + 1] != 0) {
+      std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {
+          cost + matrix[y][x + 1], {y, x + 1}};
+      matrix[y][x + 1] = 0;
+      paths_matrix[y][x + 1] = 'E';
+      queue.emplace(pair);
+    }
+    if (y > 0 && matrix[y - 1][x] != -1 && matrix[y - 1][x] != 0) {
+      std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {
+          cost + matrix[y - 1][x], {y - 1, x}};
+      matrix[y - 1][x] = 0;
+      paths_matrix[y - 1][x] = 'N';
+      queue.emplace(pair);
+    }
+    if ((y + 1) < n && matrix[y + 1][x] != -1 && matrix[y + 1][x] != 0) {
+      std::pair<int64_t, std::pair<int64_t, int64_t>> pair = {
+          cost + matrix[y + 1][x], {y + 1, x}};
+      matrix[y + 1][x] = 0;
+      paths_matrix[y + 1][x] = 'S';
+      queue.emplace(pair);
+    }
+  }
+  if (ans == -1)
+    std::cout << -1;
+  else {
+    std::string path;
+    x = fx;
+    y = fy;
+    while (!(x == sx && y == sy)) {
+      path = paths_matrix[y][x] + path;
+      if (paths_matrix[y][x] == 'N') {
+        y += 1;
+      } else if (paths_matrix[y][x] == 'S') {
+        y -= 1;
+      } else if (paths_matrix[y][x] == 'E') {
+        x -= 1;
+      } else if (paths_matrix[y][x] == 'W') {
+        x += 1;
+      }
+    }
+    std::cout << ans << std::endl << path;
+  }
+  return 0;
+    \end{verbatim}
+\end{center}
+\normalsize
+\newpage
+
+
+\section{N. Свинки-копилки}
+\textit{Условие задачи:} \par
+У Васи есть n свинок-копилок, свинки занумерованы числами от 1 до n. Каждая копилка может быть открыта единственным соответствующим ей ключом или разбита.\\
+Вася положил ключи в некоторые из копилок (он помнит, какой ключ лежит в какой из копилок). Теперь Вася собрался купить машину, а для этого ему нужно
+достать деньги из всех копилок. При этом он хочет разбить как можно меньшее количество копилок (ведь ему еще нужно копить деньги на квартиру, дачу, вертолет…).
+Помогите Васе определить, какое минимальное количество копилок нужно разбить.\\
+
+\textit{Пояснение к примененному алгоритму:} \par
+Суть задачи сводится к нахождению количества компонент связности в ориентированном графе: в каждой компоненте есть начальная вершина (не обязательно
+одна, зайдя в которую (((разбив копилку))), потом можно дойти до остальных вершин в этой компоненте по рёбрам (((используя открытые ключи))) ).\\
+Мой алгоритм втупую обходит весь граф: беру любую вершину, обхожу рекурсивно всех её потомков, добавляя вершины в компоненту связности, далее рекурсивно
+обхожу всех её родителей, заходя в каждого родителя рекурсивно обхожу всех его потомков, если не делал этого ранее, так же добавляя родителей в компоненту.
+Дополнительно сохраняю вне компонент каждую посещённую вершину, чтобы не заходить в неё дважды. После обхода всей компоненты, сохраняю её и ищу, остались ли
+непосещённые вершины, пока такие вершины есть - так же обхожу рекурсивно вверх и вниз их. В конце получаю все имеющиеся компоненты связности.\\
+\underline{Сложность алгоритма:} O($n$), потому что в каждую вершину я могу зайти максимум дважды (при обходе вверх и вниз).\\
+
+\textit{Код:}
+\tiny
+\begin{center}
+    \begin{verbatim}
+void round_down(const std::vector<std::vector<bool>> &list,
+                std::vector<bool> &check_list,
+                std::unordered_set<size_t> &cluster,
+                size_t i) {
+    cluster.emplace(i);
+    check_list[i] = true;
+    for (size_t j = 0; j < list.size(); j++) {
+        if (j == i)
+            continue;
+        if (list[i][j] && !check_list[j])
+            round_down(list, check_list, cluster, j);
+    }
 }
 
-bool comp(std::string s1, std::string s2) {
-    for (size_t i = 0; i < std::min(s1.length(), s2.length()); i++) {
-        if (s1[i] == DELIM && s2[i] != DELIM) return true;
-        if (s2[i] == DELIM && s1[i] != DELIM) return false;
-        if (s2[i] < s1[i]) return false;
-        if (s1[i] < s2[i]) return true;
+void round_up(const std::vector<std::vector<bool>> &list,
+              std::vector<bool> &check_up_list,
+              std::vector<bool> &check_list,
+              std::unordered_set<size_t> &cluster,
+              size_t i) {
+    check_up_list[i] = true;
+    round_down(list, check_list, cluster, i);
+    for (size_t j=0; j<list.size(); j++) {
+        if (list[j][i] && !check_up_list[j]) {
+            round_up(list,check_up_list,check_list, cluster, j);
+        }
     }
-    if (s1.length() < s2.length()) return true;
-    else return false;
 }
 
 int main() {
     size_t N;
     std::cin >> N;
-    std::vector<std::string> set;
+    std::vector<std::vector<bool>> list(N, std::vector<bool>(N));
     for (size_t i = 0; i < N; i++) {
-        std::string line;
-        std::cin >> line;
-        set.push_back(line);
+        size_t j;
+        std::cin >> j;
+        list[j - 1][i] = true;
     }
-    std::sort(set.begin(), set.end(), comp);
-    std::string last_line;
-    for (std::string s: set) {
-        size_t count_delims = 0;
-        size_t len_to_trim = comp_paths(last_line, s, &count_delims);
-        if (len_to_trim == s.length()) {
-            continue;
+    std::vector<std::unordered_set<size_t>> clusters;
+    std::vector<bool> check_list(N);
+    std::vector<bool> check_up_list(N);
+    for (size_t i = 0; i < N; i++) {
+        std::unordered_set<size_t> cluster;
+        if (!check_list[i]) {
+            round_up(list,check_up_list, check_list, cluster, i);
+            clusters.push_back(cluster);
         }
-        last_line = s;
-        s = s.substr(len_to_trim);
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] == DELIM) {
-                count_delims++;
-                for (int j = 0; j < count_delims; j++) {
-                    std::cout << " ";
-                }
-            } else {
-                std::cout << s[i];
-                if (s[i + 1] == DELIM) std::cout << std::endl;
-            }
-        }
-        std::cout << std::endl;
     }
+    std::cout << clusters.size() << std::endl;
     return 0;
 }
     \end{verbatim}
@@ -92,103 +219,153 @@ int main() {
 \normalsize
 \newpage
 
-\section{1628. Белые полосы}
+
+\section{O. Долой списывание!}
 \textit{Условие задачи:} \par
-У каждого неудачника в жизни бывают не только чёрные, но и белые полосы. Марсианин Вась-Вась отмечает в календаре,
-представляющем собой таблицу m × n, те дни, когда ему ужасно не повезло. Если Вась-Васю не повезло в j-й день i-й недели,
-то он закрашивает ячейку таблицы (i, j) в чёрный цвет. Все незакрашенные ячейки в таблице имеют белый цвет. Будем называть
-отрезками жизни прямоугольники размером 1 × l либо l × 1. Белыми полосами Вась-Вась считает все максимальные по
-включению белые отрезки таблицы. А сможете ли Вы определить, сколько всего белых полос было в жизни Вась-Вася?
+Во время теста Михаил Дмитриевич заметил, что некоторые лкшата обмениваются записками. Сначала он хотел поставить им всем двойки, но в тот день Михаил
+Дмитриевич был добрым, а потому решил разделить лкшат на две группы: списывающих и дающих списывать, и поставить двойки только первым.\\
+У Михаила Дмитриевича записаны все пары лкшат, обменявшихся записками. Требуется определить, сможет ли он разделить лкшат на две группы так, чтобы любой
+обмен записками осуществлялся от лкшонка одной группы лкшонку другой группы.\\
 \textit{Пояснение к примененному алгоритму:} \par
-Читаем координаты занятых ячеек и записываем их в вектор в виде пары координат {x,y}, так же добавляем в вектор ячейки,
-формирующие границы календаря. Сортируем вектор так, чтобы ячейки шли по порядку своего расположения в строках (слева-направо, сверху-вниз).
-Проходим по порядку вектор, считая все свободные "стрики" длиной > 1, и сохраняя в unordered set все одиночные свободные дни.
-Далее сортируем вектор по порядку расположения в столбцах (сверху-вниз, слева-направо). Опять проходим по нему, считая
-все свободные "стрики" длиной > 1, а, встречая одиночный свободный день, проверяем, был ли он одиночным при прошлом проходе,
-если да - это изолированный свободный день, и его считаем как "стрик" длиной 1.
-
-
-\underline{Сложность алгоритма:} O(X) чтение + O(XlogX) сортировка + O(X) проход по вектору $\approx$ O(XlogX), где X=N+M+K.
-
+Задача: проверить, является ли заданный граф с алкашатами двудольным. Необходимый и достаточный критерий двудольности графа - его можно раскрасить в 2 цвета.
+Мой алгоритм подвешивает граф за какую-то вершину и раскрашивает её по уровням в два цвета обходом в ширину. Если все связные с корнем вершины пройдены, но
+есть ещё рассмотренные вершины, то алгоритм повторяется до тех пор, пока не будут рассмотрены все вершины.\\
+\underline{Сложность алгоритма:} O($|V| + |E|$)\\
 
 \textit{Код:}
-\small
+\tiny
 \begin{center}
     \begin{verbatim}
-static size_t m, n, k;
+    size_t N, M;
+    std::cin >> N >> M;
+    std::unordered_multimap<size_t, size_t> edges;
+    std::unordered_set<size_t> unvisited_nodes;
+    for (size_t i = 0; i < M; i++) {
+        size_t x, y;
+        std::cin >> x >> y;
+        edges.emplace(x, y);
+        edges.emplace(y, x);
+        unvisited_nodes.emplace(x);
+        unvisited_nodes.emplace(y);
+    }
+    std::queue<std::pair<size_t, uint32_t>> queue;
+    std::unordered_set<size_t> red;
+    std::unordered_set<size_t> blue;
+    while(!unvisited_nodes.empty()) {
+        auto item = unvisited_nodes.begin();
+        queue.push({*item, 0});
+        unvisited_nodes.erase(item);
+        while (!queue.empty()) {
+            std::pair<size_t, uint32_t> node = queue.front();
+            queue.pop();
+            unvisited_nodes.erase(node.first);
+            auto iter = edges.find(node.first);
+            while (iter != edges.end()) {
+                if (unvisited_nodes.find(iter->second) != unvisited_nodes.end()) queue.push({iter->second, node.second+1});
+                edges.erase(iter);
+                iter = edges.find(node.first);
+            }
+            if (node.second % 2 == 0) {
+              if (blue.find(node.first) != blue.end()) {
+                  std::cout << "NO";
+                  return 0;
+              } else {
+                  red.emplace(node.first);
+              }
+            } else {
+                if (red.find(node.first) != red.end()) {
+                    std::cout << "NO";
+                    return 0;
+                } else {
+                    blue.emplace(node.first);
+                }
+            }
+        }
+    }
+    std::cout << "YES";
+    return 0;
+    \end{verbatim}
+\end{center}
+\normalsize
+\newpage
 
-bool sort_for_horizontal(std::pair<int64_t, int64_t> p1, std::pair<int64_t, int64_t> p2) {
-    if (p1.first < p2.first) return true;
-    else if (p1.first == p2.first) return p1.second < p2.second;
-    else return false;
-}
 
-bool sort_for_vertical(std::pair<int64_t, int64_t> p1, std::pair<int64_t, int64_t> p2) {
-    if (p1.second < p2.second) return true;
-    else if (p2.second == p1.second) return p1.first < p2.first;
-    else return false;
+\section{P. Авиаперелёты}
+\textit{Условие задачи:} \par
+Главного конструктора Петю попросили разработать новую модель самолёта для компании «Air Бубундия». Оказалось, что самая сложная часть заключается в
+подборе оптимального размера топливного бака.\\
+Главный картограф «Air Бубундия» Вася составил подробную карту Бубундии. На этой карте он отметил расход топлива для перелёта между каждой парой городов.\\
+Петя хочет сделать размер бака минимально возможным, для которого самолёт сможет долететь от любого города в любой другой (возможно, с дозаправками в пути).\\
+\textit{Пояснение к примененному алгоритму:} \par
+Бинпоиск по ответу + N DFS'ов + оптимизация DFS'а (если я захожу в вершину, которую до этого уже проверил поиском в глубину и она связана со всеми, то и
+текущая проверяемая поиском в глубину вершина связана со всеми и я выхожу из поиска).\\
+\underline{Сложность алгоритма:} O($log(N)$ * $N^2$)\\
+
+\textit{Код:}
+\tiny
+\begin{center}
+    \begin{verbatim}
+std::vector<bool> used_all;
+
+
+void find_path(const std::vector<std::vector<uint32_t>> &matrix,
+               std::vector<bool> &used,
+               std::unordered_set<size_t> &nodes,
+               size_t i, uint32_t dist) {
+    used[i] = true;
+    for (size_t j=0; j<matrix.size(); j++) {
+        if (!used[j] && matrix[i][j] <= dist) {
+            if (nodes.find(j) != nodes.end()) {
+                used = used_all;
+                return;
+            } else {
+                find_path(matrix,used, nodes, j,dist);
+            }
+        }
+    }
 }
 
 int main() {
-    std::cin >> m >> n >> k;
-    std::vector<std::pair<int64_t, int64_t>> busy_cells;
-    for (size_t i = 0; i < m + 2; i++) {
-        busy_cells.push_back({i, 0});
-        busy_cells.push_back({i, n + 1});
-    }
-    for (size_t i = 1; i < n + 1; i++) {
-        busy_cells.push_back({0, i});
-        busy_cells.push_back({m + 1, i});
-    }
-    for (size_t i = 0; i < k; i++) {
-        size_t x;
-        size_t y;
-        std::cin >> x >> y;
-        busy_cells.push_back({(x), (y)});
-    }
-
-    std::unordered_set<uint32_t> one_days;
-    size_t count_stripes = 0;
-
-    std::sort(busy_cells.begin(), busy_cells.end(), sort_for_horizontal);
-    for (size_t i = 1; i < busy_cells.size(); i++) {
-        std::pair<int64_t, int64_t> prev = busy_cells[i - 1];
-        std::pair<int64_t, int64_t> curr = busy_cells[i];
-
-        if (curr.first == prev.first) {
-
-            int64_t dist = curr.second - prev.second - 1;
-            if (dist == 1) {
-                one_days.emplace(curr.first * n + curr.second - 1);
-            } else if (dist > 1) {
-                count_stripes++;
-            }
+    size_t n;
+    std::cin >> n;
+    std::vector<std::vector<uint32_t>> matrix(n, std::vector<uint32_t>(n));
+    uint32_t R = 0;
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < n; j++) {
+            uint32_t number;
+            std::cin >> number;
+            matrix[i][j] = number;
+            R = std::max(number, R);
         }
-
     }
 
-    std::sort(busy_cells.begin(), busy_cells.end(), sort_for_vertical);
+    used_all = std::vector<bool> (n, true);
 
-    for (size_t i = 1; i < busy_cells.size(); i++) {
-        std::pair<int64_t, int64_t> prev = busy_cells[i - 1];
-        std::pair<int64_t, int64_t> curr = busy_cells[i];
 
-        if (curr.second == prev.second) {
-
-            int64_t dist = curr.first - prev.first - 1;
-            if (dist == 1) {
-                auto item = one_days.find((curr.first - 1) * n + curr.second);
-                if (item != one_days.end()) {
-                    count_stripes++;
-                }
-            } else if (dist > 1) {
-                count_stripes++;
+    uint32_t L = 0;
+    while (R - L > 1) {
+        uint32_t dist = (R + L) / 2;
+        bool isEnough = true;
+        std::vector<bool> used(n);
+        std::unordered_set<size_t> nodes;
+        for (size_t i=0; i<n; i++) {
+            find_path(matrix,used, nodes,i,dist);
+            if (used != used_all) {
+                isEnough = false;
+                break;
+            } else {
+                nodes.emplace(i);
             }
+            used = std::vector<bool> (n);
         }
-
+        if (!isEnough) {
+            L+= (R-L)/2;
+        } else {
+            R -= (R-L)/2;
+        }
     }
-    std::cout << count_stripes;
+    std::cout << R;
+
     return 0;
-}
     \end{verbatim}
 \end{center}

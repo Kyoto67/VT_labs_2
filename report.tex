@@ -24,7 +24,19 @@
 \usepackage{enumitem}
 \usepackage{pifont}
 \usepackage{wrapfig}
+\usepackage{hyperref}
+\hypersetup{
+	urlcolor=cyan,
+	urlbordercolor=cyan,
+    }
 
+\makeatletter
+\Hy@AtBeginDocument{%
+  \def\@pdfborder{0 0 1}% Overrides border definition set with colorlinks=true
+  \def\@pdfborderstyle{/S/U/W 0.5}% Overrides border style set with colorlinks=true
+                                % Hyperlink border style will be underline of width 1pt
+}
+\makeatother
 
 \begin{document}
 	\input{tex/front_page}

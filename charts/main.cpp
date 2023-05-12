@@ -81,8 +81,8 @@ auto main() -> int {
     mp::hold(true);
 
     double a = 5;
-    double b = 12;
-    double y_a = 2;
+    double b = 10;
+    double y_a = 10;
     int f = 3;
 
     std::cout << "Начальное условие:" << std::endl

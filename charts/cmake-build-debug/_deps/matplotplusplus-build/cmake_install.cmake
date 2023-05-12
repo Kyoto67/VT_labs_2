@@ -1,4 +1,4 @@
-# Install script for directory: /home/kyoto/git/charts/cmake-build-debug/_deps/matplotplusplus-src
+# Install script for directory: /home/kyoto/workspace/comp_math/VT_labs_2/charts/cmake-build-debug/_deps/matplotplusplus-src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,6 +44,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/kyoto/git/charts/cmake-build-debug/_deps/matplotplusplus-build/source/cmake_install.cmake")
+  include("/home/kyoto/workspace/comp_math/VT_labs_2/charts/cmake-build-debug/_deps/matplotplusplus-build/source/cmake_install.cmake")
 endif()
 

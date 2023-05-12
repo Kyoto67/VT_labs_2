@@ -22,8 +22,8 @@ set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
 include(ExternalProject)
 ExternalProject_Add(matplotplusplus-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/alandefreitas/matplotplusplus" "GIT_TAG" "origin/master"
-                    SOURCE_DIR          "/home/kyoto/git/charts/cmake-build-debug/_deps/matplotplusplus-src"
-                    BINARY_DIR          "/home/kyoto/git/charts/cmake-build-debug/_deps/matplotplusplus-build"
+                    SOURCE_DIR          "/home/kyoto/workspace/comp_math/VT_labs_2/charts/cmake-build-debug/_deps/matplotplusplus-src"
+                    BINARY_DIR          "/home/kyoto/workspace/comp_math/VT_labs_2/charts/cmake-build-debug/_deps/matplotplusplus-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

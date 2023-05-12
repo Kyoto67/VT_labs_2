@@ -1,4 +1,4 @@
-# Install script for directory: /home/kyoto/git/charts/cmake-build-debug/_deps/matplotplusplus-subbuild
+# Install script for directory: /home/kyoto/workspace/comp_math/VT_labs_2/charts/cmake-build-debug/_deps/matplotplusplus-subbuild
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/kyoto/git/charts/cmake-build-debug/_deps/matplotplusplus-subbuild/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kyoto/workspace/comp_math/VT_labs_2/charts/cmake-build-debug/_deps/matplotplusplus-subbuild/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

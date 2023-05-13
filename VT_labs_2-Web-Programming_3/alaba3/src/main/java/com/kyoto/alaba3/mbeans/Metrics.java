@@ -4,63 +4,63 @@ import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 import java.io.Serializable;
 
-public class MetricsMBeanImpl extends NotificationBroadcasterSupport implements MetricsMBean, Serializable {
+public class Metrics extends NotificationBroadcasterSupport implements MetricsMBean, Serializable {
 
-    private long hitsCount;
-    private long missedHitsCount;
-    private long missedHitsStreakCount;
+    private Integer hitsCount = null;
+    private Integer missedHitsCount = null;
+    private Integer missedHitsStreakCount = null;
     int sequenceNumber = 1;
-    private final Notification notification = new Notification("4 miss streak", getClass().getSimpleName(), sequenceNumber++, "4 miss streak.");
 
-    public MetricsMBeanImpl() {
+    public Metrics() {
         hitsCount = 0;
         missedHitsCount = 0;
         missedHitsStreakCount = 0;
     }
 
     @Override
-    public long hitsInc() {
+    public int hitsInc() {
         hitsCount++;
         return hitsCount;
     }
 
     @Override
-    public long missedAndStreakInc() {
+    public int missedAndStreakInc() {
         missedHitsCount++;
         missedHitsStreakCount++;
         if (missedHitsStreakCount % 4 == 0) {
+            final Notification notification = new Notification("4 miss streak", this, sequenceNumber++, "4 miss streak.");
             sendNotification(notification);
         }
-        return missedHitsCount;
+        return missedHitsStreakCount;
     }
 
     @Override
-    public long clearMissedStreak() {
+    public int clearMissedStreak() {
         missedHitsStreakCount = 0;
         return 0;
     }
 
-    public long getHitsCount() {
+    public Integer getHitsCount() {
         return hitsCount;
     }
 
-    public long getMissedHitsCount() {
+    public Integer getMissedHitsCount() {
         return missedHitsCount;
     }
 
-    public long getMissedHitsStreakCount() {
+    public Integer getMissedHitsStreakCount() {
         return missedHitsStreakCount;
     }
 
-    public void setHitsCount(long hitsCount) {
+    public void setHitsCount(Integer hitsCount) {
         this.hitsCount = hitsCount;
     }
 
-    public void setMissedHitsCount(long missedHitsCount) {
+    public void setMissedHitsCount(Integer missedHitsCount) {
         this.missedHitsCount = missedHitsCount;
     }
 
-    public void setMissedHitsStreakCount(long missedHitsStreakCount) {
+    public void setMissedHitsStreakCount(Integer missedHitsStreakCount) {
         this.missedHitsStreakCount = missedHitsStreakCount;
     }
 }

@@ -5,14 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Destroyed;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.management.MBeanServer;
-import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 import javax.management.StandardMBean;
 import java.lang.management.ManagementFactory;
@@ -33,8 +28,8 @@ public class AppBean {
     private int timeOffset;
     private List<Result> results;
     private MBeanServer mbs;
-    StandardMBean metricsMBean;
-    StandardMBean squareMBean;
+    Metrics metricsMBean;
+    Square squareMBean;
 
     @EJB
     private ResultServiceRealization service;
@@ -47,11 +42,11 @@ public class AppBean {
         this.results = results;
         this.service = new ResultServiceRealization();
         this.mbs = ManagementFactory.getPlatformMBeanServer();
+        this.metricsMBean = new Metrics();
+        this.squareMBean = new Square();
+        ObjectName metricsName = null;
+        ObjectName squareName = null;
         try {
-            this.metricsMBean = new StandardMBean(new MetricsMBeanImpl(), MetricsMBean.class);
-            this.squareMBean = new StandardMBean(new SquareMBeanImpl(), SquareMBean.class);
-            ObjectName metricsName = null;
-            ObjectName squareName = null;
             metricsName = new ObjectName("AppBean:name=metricsMBean");
             squareName = new ObjectName("AppBean:name=squareMBean");
             mbs.registerMBean(metricsMBean, metricsName);
@@ -82,15 +77,13 @@ public class AppBean {
     }
 
     private void resultMBeansHandle(Result result) {
-        MetricsMBean metrics = (MetricsMBean) metricsMBean.getImplementation();
-        SquareMBean square = (SquareMBean) squareMBean.getImplementation();
-        metrics.hitsInc();
+        metricsMBean.hitsInc();
         if (result.isMatch()) {
-            metrics.clearMissedStreak();
+            metricsMBean.clearMissedStreak();
         } else {
-            metrics.missedAndStreakInc();
+            metricsMBean.missedAndStreakInc();
         }
-        double currSquare = square.calculateSquare(result.getR());
+        double currSquare = squareMBean.calculateSquare(result.getR());
     }
 
 }

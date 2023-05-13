@@ -12,7 +12,9 @@ import javax.enterprise.event.Observes;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.management.MBeanServer;
+import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
+import javax.management.StandardMBean;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,13 +33,13 @@ public class AppBean {
     private int timeOffset;
     private List<Result> results;
     private MBeanServer mbs;
-    MetricsMBean metricsMBean;
-    SquareMBean squareMBean;
+    StandardMBean metricsMBean;
+    StandardMBean squareMBean;
 
     @EJB
     private ResultServiceRealization service;
 
-    public AppBean(){
+    public AppBean() {
         this(new ArrayList<>());
     }
 
@@ -45,26 +47,26 @@ public class AppBean {
         this.results = results;
         this.service = new ResultServiceRealization();
         this.mbs = ManagementFactory.getPlatformMBeanServer();
-        this.metricsMBean = new MetricsMBeanImpl();
-        this.squareMBean = new SquareMBeanImpl();
-        ObjectName metricsName = null;
-        ObjectName squareName = null;
         try {
+            this.metricsMBean = new StandardMBean(new MetricsMBeanImpl(), MetricsMBean.class);
+            this.squareMBean = new StandardMBean(new SquareMBeanImpl(), SquareMBean.class);
+            ObjectName metricsName = null;
+            ObjectName squareName = null;
             metricsName = new ObjectName("AppBean:name=metricsMBean");
             squareName = new ObjectName("AppBean:name=squareMBean");
-            mbs.registerMBean(metricsMBean,metricsName);
-            mbs.registerMBean(squareMBean,squareName);
+            mbs.registerMBean(metricsMBean, metricsName);
+            mbs.registerMBean(squareMBean, squareName);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void submit(){
-        if ( service.verification(x, y, r) ) {
+    public void submit() {
+        if (service.verification(x, y, r)) {
             boolean hitCheck = service.hitCheck(x, y, r);
             String workingTime = service.getFormattedWorkingTime();
             Date date = service.getDatewithOffset(timeOffset);
-            Result result = new Result(results.size() +1 , x, y, r, hitCheck, workingTime, date);
+            Result result = new Result(results.size() + 1, x, y, r, hitCheck, workingTime, date);
             resultMBeansHandle(result);
             results.add(result);
             service.pushToBase(result);
@@ -73,20 +75,22 @@ public class AppBean {
 
     private String resultsToJSON(List<Result> results) {
         String[] output = {"["};
-        results.forEach( (obj) -> output[0]+= obj.toString() + ", \n");
-        output[0] = output[0].substring( 0, output[0].length() - 3);
+        results.forEach((obj) -> output[0] += obj.toString() + ", \n");
+        output[0] = output[0].substring(0, output[0].length() - 3);
         output[0] += "]";
         return output[0];
     }
 
     private void resultMBeansHandle(Result result) {
-        metricsMBean.hitsInc();
+        MetricsMBean metrics = (MetricsMBean) metricsMBean.getImplementation();
+        SquareMBean square = (SquareMBean) squareMBean.getImplementation();
+        metrics.hitsInc();
         if (result.isMatch()) {
-            metricsMBean.clearMissedStreak();
+            metrics.clearMissedStreak();
         } else {
-            metricsMBean.missedAndStreakInc();
+            metrics.missedAndStreakInc();
         }
-        double currSquare = squareMBean.calculateSquare(result.getR());
+        double currSquare = square.calculateSquare(result.getR());
     }
 
 }

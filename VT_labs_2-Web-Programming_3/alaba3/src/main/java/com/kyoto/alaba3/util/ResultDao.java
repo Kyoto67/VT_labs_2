@@ -21,7 +21,6 @@ public class ResultDao {
         EntityManager entityManager = resultFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(result);
-        entityManager.persist(result.getCurrentDateandTime());
         entityManager.getTransaction().commit();
     }
 

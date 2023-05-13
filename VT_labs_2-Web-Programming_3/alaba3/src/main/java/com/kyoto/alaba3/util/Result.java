@@ -8,34 +8,40 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="weblab3")
+@Table(name="mspi_lab4")
 public class Result {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HitsIdGenerator")
-    @SequenceGenerator(name="weblab3", sequenceName="HIT_ID", allocationSize = 1)
+    @SequenceGenerator(name="mspi_lab4", sequenceName="HIT_ID", allocationSize = 1)
     @Column(name = "id", updatable = false, nullable = false)
     long id;
 
     @Transient
     int sequenceNumber;
 
+    @Column
     @Max(5)
     @Min(-5)
     double x;
 
+    @Column
     @Max(5)
     @Min(-5)
     double y;
 
+    @Column
     @Max(5)
     @Min(2)
     double r;
 
+    @Column
     boolean match;
 
+    @Column
     String workingTime;
 
+    @Column
     Date currentDateandTime;
 
     public Result() {

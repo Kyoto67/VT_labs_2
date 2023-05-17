@@ -133,11 +133,11 @@
             <version>2.10.9.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging -->
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.4.2.Final</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.logging</groupId>-->
+<!--            <artifactId>jboss-logging</artifactId>-->
+<!--            <version>3.4.2.Final</version>-->
+<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>

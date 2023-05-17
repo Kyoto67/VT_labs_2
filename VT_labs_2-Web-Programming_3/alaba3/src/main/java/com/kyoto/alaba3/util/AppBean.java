@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
-import javax.management.StandardMBean;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,8 +27,8 @@ public class AppBean {
     private int timeOffset;
     private List<Result> results;
     private MBeanServer mbs;
-    Metrics metricsMBean;
-    Square squareMBean;
+    MetricsMXBean metricsMXBean;
+    SquareMXBean squareMXBean;
 
     @EJB
     private ResultServiceRealization service;
@@ -42,15 +41,15 @@ public class AppBean {
         this.results = results;
         this.service = new ResultServiceRealization();
         this.mbs = ManagementFactory.getPlatformMBeanServer();
-        this.metricsMBean = new Metrics();
-        this.squareMBean = new Square();
+        this.metricsMXBean = new Metrics();
+        this.squareMXBean = new Square();
         ObjectName metricsName = null;
         ObjectName squareName = null;
         try {
-            metricsName = new ObjectName("AppBean:name=metricsMBean");
-            squareName = new ObjectName("AppBean:name=squareMBean");
-            mbs.registerMBean(metricsMBean, metricsName);
-            mbs.registerMBean(squareMBean, squareName);
+            metricsName = new ObjectName("AppBean:name=metricsMXBean");
+            squareName = new ObjectName("AppBean:name=squareMXBean");
+            mbs.registerMBean(metricsMXBean, metricsName);
+            mbs.registerMBean(squareMXBean, squareName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,13 +76,13 @@ public class AppBean {
     }
 
     private void resultMBeansHandle(Result result) {
-        metricsMBean.hitsInc();
+        metricsMXBean.hitsInc();
         if (result.isMatch()) {
-            metricsMBean.clearMissedStreak();
+            metricsMXBean.clearMissedStreak();
         } else {
-            metricsMBean.missedAndStreakInc();
+            metricsMXBean.missedAndStreakInc();
         }
-        double currSquare = squareMBean.calculateSquare(result.getR());
+        double currSquare = squareMXBean.calculateSquare(result.getR());
     }
 
 }

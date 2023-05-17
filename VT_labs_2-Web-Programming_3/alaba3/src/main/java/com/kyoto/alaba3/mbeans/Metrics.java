@@ -4,17 +4,14 @@ import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 import java.io.Serializable;
 
-public class Metrics extends NotificationBroadcasterSupport implements MetricsMBean, Serializable {
+public class Metrics extends NotificationBroadcasterSupport implements MetricsMXBean, Serializable {
 
-    private Integer hitsCount = null;
-    private Integer missedHitsCount = null;
-    private Integer missedHitsStreakCount = null;
+    private int hitsCount = 0;
+    private int missedHitsCount = 0;
+    private int missedHitsStreakCount = 0;
     int sequenceNumber = 1;
 
     public Metrics() {
-        hitsCount = 0;
-        missedHitsCount = 0;
-        missedHitsStreakCount = 0;
     }
 
     @Override
@@ -40,27 +37,27 @@ public class Metrics extends NotificationBroadcasterSupport implements MetricsMB
         return 0;
     }
 
-    public Integer getHitsCount() {
+    public int getHitsCount() {
         return hitsCount;
     }
 
-    public Integer getMissedHitsCount() {
+    public int getMissedHitsCount() {
         return missedHitsCount;
     }
 
-    public Integer getMissedHitsStreakCount() {
+    public int getMissedHitsStreakCount() {
         return missedHitsStreakCount;
     }
 
-    public void setHitsCount(Integer hitsCount) {
-        this.hitsCount = hitsCount;
-    }
-
-    public void setMissedHitsCount(Integer missedHitsCount) {
-        this.missedHitsCount = missedHitsCount;
-    }
-
-    public void setMissedHitsStreakCount(Integer missedHitsStreakCount) {
-        this.missedHitsStreakCount = missedHitsStreakCount;
-    }
+//    public void setHitsCount(int hitsCount) {
+//        this.hitsCount = hitsCount;
+//    }
+//
+//    public void setMissedHitsCount(int missedHitsCount) {
+//        this.missedHitsCount = missedHitsCount;
+//    }
+//
+//    public void setMissedHitsStreakCount(int missedHitsStreakCount) {
+//        this.missedHitsStreakCount = missedHitsStreakCount;
+//    }
 }

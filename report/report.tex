@@ -1,9 +1,9 @@
 %! Author = kyoto
-%! Date = 03.05.2023
+%! Date = 15.05.2023
 
-\documentclass[a4paper, oneside]{article}
+\documentclass[a4paper, oneside, hidelinks]{article}
 
-\usepackage[left=3cm, top=5.5cm, right=4cm, bottom=5cm]{geometry}
+\usepackage[left=3cm, top=5.5cm, right=3cm, bottom=5cm]{geometry}
 \usepackage{pgfplots}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
@@ -22,16 +22,17 @@
 \usepackage{color}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{wrapfig}
 
 \usepackage[pages = some]{background}
 \usepackage{hyperref}
 \backgroundsetup{
-	scale = 1,
-	angle = 0,
-	opacity = 1,
-	contents = {\includegraphics[height = \paperheight, keepaspectratio]{background-image.pdf}}}
+    scale = 1,
+    angle = 0,
+    opacity = 1,
+    contents = {\includegraphics[height = \paperheight, keepaspectratio]{background-image.pdf}}}
 
 \begin{document}
-	\input{tex/front_page}
-%	\input{tex/main_page}
+    \input{tex/front_page}
+    \input{tex/main_page}
 \end{document}

@@ -1,1 +1,0 @@
-sshpass -p 123awdzxc ssh -p 2222 -L 1337:helios:28700 s336759@helios.se.ifmo.ru

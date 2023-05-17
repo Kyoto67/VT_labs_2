@@ -2,11 +2,10 @@ package com.kyoto.alaba3.mbeans;
 
 import java.io.Serializable;
 
-public class Square implements SquareMBean, Serializable {
-    Double lastSquare = null;
+public class Square implements SquareMXBean, Serializable {
+    double lastSquare = 0;
 
     public Square() {
-        lastSquare = 0.0;
     }
 
     @Override
@@ -20,12 +19,12 @@ public class Square implements SquareMBean, Serializable {
     }
 
     @Override
-    public Double getLastSquare() {
+    public double getLastSquare() {
         return lastSquare;
     }
 
-    @Override
-    public void setLastSquare(Double lastSquare) {
-        this.lastSquare = lastSquare;
-    }
+//    @Override
+//    public void setLastSquare(double lastSquare) {
+//        this.lastSquare = lastSquare;
+//    }
 }
